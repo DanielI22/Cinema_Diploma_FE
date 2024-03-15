@@ -7,9 +7,8 @@ import ProjectorLayout from './layouts/ProjectorLayout';
 import { useContext } from 'react';
 
 const AppRoutes = () => {
-    const { role } = useContext(AuthContext);
-
-    switch (role) {
+    const { userDetails } = useContext(AuthContext);
+    switch (userDetails.role) {
         case 'admin':
             return <AdminLayout />;
         case 'operator':
