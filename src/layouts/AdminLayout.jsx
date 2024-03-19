@@ -1,14 +1,22 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
+import Header from '../components/Header/Header';
+import { PATHS } from '../utils/constants';
+import Home from '../components/Home/Home';
+import ProtectedRoute from '../components/AuthGuards/ProtectedRoute';
+import Logout from '../components/Logout/Logout';
+import NotFound from '../components/NotFound/NotFound';
 
 const AdminLayout = () => (
   <>
-  <div>ADMIN</div>
+    <Header />
+    <div>ADMIN</div>
     {/* Admin-specific navigation, sidebars, etc., can go here */}
     <Routes>
-      {/* <Route path="/admin" element={<AdminHome />} />
-      <Route path="/admin/users" element={<ManageUsers />} />
-      Define other admin-specific routes */}
+      <Route path={PATHS.HOME} element={<Home />} />
+
+      <Route path={PATHS.LOGOUT} element={<ProtectedRoute><Logout /></ProtectedRoute>} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   </>
 );

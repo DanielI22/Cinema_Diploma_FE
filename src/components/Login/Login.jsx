@@ -2,19 +2,25 @@ import { useState } from 'react';
 import styles from './Login.module.css'; 
 import { Link } from 'react-router-dom';
 import { PATHS } from '../../utils/constants';
-import AuthContext from "../../contexts/authContext"
-import { useContext } from 'react';
+import { useAuth } from "../../contexts/authContext"
+import Spinner from '../Spinner/Spinner';
 
 export default function Login() {
-    const { loginSubmitHandler } = useContext(AuthContext);
+    const { loginSubmitHandler } = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        loginSubmitHandler({ email, password })
+        setIsLoading(true);
+        await loginSubmitHandler({ email, password });
+        setIsLoading(false);
     };
 
+    if(isLoading) {
+        return <Spinner />
+    }
     return (
         <div className={styles.loginContainer}>
             <form onSubmit={handleSubmit} className={styles.loginForm}>

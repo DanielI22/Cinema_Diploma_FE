@@ -1,8 +1,9 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Register.module.css';
 import { PATHS } from '../../utils/constants';
-import AuthContext from "../../contexts/authContext"
+import { useAuth } from "../../contexts/authContext"
+import Spinner from '../Spinner/Spinner';
 
 export default function Register() {
     const [username, setUsername] = useState('');
@@ -10,11 +11,16 @@ export default function Register() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
-    const { registerSubmitHandler } = useContext(AuthContext);
+    const { registerSubmitHandler } = useAuth();
+    const [isLoading, setIsLoading] = useState(false);
 
-    const handleSubmit = (e) => {
-
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        if (username.length < 3) {
+            setError("Username must be at least 3 characters long.")
+            return;
+        }
+
         if (password.length < 3) {
             setError("Password must be at least 3 characters long.")
             return;
@@ -26,8 +32,14 @@ export default function Register() {
         }
         
         setError('');
-        registerSubmitHandler({ username, email, password })
+        setIsLoading(true);
+        await registerSubmitHandler({ username, email, password })
+        setIsLoading(false);
     };
+
+    if (isLoading) {
+        return <Spinner />;
+    }
 
     return (
         <div className={styles.registerContainer}>

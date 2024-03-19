@@ -1,8 +1,7 @@
 import styles from './Header.module.css';
 import { Link } from 'react-router-dom';
 import { PATHS } from '../../utils/constants';
-import { useContext } from 'react';
-import AuthContext from '../../contexts/authContext';
+import { useAuth } from '../../contexts/authContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import LanguageToggleButton from '../LanguageToggleButton/LanguageToggleButton';
@@ -10,9 +9,8 @@ import LanguageToggleButton from '../LanguageToggleButton/LanguageToggleButton';
 export default function Header() {
     const {
         isAuthenticated,
-        username,
-    } = useContext(AuthContext);
-
+        userDetails,
+    } = useAuth();
     return (
         <header className={styles.header}>
             <Link to={PATHS.HOME}><img className={styles.logo} src="/logo.png" alt="YourCinema" /></Link>
@@ -24,7 +22,7 @@ export default function Header() {
                     <>
                         <div className={styles.profileDropdown}>
                             <button className={styles.profileButton}>
-                                {username} <FontAwesomeIcon icon={faCaretDown} />
+                                {userDetails.username} <FontAwesomeIcon icon={faCaretDown} />
                             </button>
                             <div className={styles.dropdownContent}>
                                 <Link to={PATHS.RESERVATIONS}>Reservations</Link>

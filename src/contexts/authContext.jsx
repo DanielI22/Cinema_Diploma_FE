@@ -1,106 +1,92 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useCallback, useContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { jwtDecode } from 'jwt-decode';
 import usePersistedState from "../hooks/usePersistedState";
 import * as authService from '../services/authService';
-import { PATHS } from "../utils/constants";
+import { AUTH_TOKEN_HEADER, PATHS, REFRESH_TOKEN_HEADER } from "../utils/constants";
 
 const AuthContext = createContext();
 
+
 export const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
-    const [authToken, setAuthToken] = usePersistedState('authToken', null, 'sessionStorage');
-    const [refreshToken, setRefreshToken] = usePersistedState('refreshToken', null, 'localStorage');
-    const [userDetails, setUserDetails] = useState(() => {
-        if (authToken) {
-            return jwtDecode(authToken);
-        }
-        return {};
-    });
+    const [authToken, setAuthToken] = usePersistedState(AUTH_TOKEN_HEADER, null, 'sessionStorage');
+    const [refreshToken, setRefreshToken] = usePersistedState(REFRESH_TOKEN_HEADER, null, 'localStorage');
+    const [userDetails, setUserDetails] = useState({});
 
-    const updateUserDetails = (token) => {
+    useEffect(() => {
+        if (authToken) {
+            updateUserDetails(authToken);
+        } else {
+            setUserDetails({});
+        }
+    }, [authToken]);
+
+    const updateUserDetails = useCallback((token) => {
         const decoded = jwtDecode(token);
-        setUserDetails(decoded);
-    };
+        setUserDetails({
+            userId: decoded.sub,
+            username: decoded.preferred_username,
+            email: decoded.email,
+            roles: decoded.realm_access?.roles || []
+        });
+    }, []);
 
     const refreshTokens = async () => {
-        try {
             const result = await authService.refreshToken(refreshToken);
             setAuthToken(result.accessToken);
             setRefreshToken(result.refreshToken);
-            updateUserDetails(result.accessToken);
-        } catch (error) {
-            toast.error(error.message || 'Failed to refresh token');
             navigate(PATHS.LOGIN);
-        }
     };
 
-    // Automatically attempt to refresh token before it expires
     useEffect(() => {
-        if (!authToken) return;
-        const checkTokenExpiry = () => {
-            const currentTime = Date.now() / 1000; // Convert to seconds
+        const interval = authToken ? setInterval(() => {
             const decoded = jwtDecode(authToken);
-            const timeLeft = decoded.exp - currentTime;
-
-            if (timeLeft < 60 * 5) { // Less than 5 minutes remaining
+            const currentTime = Date.now() / 1000;
+            if (decoded.exp - currentTime < 60 * 2) { // Less than 2 minutes
                 refreshTokens();
             }
-        };
+        }, 1000 * 60 * 4) : null; // Check every 4 minutes
 
-        let interval = setInterval(checkTokenExpiry, 1000 * 60 * 4); // Check every 4 minutes
-
-        return () => clearInterval(interval); // Cleanup on unmount
-    }, [authToken, refreshToken]);
+        return () => interval && clearInterval(interval);
+    }, [authToken, refreshToken, refreshTokens]);
 
     const loginSubmitHandler = async (values) => {
-        try {
-            const result = await authService.login(values.email, values.password);
+        const result = await authService.login(values);
+        if (result) {
             setAuthToken(result.accessToken);
             setRefreshToken(result.refreshToken);
-            updateUserDetails(result.accessToken);
             navigate(-1);
-        } catch (error) {
-            toast.error('Error');
         }
     };
 
     const registerSubmitHandler = async (values) => {
-        try {
-            const result = await authService.register(values);
+        const result = await authService.register(values);
+        if (result) {
             setAuthToken(result.accessToken);
             setRefreshToken(result.refreshToken);
-            updateUserDetails(result.accessToken);
             navigate(PATHS.HOME);
-        } catch (error) {
-            toast.error('Error');
         }
     };
 
     const logoutHandler = async () => {
         await authService.logout();
-        localStorage.removeItem('refreshToken');
-        sessionStorage.removeItem('authToken');
-        setUserDetails({});
-        navigate(PATHS.LOGIN);
+        setAuthToken(null);
+        setRefreshToken(null);
+        sessionStorage.removeItem(AUTH_TOKEN_HEADER);
+        localStorage.removeItem(REFRESH_TOKEN_HEADER);
+        navigate(PATHS.HOME);
     };
 
-    const values = {
-        loginSubmitHandler,
-        registerSubmitHandler,
-        logoutHandler,
-        userDetails,
-        isAuthenticated: !!authToken,
-    };
+    const isAuthenticated = !!authToken;
+    const authContextValue = { loginSubmitHandler, registerSubmitHandler, logoutHandler, userDetails, isAuthenticated };
 
     return (
-        <AuthContext.Provider value={values}>
+        <AuthContext.Provider value={authContextValue}>
             {children}
         </AuthContext.Provider>
     );
 };
 
-AuthContext.displayName = 'AuthContext';
-
-export default AuthContext;
+export const useAuth = () => useContext(AuthContext);

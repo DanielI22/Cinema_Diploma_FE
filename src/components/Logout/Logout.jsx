@@ -1,20 +1,13 @@
-import { useContext, useEffect } from "react";
-import * as authService from '../../services/authService';
-import { useNavigate } from "react-router-dom";
-import AuthContext from "../../contexts/authContext";
-import { PATHS } from "../../utils/constants";
+import { useEffect } from "react";
+import { useAuth } from "../../contexts/authContext";
+import Spinner from "../Spinner/Spinner";
 
 export default function Logout() {
-    const navigate = useNavigate();
-    const { logoutHandler } = useContext(AuthContext);
+    const { logoutHandler } = useAuth();
 
     useEffect(() => {
-        authService.logout()
-            .finally(() => {
-                logoutHandler();
-                navigate(PATHS.HOME);
-            });
-    }, [logoutHandler, navigate]);
+        logoutHandler();
+    }, [logoutHandler])
 
-    return null;
+    return (<Spinner />)
 }

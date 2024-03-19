@@ -12,7 +12,9 @@ function App() {
     <Router>
       <AuthProvider>
         <ToastContainer />
-        <AppRoutes />
+        <div className="min-h-[100vh]">
+         <AppRoutes />
+        </div>
       </AuthProvider>
       <Footer />
     </Router>
