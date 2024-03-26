@@ -4,7 +4,8 @@ import { toast } from 'react-toastify';
 import { jwtDecode } from 'jwt-decode';
 import usePersistedState from "../hooks/usePersistedState";
 import * as authService from '../services/authService';
-import { AUTH_TOKEN_HEADER, PATHS, REFRESH_TOKEN_HEADER } from "../utils/constants";
+import { ACCESS_TOKEN_CHECK_TIME, ACCESS_TOKEN_EXPIRE, AUTH_TOKEN_HEADER, PATHS, REFRESH_TOKEN_HEADER } from "../utils/constants";
+import { getUserRole } from "../utils/functions";
 
 const AuthContext = createContext();
 
@@ -35,19 +36,22 @@ export const AuthProvider = ({ children }) => {
 
     const refreshTokens = async () => {
             const result = await authService.refreshToken(refreshToken);
+            console.log(result);
             setAuthToken(result.accessToken);
             setRefreshToken(result.refreshToken);
-            navigate(PATHS.LOGIN);
     };
 
     useEffect(() => {
         const interval = authToken ? setInterval(() => {
+            console.log("REFRESH")
             const decoded = jwtDecode(authToken);
             const currentTime = Date.now() / 1000;
-            if (decoded.exp - currentTime < 60 * 2) { // Less than 2 minutes
+            console.log(decoded.exp - currentTime)
+            if (decoded.exp - currentTime < ACCESS_TOKEN_EXPIRE) { // Less than 2 minutes
+                console.log("refreshRequest");
                 refreshTokens();
             }
-        }, 1000 * 60 * 4) : null; // Check every 4 minutes
+        }, ACCESS_TOKEN_CHECK_TIME) : null; // Check every 2 minutes
 
         return () => interval && clearInterval(interval);
     }, [authToken, refreshToken, refreshTokens]);
@@ -80,7 +84,8 @@ export const AuthProvider = ({ children }) => {
     };
 
     const isAuthenticated = !!authToken;
-    const authContextValue = { loginSubmitHandler, registerSubmitHandler, logoutHandler, userDetails, isAuthenticated };
+    const role = getUserRole(userDetails);
+    const authContextValue = { loginSubmitHandler, registerSubmitHandler, logoutHandler, userDetails, role, isAuthenticated };
 
     return (
         <AuthContext.Provider value={authContextValue}>

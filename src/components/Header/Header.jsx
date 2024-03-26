@@ -10,13 +10,30 @@ export default function Header() {
     const {
         isAuthenticated,
         userDetails,
+        role,
     } = useAuth();
+
+    const renderMiddleSection = () => {
+        if (role == 'admin') {
+            return <Link to={PATHS.HOME}>Dashboard</Link>
+        } else if (role == 'operator') {
+            return <div>OPERATOR</div>;
+        } else if (role == 'validator') {
+            return <div>VALIDATOTR</div>;
+        } else if (role == 'projector') {
+            return <div>PROJECTOR</div>;
+        } else {
+            return (<div className={styles.navLeft}>
+                <Link to={PATHS.MOVIES}>Our Movies</Link>
+            </div>);;
+        }
+    }
+
+
     return (
         <header className={styles.header}>
             <Link to={PATHS.HOME}><img className={styles.logo} src="/logo.png" alt="YourCinema" /></Link>
-            <div className={styles.navLeft}>
-                <Link to={PATHS.MOVIES}>Our Movies</Link>
-            </div>
+            {renderMiddleSection()}
             <div className={styles.navRight}>
                 {isAuthenticated ? (
                     <>
@@ -24,10 +41,12 @@ export default function Header() {
                             <button className={styles.profileButton}>
                                 {userDetails.username} <FontAwesomeIcon icon={faCaretDown} />
                             </button>
+                            {role=='user' ? (
                             <div className={styles.dropdownContent}>
                                 <Link to={PATHS.RESERVATIONS}>Reservations</Link>
                                 <Link to={PATHS.FAVOURITES}>Favourites</Link>
                             </div>
+                            ) : <></>}
                         </div>
                         <Link to={PATHS.LOGOUT}>Log out</Link>
                     </>

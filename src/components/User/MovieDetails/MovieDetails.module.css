@@ -1,0 +1,93 @@
+.movieDetails {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 85vh;
+}
+
+.detailsContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.poster {
+    max-width: 300px;
+    height: auto;
+    border-radius: 8px;
+    margin-right: 7%;
+}
+
+.info {
+    min-width: 400px;
+    max-width: 800px;
+}
+
+.title {
+    font-size: 2rem;
+    margin: 10px 0;
+}
+
+.genre {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.description {
+    margin-bottom: 10%;
+}
+
+.additionalInfo {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.favouritesContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+    margin-right: 50px;
+}
+
+.favouritesButton {
+    background-color: transparent;
+    cursor: pointer;
+    padding: 0;
+    color: #CCC;
+    margin-left: 10px;
+}
+
+.favouritesButton:hover {
+    color: #00a8ff;
+}
+
+.favouriteActive {
+    color: #00a8ff;
+}
+
+.startTime {
+    margin-bottom: 10px;
+    font-size: 2rem;
+}
+
+.bookingButton {
+    background-color: white;
+    color: #00a8ff;
+    width: 100%;
+    padding: 10px 15px;
+    border: 2px solid #00a8ff;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.bookingButton:hover {
+    background-color: #00a8ff;
+    color: white;
+}

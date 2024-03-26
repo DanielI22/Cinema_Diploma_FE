@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import styles from './Home.module.css'
-import  { useAuth } from '../../contexts/authContext';
-// import MovieCarousel from '../../components/MovieCarousel/MovieCarousel';
+import MovieCarousel from '../MovieCarousel/MovieCarousel';
 
 export default function Home() {
   const { t } = useTranslation();
@@ -13,7 +12,7 @@ export default function Home() {
       {t('descriptionMessage')}
       </p>
       <h2 className={styles.upcomingShowingsTitle}>{t('upcomingMessage')}</h2>
-      {/* <MovieCarousel /> */}
+      <MovieCarousel />
     </div>
   );
 }

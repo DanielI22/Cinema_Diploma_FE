@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 5rem;
+    padding: 0 20px;
     background-color: var(--secondary-color);
     color: white;
 }
@@ -64,4 +64,15 @@
     display: flex;
     align-items: center;
     gap: 0.7rem;
+}
+
+@media (max-width: 768px) {
+    .navLeft, .navRight {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navLeft > a, .navRight > a, .navRight > div {
+        margin: 5px 0;
+    }
 }
