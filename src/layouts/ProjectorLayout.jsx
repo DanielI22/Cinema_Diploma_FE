@@ -7,7 +7,6 @@ import Home from '../components/User/Home/Home';
 import NotFound from '../components/NotFound/NotFound';
 const ProjectorLayout = () => (
     <>
-        <Header />
         <div>PROJECTOR</div>
         <Routes>
             <Route path={PATHS.HOME} element={<Home />} />

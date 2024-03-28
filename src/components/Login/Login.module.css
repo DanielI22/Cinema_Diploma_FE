@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     height: 85vh;
-    background-color: #f4f4f4;
+    background: var(--background-color);
 }
 
 .loginForm {

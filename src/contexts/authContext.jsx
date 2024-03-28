@@ -1,6 +1,5 @@
 import { createContext, useState, useEffect, useCallback, useContext } from "react";
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { jwtDecode } from 'jwt-decode';
 import usePersistedState from "../hooks/usePersistedState";
 import * as authService from '../services/authService';
@@ -30,15 +29,18 @@ export const AuthProvider = ({ children }) => {
             userId: decoded.sub,
             username: decoded.preferred_username,
             email: decoded.email,
-            roles: decoded.realm_access?.roles || []
+            role: getUserRole(decoded.realm_access?.roles)
         });
     }, []);
 
     const refreshTokens = async () => {
-            const result = await authService.refreshToken(refreshToken);
-            console.log(result);
-            setAuthToken(result.accessToken);
-            setRefreshToken(result.refreshToken);
+        // const result = await authService.refreshToken(refreshToken);
+        const result = await authService.refreshAccessToken(refreshToken);
+        console.log(result);
+        // setAuthToken(result.accessToken);
+        // setRefreshToken(result.refreshToken);
+        setAuthToken(result.access_token);
+        setRefreshToken(result.refresh_token);
     };
 
     useEffect(() => {
@@ -61,7 +63,11 @@ export const AuthProvider = ({ children }) => {
         if (result) {
             setAuthToken(result.accessToken);
             setRefreshToken(result.refreshToken);
-            navigate(-1);
+            if (userDetails.role == 'user') {
+                navigate(-1);
+            } else {
+                navigate(PATHS.HOME);
+            }
         }
     };
 
@@ -75,17 +81,16 @@ export const AuthProvider = ({ children }) => {
     };
 
     const logoutHandler = async () => {
-        await authService.logout();
         setAuthToken(null);
         setRefreshToken(null);
         sessionStorage.removeItem(AUTH_TOKEN_HEADER);
         localStorage.removeItem(REFRESH_TOKEN_HEADER);
         navigate(PATHS.HOME);
+        await authService.logout();
     };
 
     const isAuthenticated = !!authToken;
-    const role = getUserRole(userDetails);
-    const authContextValue = { loginSubmitHandler, registerSubmitHandler, logoutHandler, userDetails, role, isAuthenticated };
+    const authContextValue = { loginSubmitHandler, registerSubmitHandler, logoutHandler, userDetails, isAuthenticated };
 
     return (
         <AuthContext.Provider value={authContextValue}>

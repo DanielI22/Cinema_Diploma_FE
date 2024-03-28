@@ -1,6 +1,7 @@
 export const API_BASE_URL = "http://localhost:8081/api";
 export const AUTH_TOKEN_HEADER = "authToken";
 export const REFRESH_TOKEN_HEADER = "refreshToken";
+
 export const PATHS = {
     HOME: "/",
     MOVIES: "/movies",
@@ -18,8 +19,15 @@ export const PATHS = {
     MANAGE_USERS: "/manage-users",
     MANAGE_BOOKINGS: "/manage-bookings",
     MANAGE_TICKETS: "/manage-tickets",
-};
-export const GENERAL_ERROR = "An unexpected error occurred. Please try again later.";
 
-export const ACCESS_TOKEN_CHECK_TIME = 1000 * 60 * 1;
+    MANAGE_CINEMA: "/manage-cinema",
+    MANAGE_HALL: "/manage-halls"
+};
+
+export const GENERAL_ERROR = "An unexpected error occurred. Please try again later.";
+export const GENERAL_ADD = "Added Successfully.";
+export const GENERAL_UPDATE = "Updated Successfully.";
+export const GENERAL_DELETE = "Deleted Successfully.";
+
+export const ACCESS_TOKEN_CHECK_TIME = 1000  * 60 * 2;
 export const ACCESS_TOKEN_EXPIRE = 60 * 2;

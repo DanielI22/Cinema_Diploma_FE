@@ -49,3 +49,30 @@ export const refreshToken = async (refreshToken) => {
         toast.error(GENERAL_ERROR)
     }
 };
+
+
+export const refreshAccessToken = async (refreshToken) => {
+    const clientId="cinema-quarkus";
+    const clientSecret="6XU73V4dJNGWDmuXwq0WnIIJtys9PBI5";
+    const serverUrl = "http://localhost:8080";
+    const realmName = "cinema";
+
+    const params = new URLSearchParams();
+    params.append('client_id', clientId);
+    params.append('client_secret', clientSecret);
+    params.append('grant_type', 'refresh_token');
+    params.append('refresh_token', refreshToken);
+  
+    try {
+      const response = await axiosInstance.post(serverUrl + '/realms/' + realmName + '/protocol/openid-connect/token', params, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      });
+      toast.success("Token refresh");
+      return response.data;
+    } catch (error) {
+      console.error('Error refreshing access token:', error);
+      throw error;
+    }
+  };

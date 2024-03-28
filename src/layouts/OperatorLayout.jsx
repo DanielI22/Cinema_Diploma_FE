@@ -8,7 +8,6 @@ import NotFound from '../components/NotFound/NotFound';
 
 const OperatorLayout = () => (
     <>
-        <Header />
         <div>OPERATOR</div>
         <Routes>
             <Route path={PATHS.HOME} element={<Home />} />

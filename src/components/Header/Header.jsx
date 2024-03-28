@@ -9,23 +9,22 @@ import LanguageToggleButton from '../LanguageToggleButton/LanguageToggleButton';
 export default function Header() {
     const {
         isAuthenticated,
-        userDetails,
-        role,
+        userDetails
     } = useAuth();
 
     const renderMiddleSection = () => {
-        if (role == 'admin') {
+        if (userDetails.role == 'admin') {
             return <Link to={PATHS.HOME}>Dashboard</Link>
-        } else if (role == 'operator') {
+        } else if (userDetails.role == 'operator') {
             return <div>OPERATOR</div>;
-        } else if (role == 'validator') {
+        } else if (userDetails.role == 'validator') {
             return <div>VALIDATOTR</div>;
-        } else if (role == 'projector') {
+        } else if (userDetails.role == 'projector') {
             return <div>PROJECTOR</div>;
         } else {
             return (<div className={styles.navLeft}>
                 <Link to={PATHS.MOVIES}>Our Movies</Link>
-            </div>);;
+            </div>);
         }
     }
 
@@ -41,7 +40,7 @@ export default function Header() {
                             <button className={styles.profileButton}>
                                 {userDetails.username} <FontAwesomeIcon icon={faCaretDown} />
                             </button>
-                            {role=='user' ? (
+                            {userDetails.role=='user' ? (
                             <div className={styles.dropdownContent}>
                                 <Link to={PATHS.RESERVATIONS}>Reservations</Link>
                                 <Link to={PATHS.FAVOURITES}>Favourites</Link>

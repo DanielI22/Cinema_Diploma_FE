@@ -1,19 +1,21 @@
 import { toast } from "react-toastify";
-import { GENERAL_ERROR } from "../utils/constants";
+import { GENERAL_ADD, GENERAL_DELETE, GENERAL_ERROR, GENERAL_UPDATE } from "../utils/constants";
 import axiosInstance from "../config/axiosInstance";
 
 export const getAll = async () => {
     try {
-        const response = await axiosInstance.get(`/movies`);
+        const response = await axiosInstance.get(`/halls`);
+        console.log(response.data)
         return response.data;
     } catch (error) {
         toast.error(GENERAL_ERROR);
     }
 };
 
-export const getOne = async (movieId) => {
+export const getAvailable = async () => {
     try {
-        const response = await axiosInstance.get(`/movies/${movieId}`);
+        const response = await axiosInstance.get(`/halls/available`);
+        console.log(response.data)
         return response.data;
     } catch (error) {
         toast.error(GENERAL_ERROR);

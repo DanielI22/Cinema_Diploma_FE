@@ -7,16 +7,15 @@ import ProjectorLayout from './layouts/ProjectorLayout';
 
 const AppRoutes = () => {
     const { userDetails } = useAuth();
-    if (Object.keys(userDetails).length === 0) {
+    if (userDetails.role == 'user') {
         return <UserLayout />;
-    }
-    if (userDetails.roles.includes('admin')) {
+    } else if (userDetails.role == 'admin') {
         return <AdminLayout />;
-    } else if (userDetails.roles.includes('operator')) {
+    } else if (userDetails.role == 'operator') {
         return <OperatorLayout />;
-    } else if (userDetails.roles.includes('validator')) {
+    } else if (userDetails.role == 'validator') {
         return <ValidatorLayout />;
-    } else if (userDetails.roles.includes('projector')) {
+    } else if (userDetails.role == 'projector') {
         return <ProjectorLayout />;
     } else {
         return <UserLayout />;

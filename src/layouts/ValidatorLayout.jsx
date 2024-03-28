@@ -8,7 +8,6 @@ import NotFound from '../components/NotFound/NotFound';
 
 const ValidatorLayout = () => (
     <>
-        <Header />
         <div>VALIDATAOR</div>
         <Routes>
             <Route path={PATHS.HOME} element={<Home />} />

@@ -1,0 +1,72 @@
+.hallManagementScreen {
+    padding: 20px;
+}
+
+.manageHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.manageHeader h2 {
+    margin: 0;
+}
+
+.addButton {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.hallList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+}
+
+.hallItemWrapper {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    width: calc(30.333% - 20px);
+    box-sizing: border-box;
+}
+
+.hallDetails {
+    margin-bottom: 10px;
+}
+
+.hallActions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.editButton, .deleteButton {
+    background-color: var(--primary-color);
+    color:  var(--background-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.deleteButton {
+    background-color: #dc3545;
+}
+
+.editButton {
+    text-decoration: none;
+    display: inline-block;
+    color: var(--background-color);
+    cursor: pointer;
+}

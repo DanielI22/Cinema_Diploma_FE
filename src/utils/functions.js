@@ -2,11 +2,11 @@ export function genresToString(genres) {
     return genres.map(genre => genre.name).map(genre => capitalizeFirstLetter(genre)).join(", ");
 }
 
-export function getUserRole(userDetails) {
-    if(!userDetails) {
+export function getUserRole(decodedRoles) {
+    if(!decodedRoles) {
         return 'user';
     }
-    const roles = userDetails.roles || [];
+    const roles = decodedRoles || [];
     const roleHierarchy = ['admin', 'operator', 'validator', 'projector'];
 
     // Find the highest priority role the user has

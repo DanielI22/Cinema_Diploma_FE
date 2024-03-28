@@ -12,9 +12,7 @@ import MovieDetails from "../components/User/MovieDetails/MovieDetails";
 
 const UserLayout = () => (
   <>
-    <Header />
     <Routes>
-
       <Route path={PATHS.HOME} element={<Home />} />
       {/* <Route path={PATHS.MOVIES} element={<Movies />} /> */}
       <Route path={`${PATHS.MOVIES}/:movieId`} element={<MovieDetails />} />
