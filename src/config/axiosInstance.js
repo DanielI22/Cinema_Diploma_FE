@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { API_BASE_URL, AUTH_TOKEN_HEADER, PATHS } from '../utils/constants';
+import { API_BASE_URL, AUTH_TOKEN_HEADER } from '../utils/constants';
 import { toast } from 'react-toastify';
 
 const axiosInstance = axios.create({

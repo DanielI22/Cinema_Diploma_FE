@@ -8,6 +8,7 @@ import AdminHome from '../components/Admin/AdminHome/AdminHome';
 import CinemaManagementPage from '../components/Admin/CinemaManage/CinemaManagementPage';
 import AddEditCinemaPage from '../components/Admin/CinemaManage/AddEditCinemaPage';
 import HallManagementPage from '../components/Admin/HallManage/HallManagementPage';
+import AddEditHallPage from '../components/Admin/HallManage/AddEditHallPage';
 
 const AdminLayout = () => (
   <>
@@ -17,8 +18,8 @@ const AdminLayout = () => (
       <Route path={PATHS.MANAGE_CINEMA} element={<AddEditCinemaPage />} />
       <Route path={`${PATHS.MANAGE_CINEMA}/:cinemaId`} element={<AddEditCinemaPage />} />
       <Route path={PATHS.MANAGE_HALLS} element={<HallManagementPage />} />
-      {/* <Route path={PATHS.MANAGE_CINEMA} element={<AddEditCinemaPage />} />
-      <Route path={`${PATHS.MANAGE_CINEMA}/:cinemaId`} element={<AddEditCinemaPage />} /> */}
+      <Route path={PATHS.MANAGE_HALL} element={<AddEditHallPage />} />
+      <Route path={`${PATHS.MANAGE_HALL}/:hallId`} element={<AddEditHallPage />} />
       <Route path={PATHS.LOGOUT} element={<ProtectedRoute><Logout /></ProtectedRoute>} />
       <Route path="*" element={<NotFound />} />
     </Routes>

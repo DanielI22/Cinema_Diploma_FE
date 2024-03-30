@@ -26,8 +26,10 @@ const HallManagementPage = () => {
     };
 
     const handleConfirmDeletion = async (hallId) => {
+        setIsLoading(true);
         await hallService.deleteHall(hallId);
         fetchHalls();
+        setIsLoading(false);
     };
 
     const groupHallsByCinema = (halls) => {
@@ -51,7 +53,6 @@ const HallManagementPage = () => {
 
     return (
         <div className={styles.hallManagementScreen}>
-            <BackButton />
             <DeleteModal
                 showModal={isModalVisible}
                 onConfirm={() => confirmDeletion(handleConfirmDeletion)}

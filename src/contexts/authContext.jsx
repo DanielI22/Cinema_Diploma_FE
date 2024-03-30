@@ -81,6 +81,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     const logoutHandler = async () => {
+        // await authService.logout();
         setAuthToken(null);
         setRefreshToken(null);
         sessionStorage.removeItem(AUTH_TOKEN_HEADER);

@@ -21,3 +21,45 @@ export const getAvailable = async () => {
         toast.error(GENERAL_ERROR);
     }
 };
+
+export const getOne = async (hallId) => {
+    try {
+        const response = await axiosInstance.get(`/halls/${hallId}`);
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        toast.error(GENERAL_ERROR);
+    }
+};
+
+export const addHall = async (hall) => {
+    try {
+        const response = await axiosInstance.post(`/halls`, hall);
+        toast.success(GENERAL_ADD);
+        return response.data;
+    } catch (error) {
+        toast.error(GENERAL_ERROR);
+    }
+}
+
+export const editHall = async (hallId, hall) => {
+    try {
+        const response = await axiosInstance.put(`/halls/${hallId}`, hall);
+        toast.success(GENERAL_UPDATE);
+        return response.data;
+    } catch (error) {
+        toast.error(GENERAL_ERROR);
+    }
+};
+
+
+export const deleteHall = async (hallId) => {
+    try {
+        console.log(hallId);
+        const response = await axiosInstance.delete(`/halls/${hallId}`);
+        toast.success(GENERAL_DELETE);
+        return response.data;
+    } catch (error) {
+        toast.error(GENERAL_ERROR);
+    }
+};

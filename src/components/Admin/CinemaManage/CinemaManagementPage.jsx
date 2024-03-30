@@ -27,8 +27,10 @@ const CinemaManagementPage = () => {
     };
 
     const handleConfirmDeletion = async (cinemaId) => {
+        setIsLoading(true);
         await cinemaService.deleteCinema(cinemaId);
         fetchCinemas();
+        setIsLoading(false);
     };
 
     if (isLoading) {
@@ -36,7 +38,6 @@ const CinemaManagementPage = () => {
     }
     return (
         <div className={styles.cinemaManagementScreen}>
-            <BackButton />
             <DeleteModal
                 showModal={isModalVisible}
                 onConfirm={() => confirmDeletion(handleConfirmDeletion)}

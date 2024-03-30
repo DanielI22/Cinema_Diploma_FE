@@ -21,7 +21,7 @@ export const PATHS = {
     MANAGE_TICKETS: "/manage-tickets",
 
     MANAGE_CINEMA: "/manage-cinema",
-    MANAGE_HALL: "/manage-halls"
+    MANAGE_HALL: "/manage-hall"
 };
 
 export const GENERAL_ERROR = "An unexpected error occurred. Please try again later.";
@@ -31,3 +31,7 @@ export const GENERAL_DELETE = "Deleted Successfully.";
 
 export const ACCESS_TOKEN_CHECK_TIME = 1000  * 60 * 2;
 export const ACCESS_TOKEN_EXPIRE = 60 * 2;
+
+export const MAX_ROWS = 20;
+export const MAX_SEATS = 20;
+export const INITIAL_SEATS = 10;

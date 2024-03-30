@@ -43,7 +43,6 @@ export const editCinema = async (cinemaId, cinema) => {
 
 export const deleteCinema = async (cinemaId) => {
     try {
-        console.log(cinemaId);
         const response = await axiosInstance.delete(`/cinemas/${cinemaId}`);
         toast.success(GENERAL_DELETE);
         return response.data;
