@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './CinemaManagementPage.module.css';
 import * as cinemaService from '../../../services/cinemaService'
 import CinemaCard from '../../User/CinemaCard/CinemaCard';
 import { PATHS } from '../../../utils/constants';
 import Spinner from '../../Spinner/Spinner';
-import { toast } from 'react-toastify';
 import DeleteModal from '../../DeleteModal/DeleteModal';
 import useDeleteModal from '../../../hooks/useDeleteModal';
-import BackButton from '../../BackButton/BackButton';
 
 const CinemaManagementPage = () => {
     const [cinemas, setCinemas] = useState([]);

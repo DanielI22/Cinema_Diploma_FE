@@ -25,7 +25,6 @@ export const getAvailable = async () => {
 export const getOne = async (hallId) => {
     try {
         const response = await axiosInstance.get(`/halls/${hallId}`);
-        console.log(response.data);
         return response.data;
     } catch (error) {
         toast.error(GENERAL_ERROR);
@@ -55,7 +54,6 @@ export const editHall = async (hallId, hall) => {
 
 export const deleteHall = async (hallId) => {
     try {
-        console.log(hallId);
         const response = await axiosInstance.delete(`/halls/${hallId}`);
         toast.success(GENERAL_DELETE);
         return response.data;

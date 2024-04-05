@@ -10,6 +10,7 @@ const AdminHome = () => {
       <Link to={PATHS.MANAGE_CINEMAS} className={styles.dashboardItem}>Manage Cinemas</Link>
       <Link to={PATHS.MANAGE_HALLS} className={styles.dashboardItem}>Manage Halls</Link>
       <Link to={PATHS.MANAGE_MOVIES} className={styles.dashboardItem}>Manage Movies</Link>
+      <Link to={PATHS.MANAGE_GENRES} className={styles.dashboardItem}>Manage Genres</Link>
       <Link to={PATHS.MANAGE_SHOWTIMES} className={styles.dashboardItem}>Manage Showtimes</Link>
       <Link to={PATHS.MANAGE_BOOKINGS} className={styles.dashboardItem}>Manage Bookings</Link>
       <Link to={PATHS.MANAGE_TICKETS} className={styles.dashboardItem}>Manage Tickets</Link>

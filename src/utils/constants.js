@@ -15,13 +15,21 @@ export const PATHS = {
     MANAGE_CINEMAS: "/manage-cinemas",
     MANAGE_HALLS: "/manage-halls",
     MANAGE_MOVIES: "/manage-movies",
+    MANAGE_GENRES: "/manage-genres",
     MANAGE_SHOWTIMES: "/manage-showtimes",
     MANAGE_USERS: "/manage-users",
     MANAGE_BOOKINGS: "/manage-bookings",
     MANAGE_TICKETS: "/manage-tickets",
 
     MANAGE_CINEMA: "/manage-cinema",
-    MANAGE_HALL: "/manage-hall"
+    MANAGE_HALL: "/manage-hall",
+    MANAGE_MOVIE: "/manage-movie",
+    MANAGE_MOVIE_API: "/manage-movie-api",
+    MANAGE_GENRE: "/manage-genres",
+    MANAGE_SHOWTIME: "/manage-showtime",
+    MANAGE_USER: "/manage-user",
+    MANAGE_BOOKING: "/manage-booking",
+    MANAGE_TICKET: "/manage-ticket",
 };
 
 export const GENERAL_ERROR = "An unexpected error occurred. Please try again later.";

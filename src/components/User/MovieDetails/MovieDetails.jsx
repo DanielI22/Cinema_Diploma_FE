@@ -8,6 +8,7 @@ import Spinner from '../../Spinner/Spinner';
 import { useAuth } from '../../../contexts/authContext';
 import NotFound from '../../NotFound/NotFound';
 import { genresToString } from '../../../utils/functions';
+import BackButton from '../../BackButton/BackButton';
 
 export default function MovieDetails() {
     console.log('test')
@@ -15,7 +16,7 @@ export default function MovieDetails() {
     const [movie, setMovie] = useState(null);
     const [favourite, setFavourite] = useState(null);
     const [notFound, setNotFound] = useState(false);
-    const { isAuthenticated, userId } = useAuth();
+    const { userDetails, userId } = useAuth();
 
     useEffect(() => {
         // favouriteService.getFavourite(userId, movieId)
@@ -59,25 +60,26 @@ export default function MovieDetails() {
             setFavourite(favourite);
         }
     };
-console.log(movie.genre)
     return (
-        <div className={styles.movieDetails}>
-            <div className={styles.detailsContainer}>
-                <img src={movie.imageUrl} alt={movie.title} className={styles.poster} />
-                <div className={styles.info}>
-                    <h1 className={styles.title}>{movie.title} ({movie.releaseYear})</h1>
-                    <p className={styles.genre}>{genresToString(movie.genres)}</p>
-                    <p className={styles.description}>{movie.description}</p>
-                    {isAuthenticated && <div className={styles.favouritesContainer}>
-                        <p>Add to Favourites</p>
-                        <button className={`${styles.favouritesButton} ${favourite ? styles.favouriteActive : ''}`}
-                            onClick={handleFavouriteClick}>
-                            <FontAwesomeIcon icon={faStar} />
-                        </button>
-                    </div>}
+        <><BackButton />
+            <div className={styles.movieDetails}>
+                <div className={styles.detailsContainer}>
+                    <img src={movie.imageUrl} alt={movie.title} className={styles.poster} />
+                    <div className={styles.info}>
+                        <h1 className={styles.title}>{movie.title} ({movie.releaseYear})</h1>
+                        <p className={styles.genre}>{genresToString(movie.genres)}</p>
+                        <p className={styles.description}>{movie.description}</p>
+                        {userDetails.role == 'user' && <div className={styles.favouritesContainer}>
+                            <p>Add to Favourites</p>
+                            <button className={`${styles.favouritesButton} ${favourite ? styles.favouriteActive : ''}`}
+                                onClick={handleFavouriteClick}>
+                                <FontAwesomeIcon icon={faStar} />
+                            </button>
+                        </div>}
+                    </div>
                 </div>
+                {/* <ReviewArea /> */}
             </div>
-            {/* <ReviewArea /> */}
-        </div>
+        </>
     );
 }

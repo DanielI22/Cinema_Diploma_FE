@@ -1,0 +1,71 @@
+.movieManagementScreen {
+    padding: 20px;
+}
+
+.manageHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.manageHeader h2 {
+    margin: 0;
+}
+
+.actionButtons {
+    display: flex;
+    gap: 10px;
+}
+
+.addButton {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.movieList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+}
+
+.movieItemWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.movieActions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.editButton, .deleteButton {
+    background-color: var(--primary-color);
+    color:  var(--background-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.deleteButton {
+    background-color: #dc3545;
+}
+
+.editButton {
+    text-decoration: none;
+    display: inline-block;
+    color: var(--background-color);
+    cursor: pointer;
+}

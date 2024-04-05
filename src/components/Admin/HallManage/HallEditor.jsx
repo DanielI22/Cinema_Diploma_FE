@@ -26,6 +26,19 @@ const HallEditor = ({ rows, onRowsChange }) => {
         onRowsChange(updatedRows);
     };
 
+    const removeSeat = (rowIndex) => {
+        const updatedRows = rows.map((row, index) => {
+            if (index === rowIndex && row.seats.length > 0) {
+                return {
+                    ...row,
+                    seats: row.seats.slice(0, -1)
+                };
+            }
+            return row;
+        });
+        onRowsChange(updatedRows);
+    };
+
     const toggleSeatEmpty = (rowIndex, seatIndex) => {
         const updatedRows = rows.map((row, rIndex) => {
             if (rIndex === rowIndex) {
@@ -74,6 +87,9 @@ const HallEditor = ({ rows, onRowsChange }) => {
                             </div>
                         </div>
                     ))}
+                    {row.seats.length > 0 && (
+                        <button type="button" className={styles.deleteSeatBtn} onClick={() => removeSeat(rowIndex)}>-</button>
+                    )}
                     {row.seats.length < MAX_SEATS && (
                         <button type="button" className={styles.addSeatBtn} onClick={() => addSeat(rowIndex)}>+</button>
                     )}

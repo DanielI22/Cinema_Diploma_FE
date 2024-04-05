@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { PATHS } from '../../../utils/constants';
 import { genresToString } from '../../../utils/functions';
 
-export default function MovieCard({ movie }) {
+export default function MovieCard({ movie, redirect = true }) {
   const cardContent = (
     <div className={styles.card}>
       <img src={movie.imageUrl} alt={movie.title} className={styles.poster} />
@@ -14,9 +14,11 @@ export default function MovieCard({ movie }) {
     </div>
   );
 
-  return (
+  return redirect ? (
     <Link to={`${PATHS.MOVIES}/${movie.id}`} className={styles.cardLink}>
       {cardContent}
     </Link>
+  ) : (
+    cardContent
   );
 }

@@ -100,3 +100,6 @@ img {
   color: var(--background-color);
 }
 
+textarea {
+  padding: 10px;;
+}
