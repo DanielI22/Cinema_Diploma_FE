@@ -25,11 +25,8 @@ export const PATHS = {
     MANAGE_HALL: "/manage-hall",
     MANAGE_MOVIE: "/manage-movie",
     MANAGE_MOVIE_API: "/manage-movie-api",
-    MANAGE_GENRE: "/manage-genres",
     MANAGE_SHOWTIME: "/manage-showtime",
     MANAGE_USER: "/manage-user",
-    MANAGE_BOOKING: "/manage-booking",
-    MANAGE_TICKET: "/manage-ticket",
 };
 
 export const GENERAL_ERROR = "An unexpected error occurred. Please try again later.";

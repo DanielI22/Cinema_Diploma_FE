@@ -1,0 +1,60 @@
+.showtimeItemWrapper {
+    position: relative;
+    margin-bottom: 5px;
+}
+
+.showtimeDetails {
+    padding: 5px;
+}
+
+.showtimeActions {
+    margin-top: 10px;
+}
+
+.deleteButton {
+    padding: 5px 10px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cinemaGroup {
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 15px;
+}
+
+.cinemaName {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.movieGroup {
+    margin-bottom: 15px;
+}
+
+.movieName {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.showtimeItemWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 5px;
+}
+
+.showtimeItemWrapper div:first-child {
+    background-color: #e9e9e9;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: #444;
+}

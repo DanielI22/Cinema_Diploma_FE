@@ -1,5 +1,4 @@
 import { Route, Routes } from 'react-router-dom';
-import Header from '../components/Header/Header';
 import { PATHS } from '../utils/constants';
 import ProtectedRoute from '../components/AuthGuards/ProtectedRoute';
 import Logout from '../components/Logout/Logout';
@@ -13,6 +12,10 @@ import MovieManagementPage from '../components/Admin/MovieManage/MovieManagement
 import MovieDetails from '../components/User/MovieDetails/MovieDetails';
 import AddEditMoviePage from '../components/Admin/MovieManage/AddEditMoviePage';
 import AddSearchMovieApiPage from '../components/Admin/MovieManage/AddSearchMovieApiPage';
+import GenreManagementPage from '../components/Admin/GenreManage/GenreManagementPage';
+import BookingManagementPage from '../components/Admin/BookingManage/BookingManagementPage';
+import ShowtimeManagementPage from '../components/Admin/ShowtimeManage/ShowtimeManagementPage';
+import AddShowtimePage from '../components/Admin/ShowtimeManage/AddShowtimePage';
 
 const AdminLayout = () => (
   <>
@@ -29,6 +32,10 @@ const AdminLayout = () => (
       <Route path={PATHS.MANAGE_MOVIE} element={<AddEditMoviePage />} />
       <Route path={`${PATHS.MANAGE_MOVIE}/:movieId`} element={<AddEditMoviePage />} />
       <Route path={PATHS.MANAGE_MOVIE_API} element={<AddSearchMovieApiPage />} />
+      <Route path={PATHS.MANAGE_GENRES} element={<GenreManagementPage />} />
+      <Route path={PATHS.MANAGE_SHOWTIMES} element={<ShowtimeManagementPage />} />
+      <Route path={PATHS.MANAGE_SHOWTIME} element={<AddShowtimePage />} />
+      <Route path={PATHS.MANAGE_BOOKINGS} element={<BookingManagementPage />} />
       <Route path={PATHS.LOGOUT} element={<ProtectedRoute><Logout /></ProtectedRoute>} />
       <Route path="*" element={<NotFound />} />
     </Routes>

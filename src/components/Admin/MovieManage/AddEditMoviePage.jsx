@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styles from './AddEditMoviePage.module.css';
 import { PATHS } from '../../../utils/constants';
 import * as movieService from '../../../services/movieService';
+import * as genreService from '../../../services/genreService';
 import BackButton from '../../BackButton/BackButton';
 import Spinner from '../../Spinner/Spinner';
 import GenreSelect from './GenreSelect';
@@ -24,7 +25,7 @@ export default function AddEditMoviePage() {
     const [selectedGenres, setSelectedGenres] = useState([]);
 
     useEffect(() => {
-        movieService.getAllGenres().then(response => {
+        genreService.getAll().then(response => {
             setAllGenres(response.genres);
         });
 

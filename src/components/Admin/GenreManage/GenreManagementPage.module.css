@@ -1,0 +1,49 @@
+.genreManagementScreen {
+    padding: 20px;
+}
+
+.addEditForm {
+    margin-bottom: 20px;
+}
+
+.genresTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.genresTable th, .genresTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.genresTable th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+.genresTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.editButton, .deleteButton {
+    background-color: var(--primary-color);
+    color:  var(--background-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.deleteButton {
+    background-color: #dc3545;
+    margin-left: 20px;
+}
+
+.editButton {
+    text-decoration: none;
+    display: inline-block;
+    color: var(--background-color);
+    cursor: pointer;
+}

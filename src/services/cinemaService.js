@@ -14,7 +14,6 @@ export const getAll = async () => {
 export const getOne = async (cinemaId) => {
     try {
         const response = await axiosInstance.get(`/cinemas/${cinemaId}`);
-        console.log(response.data);
         return response.data;
     } catch (error) {
         toast.error(GENERAL_ERROR);
@@ -45,6 +44,15 @@ export const deleteCinema = async (cinemaId) => {
     try {
         const response = await axiosInstance.delete(`/cinemas/${cinemaId}`);
         toast.success(GENERAL_DELETE);
+        return response.data;
+    } catch (error) {
+        toast.error(GENERAL_ERROR);
+    }
+};
+
+export const getHalls = async (cinemaId) => {
+    try {
+        const response = await axiosInstance.get(`/cinemas/${cinemaId}/halls`);
         return response.data;
     } catch (error) {
         toast.error(GENERAL_ERROR);

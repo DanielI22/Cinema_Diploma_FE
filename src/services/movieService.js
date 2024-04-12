@@ -60,12 +60,3 @@ export const searchMovies = async (query) => {
         throw error;
     }
 };
-
-export const getAllGenres = async () => {
-    try {
-        const response = await axiosInstance.get(`/movies/genres`);
-        return response.data;
-    } catch (error) {
-        toast.error(GENERAL_ERROR);
-    }
-};

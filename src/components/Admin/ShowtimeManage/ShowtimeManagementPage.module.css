@@ -1,0 +1,36 @@
+.showtimeManagementScreen {
+    padding: 20px;
+}
+
+.manageHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.manageHeader h2 {
+    margin: 0;
+}
+
+.addButton {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.showtimeList {
+    padding-top: 20px;;
+}
+
+.noShowtimes {
+    text-align: center;
+    margin-top: 20px;
+    color: #888;
+    font-size: 18px;
+}

@@ -3,7 +3,7 @@ export function genresToString(genres) {
 }
 
 export function getUserRole(decodedRoles) {
-    if(!decodedRoles) {
+    if (!decodedRoles) {
         return 'user';
     }
     const roles = decodedRoles || [];
@@ -24,5 +24,32 @@ function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+export function groupShowtimesByCinemaAndMovie (showtimes) {
+    const groupedByCinema = showtimes.reduce((acc, curr) => {
+        if (!acc[curr.cinemaName]) {
+            acc[curr.cinemaName] = [];
+        }
+        acc[curr.cinemaName].push(curr);
+        return acc;
+    }, {});
 
-  
+    return Object.keys(groupedByCinema).map((cinemaName) => {
+        const groupedByMovie = groupedByCinema[cinemaName].reduce((acc, curr) => {
+            if (!acc[curr.movieName]) {
+                acc[curr.movieName] = [];
+            }
+            acc[curr.movieName].push(curr);
+            return acc;
+        }, {});
+
+        return {
+            cinemaName,
+            movies: Object.keys(groupedByMovie).map((movieName) => ({
+                movieName,
+                showtimes: groupedByMovie[movieName],
+            })),
+        };
+    });
+};
+
+
