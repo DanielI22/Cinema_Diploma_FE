@@ -68,26 +68,20 @@
     color: #00a8ff;
 }
 
-.startTime {
-    margin-bottom: 10px;
-    font-size: 2rem;
+.trailerContainer {
+    width: 60%;
+    height: 0;
+    padding-bottom: 33.75%;
+    position: relative;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.bookingButton {
-    background-color: white;
-    color: #00a8ff;
+.trailer {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    padding: 10px 15px;
-    border: 2px solid #00a8ff;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-bottom: 10px;
-    text-align: center;
-    display: inline-block;
-    text-decoration: none;
-}
-
-.bookingButton:hover {
-    background-color: #00a8ff;
-    color: white;
+    height: 100%;
 }

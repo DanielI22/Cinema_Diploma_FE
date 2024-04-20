@@ -11,7 +11,7 @@ export default function AddSearchMovieApiPage() {
     const [query, setQuery] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [searchResults, setSearchResults] = useState([]);
-    const [hasSearched, setHasSearched] = useState(false); // New state to track if a search has been performed
+    const [hasSearched, setHasSearched] = useState(false);
     const navigate = useNavigate();
 
     const handleSearchChange = (e) => {
@@ -21,7 +21,7 @@ export default function AddSearchMovieApiPage() {
     const handleSearchSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-        setHasSearched(true); // Set to true when search is performed
+        setHasSearched(true);
         try {
             const response = await movieService.searchMovies(query);
             setSearchResults(response.movies);

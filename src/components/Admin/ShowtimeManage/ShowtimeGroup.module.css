@@ -11,13 +11,27 @@
     margin-top: 10px;
 }
 
-.deleteButton {
-    padding: 5px 10px;
-    background-color: #dc3545;
-    color: white;
+.editButton, .deleteButton {
+    background-color: var(--primary-color);
+    color:  var(--background-color);
+    padding: 10px 20px;
     border: none;
     border-radius: 5px;
+    text-decoration: none;
     cursor: pointer;
+    font-size: 16px;
+}
+
+.deleteButton {
+    background-color: #dc3545;
+}
+
+.editButton {
+    text-decoration: none;
+    display: inline-block;
+    color: var(--background-color);
+    cursor: pointer;
+    margin-right: 10px;
 }
 
 .cinemaGroup {

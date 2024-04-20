@@ -40,3 +40,5 @@ export const ACCESS_TOKEN_EXPIRE = 60 * 2;
 export const MAX_ROWS = 20;
 export const MAX_SEATS = 20;
 export const INITIAL_SEATS = 10;
+
+export const REVIEWS_PER_PAGE = 4;

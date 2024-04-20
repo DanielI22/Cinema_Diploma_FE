@@ -15,7 +15,7 @@ import AddSearchMovieApiPage from '../components/Admin/MovieManage/AddSearchMovi
 import GenreManagementPage from '../components/Admin/GenreManage/GenreManagementPage';
 import BookingManagementPage from '../components/Admin/BookingManage/BookingManagementPage';
 import ShowtimeManagementPage from '../components/Admin/ShowtimeManage/ShowtimeManagementPage';
-import AddShowtimePage from '../components/Admin/ShowtimeManage/AddShowtimePage';
+import AddEditShowtimePage from '../components/Admin/ShowtimeManage/AddEditShowtimePage';
 
 const AdminLayout = () => (
   <>
@@ -34,7 +34,8 @@ const AdminLayout = () => (
       <Route path={PATHS.MANAGE_MOVIE_API} element={<AddSearchMovieApiPage />} />
       <Route path={PATHS.MANAGE_GENRES} element={<GenreManagementPage />} />
       <Route path={PATHS.MANAGE_SHOWTIMES} element={<ShowtimeManagementPage />} />
-      <Route path={PATHS.MANAGE_SHOWTIME} element={<AddShowtimePage />} />
+      <Route path={PATHS.MANAGE_SHOWTIME} element={<AddEditShowtimePage />} />
+      <Route path={`${PATHS.MANAGE_SHOWTIME}/:showtimeId`} element={<AddEditShowtimePage />} />
       <Route path={PATHS.MANAGE_BOOKINGS} element={<BookingManagementPage />} />
       <Route path={PATHS.LOGOUT} element={<ProtectedRoute><Logout /></ProtectedRoute>} />
       <Route path="*" element={<NotFound />} />

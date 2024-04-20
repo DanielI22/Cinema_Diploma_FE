@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom';
 import styles from './ShowtimeGroup.module.css';
+import { PATHS } from '../../../utils/constants';
 
 const ShowtimeGroup = ({ groupedShowtimes, showDeleteModal }) => {
     return (
@@ -15,6 +17,7 @@ const ShowtimeGroup = ({ groupedShowtimes, showDeleteModal }) => {
                                         {new Date(showtime.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })} - {showtime.hallName}
                                     </div>
                                     <div className={styles.showtimeActions}>
+                                        <Link to={`${PATHS.MANAGE_SHOWTIME}/${showtime.id}`} className={styles.editButton}>Edit</Link>
                                         <button onClick={() => showDeleteModal(showtime.id)} className={styles.deleteButton}>
                                             Delete
                                         </button>

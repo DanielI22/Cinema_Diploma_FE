@@ -1,0 +1,119 @@
+.movieProgram {
+    background-color: #ffffff;
+    /* Adjust the background color to match the white theme */
+    color: #007bff;
+    /* Adjust the text color to match the blue theme */
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px auto;
+    max-width: 100%;
+    /* Adjust the width as needed */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dateNavigation {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.dateButton,
+.selectedDate {
+    background-color: #e6f7ff;
+    /* Light blue background for the buttons */
+    color: #007bff;
+    /* Text color to match the blue theme */
+    border: 2px solid #007bff;
+    /* Blue border to match the theme */
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    outline: none;
+}
+
+.dateButton:hover,
+.selectedDate {
+    background-color: #cceeff;
+    /* Darker shade of blue for hover */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    /* Shadow effect for hover */
+}
+
+.cinema {
+    border-top: 1px solid #007bff;
+    /* Border color to match the blue theme */
+    padding-top: 20px;
+}
+
+.cinema h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #007bff;
+    /* Text color for the cinema name */
+}
+
+.showtime {
+    display: inline-block;
+    background-color: #f0f8ff;
+    margin: 5px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 1px solid #007bff;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    position: relative;
+    /* Needed for absolute positioning of the price tag */
+}
+
+.showtime a {
+    color: #007bff;
+    text-decoration: none;
+    display: block;
+    /* Ensure the link fills the showtime for larger clickable area */
+}
+
+.showtime:hover {
+    transform: scale(1.05);
+    background-color: #e6f7ff;
+}
+
+.showtime .priceTag {
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    /* Position above the showtime */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ffffff;
+    color: #007bff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    border: 1px solid #007bff;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.showtime:hover .priceTag {
+    display: block;
+    /* Show the price tag on hover */
+}
+
+.showtimeInactive {
+    display: inline-block;
+    background-color: #cccccc;
+    margin: 5px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 1px solid #aaaaaa;
+    color: #666666;
+    cursor: not-allowed;
+}
+
+.programLabel {
+    text-align: center;
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}

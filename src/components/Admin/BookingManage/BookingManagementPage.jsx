@@ -9,7 +9,6 @@ const BookingManagementPage = () => {
     const [bookings, setBookings] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const { isModalVisible, showDeleteModal, hideDeleteModal, confirmDeletion } = useDeleteModal();
-    const [selectedBookingId, setSelectedBookingId] = useState(null);
 
     useEffect(() => {
         fetchBookings();
@@ -22,14 +21,11 @@ const BookingManagementPage = () => {
         setIsLoading(false);
     };
 
-    const handleDeleteClick = async () => {
-        if (selectedBookingId) {
-            setIsLoading(true);
-            await bookingService.deleteBooking(selectedBookingId);
-            fetchBookings();
-            hideDeleteModal();
-            setIsLoading(false);
-        }
+    const handleDeleteClick = async (bookingId) => {
+        setIsLoading(true);
+        await showtimeService.deleteShowtime(bookingId);
+        fetchShowtimesByDate(selectedDate);
+        setIsLoading(false);
     };
 
     const bookingsGroupedByShowtime = bookings.reduce((acc, booking) => {
@@ -50,14 +46,8 @@ const BookingManagementPage = () => {
                     <ul>
                         {bookings.map((booking) => (
                             <li key={booking.id}>
-                                {booking.userMail} 
-                                <button 
-                                    className={styles.deleteButton}
-                                    onClick={() => {
-                                        showDeleteModal();
-                                        setSelectedBookingId(booking.id);
-                                    }}
-                                >
+                                {booking.userMail}
+                                <button onClick={() => showDeleteModal(booking.id)} className={styles.deleteButton}>
                                     Delete
                                 </button>
                             </li>
