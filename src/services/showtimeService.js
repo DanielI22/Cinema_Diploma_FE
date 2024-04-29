@@ -20,6 +20,16 @@ export const getByMovieDate = async (movieId, formattedDate) => {
     }
 };
 
+export const getByCinemaDate = async (cinemaId, formattedDate) => {
+    try {
+        const response = await axiosInstance.get(`/cinemas/${cinemaId}/showtimes?date=${formattedDate}`);
+        return response.data;
+    } catch (error) {
+        toast.error(GENERAL_ERROR);
+    }
+};
+
+
 
 export const getOne = async (showtimeId) => {
     try {

@@ -12,8 +12,8 @@ const BackButton = () => {
     };
 
     return (
-        <button onClick={goBack} className={`submit-button ${styles.backButton}`} >
-            <FontAwesomeIcon icon={faArrowLeft} /> Back
+        <button onClick={goBack} className={`${styles.backButton}`} >
+            <FontAwesomeIcon icon={faArrowLeft} />
         </button>
     );
 };

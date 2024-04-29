@@ -42,6 +42,13 @@ const GenreManagementPage = () => {
         setGenreName(genre.name);
     };
 
+    const handleInputChange = (e) => {
+        setGenreName(e.target.value);
+        if (e.target.value === '') {
+            setEditGenreId(null);
+        }
+    };
+
     const handleDeleteClick = async (genreId) => {
         setIsLoading(true);
         await genreService.deleteGenre(genreId);
@@ -61,7 +68,7 @@ const GenreManagementPage = () => {
                     type="text"
                     placeholder="Genre Name"
                     value={genreName}
-                    onChange={(e) => setGenreName(e.target.value)}
+                    onChange={handleInputChange}
                     required
                 />
                 <button type="submit" className="submit-button">

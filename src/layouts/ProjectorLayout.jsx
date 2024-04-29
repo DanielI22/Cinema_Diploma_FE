@@ -1,15 +1,17 @@
 import { Route, Routes } from 'react-router-dom';
-import Header from '../components/Header/Header';
 import { PATHS } from '../utils/constants';
 import ProtectedRoute from '../components/AuthGuards/ProtectedRoute';
 import Logout from '../components/Logout/Logout';
 import Home from '../components/User/Home/Home';
 import NotFound from '../components/NotFound/NotFound';
+import SelectCinema from '../components/Personnel/SelectCinema/SelectCinema';
+import PersonnelRoute from '../components/AuthGuards/PersonnelRoute';
+
 const ProjectorLayout = () => (
     <>
-        <div>PROJECTOR</div>
         <Routes>
-            <Route path={PATHS.HOME} element={<Home />} />
+            <Route path={PATHS.HOME} element={<PersonnelRoute><Home /></PersonnelRoute>} />
+            <Route path={PATHS.SELECT_CINEMA} element={<SelectCinema />} />
 
             <Route path={PATHS.LOGOUT} element={<ProtectedRoute><Logout /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />

@@ -5,15 +5,16 @@ import usePersistedState from "../hooks/usePersistedState";
 import * as authService from '../services/authService';
 import { ACCESS_TOKEN_CHECK_TIME, ACCESS_TOKEN_EXPIRE, AUTH_TOKEN_HEADER, PATHS, REFRESH_TOKEN_HEADER } from "../utils/constants";
 import { getUserRole } from "../utils/functions";
+import { useCinema } from "./cinemaContext";
 
 const AuthContext = createContext();
-
 
 export const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
     const [authToken, setAuthToken] = usePersistedState(AUTH_TOKEN_HEADER, null, 'sessionStorage');
     const [refreshToken, setRefreshToken] = usePersistedState(REFRESH_TOKEN_HEADER, null, 'localStorage');
     const [userDetails, setUserDetails] = useState({});
+    const { clearCinema } = useCinema();
 
     useEffect(() => {
         if (authToken) {
@@ -63,8 +64,13 @@ export const AuthProvider = ({ children }) => {
         if (result) {
             setAuthToken(result.accessToken);
             setRefreshToken(result.refreshToken);
-            if (userDetails.role == 'user') {
+            updateUserDetails(result.accessToken);
+            const decoded = jwtDecode(result.accessToken);
+            const role = getUserRole(decoded.realm_access?.roles);
+            if (role === 'user') {
                 navigate(-1);
+            } else if (['operator', 'validator', 'projector'].includes(role)) {
+                navigate(PATHS.SELECT_CINEMA);
             } else {
                 navigate(PATHS.HOME);
             }
@@ -84,8 +90,9 @@ export const AuthProvider = ({ children }) => {
         // await authService.logout();
         setAuthToken(null);
         setRefreshToken(null);
-        sessionStorage.removeItem(AUTH_TOKEN_HEADER);
-        localStorage.removeItem(REFRESH_TOKEN_HEADER);
+        sessionStorage.clear();
+        localStorage.clear();
+        clearCinema();
         navigate(PATHS.HOME);
         await authService.logout();
     };

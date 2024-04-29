@@ -16,7 +16,12 @@ export const getOne = async (movieId) => {
         const response = await axiosInstance.get(`/movies/${movieId}`);
         return response.data;
     } catch (error) {
-        toast.error(GENERAL_ERROR);
+        if (error.response?.status == 404) {
+            toast.error("Movie not found");
+        }
+        else {
+            toast.error(GENERAL_ERROR);
+        }
     }
 };
 

@@ -1,16 +1,17 @@
 export const API_BASE_URL = "http://localhost:8081/api";
 export const AUTH_TOKEN_HEADER = "authToken";
 export const REFRESH_TOKEN_HEADER = "refreshToken";
+export const CINEMA_HEADER = "cinema";
 
 export const PATHS = {
     HOME: "/",
     MOVIES: "/movies",
-    RESERVATIONS: "/reservations",
-    FAVOURITES: "/favourites",
-    BOOKING: "/booking",
+    PROGRAM: "/program",
     LOGIN: "/login",
     REGISTER: "/register",
     LOGOUT: "/logout",
+
+    SELECT_CINEMA: "/select-cinema",
 
     MANAGE_CINEMAS: "/manage-cinemas",
     MANAGE_HALLS: "/manage-halls",

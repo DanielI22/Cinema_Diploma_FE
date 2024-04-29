@@ -8,7 +8,7 @@ import * as favouriteService from "../../../services/favouriteService";
 import Spinner from '../../Spinner/Spinner';
 import { useAuth } from '../../../contexts/authContext';
 import NotFound from '../../NotFound/NotFound';
-import { genresToString } from '../../../utils/functions';
+import { genresToString, isValidUUID } from '../../../utils/functions';
 import BackButton from '../../BackButton/BackButton';
 import ReviewArea from '../ReviewArea/ReviewArea';
 import MovieProgram from '../MovieProgram/MovieProgram';
@@ -17,19 +17,23 @@ export default function MovieDetails() {
     const { movieId } = useParams();
     const [movie, setMovie] = useState(null);
     const [favourite, setFavourite] = useState(null);
-    const [notFound, setNotFound] = useState(false);
+    const [isValidId, setIsValidId] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     const { userDetails, isAuthenticated } = useAuth();
 
     useEffect(() => {
+        if (!movieId || !isValidUUID(movieId)) {
+            setIsValidId(false);
+            setIsLoading(false);
+            return;
+        }
         const fetchMovie = async () => {
             try {
                 const result = await movieService.getOne(movieId)
                 setMovie(result.movie);
-            }
-            catch (err) {
-                if (err.code == 404) {
-                    setNotFound(true);
-                }
+                setIsLoading(false);
+            } catch (error) {
+                setIsValidId(false);
             }
         }
         fetchMovie();
@@ -46,10 +50,11 @@ export default function MovieDetails() {
         setFavourite(result.isFavourite);
     };
 
-    if (notFound) {
-        return <NotFound />
+    if (!isValidId) {
+        return <NotFound />;
     }
-    if (!movie) {
+
+    if (isLoading) {
         return <Spinner />;
     }
     const handleFavouriteClick = async () => {

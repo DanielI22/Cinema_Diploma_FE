@@ -1,0 +1,10 @@
+.cinemaListScreen {
+    padding: 20px;
+}
+
+.cinemaList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+}

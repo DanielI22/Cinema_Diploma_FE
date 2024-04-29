@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './MovieProgram.module.css';
 import * as showtimeService from '../../../services/showtimeService';
 import { Link } from 'react-router-dom';
+import DateNavigation from '../DataNavigation/DateNavigation';
 
 function MovieProgram({ movieId }) {
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -17,7 +18,6 @@ function MovieProgram({ movieId }) {
     }, [movieId, selectedDate]);
 
     const groupShowtimes = (showtimes) => {
-        // Group by cinemaName
         const grouped = showtimes.reduce((acc, showtime) => {
             acc[showtime.cinemaName] = acc[showtime.cinemaName] || [];
             acc[showtime.cinemaName].push(showtime);
@@ -27,32 +27,6 @@ function MovieProgram({ movieId }) {
         setGroupedShowtimes(grouped);
     };
 
-    // Generate a list of dates for navigation
-    const renderDateNavigation = () => {
-        const dates = [];
-        for (let i = 0; i < 7; i++) {
-            const date = new Date();
-            date.setDate(date.getDate() + i);
-            dates.push(date);
-        }
-        return dates.map((date) => (
-            <button
-                key={date.toISOString()}
-                className={selectedDate.toISOString().slice(0, 10) === date.toISOString().slice(0, 10) ? styles.selectedDate : styles.dateButton}
-                onClick={() => setSelectedDate(date)}
-            >
-                {date.toLocaleDateString('en-GB', {
-                    weekday: 'short',
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit'
-                })}
-            </button>
-        ));
-    };
-
-
-
     const renderCinemaShowtimes = () => {
         const now = new Date();
         return Object.entries(groupedShowtimes).map(([cinemaName, showtimes]) => (
@@ -61,18 +35,22 @@ function MovieProgram({ movieId }) {
                 {showtimes.map((showtime) => {
                     const showtimeDate = new Date(showtime.startTime);
                     const isActive = (showtimeDate - now) / 60000 > 15;
-                    return (
-                        <div key={showtime.id} className={isActive ? styles.showtime : styles.showtimeInactive}>
-                            {isActive ? (
-                                <Link to={`/booking/${showtime.id}`}>
+                    if (isActive) {
+                        return (
+                            <Link to={`/booking/${showtime.id}`} key={showtime.id} className={styles.showtime}>
+                                <div>
                                     {showtimeDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
                                     <span className={styles.priceTag}>{`${showtime.ticketPrice.toFixed(2)} BGN`}</span>
-                                </Link>
-                            ) : (
+                                </div>
+                            </Link>
+                        );
+                    } else {
+                        return (
+                            <div key={showtime.id} className={styles.showtimeInactive}>
                                 <span>{showtimeDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}</span>
-                            )}
-                        </div>
-                    );
+                            </div>
+                        );
+                    }
                 })}
             </div>
         ));
@@ -81,9 +59,7 @@ function MovieProgram({ movieId }) {
     return (
         <div className={styles.movieProgram}>
             <h2 className={styles.programLabel}>Program</h2>
-            <div className={styles.dateNavigation}>
-                {renderDateNavigation()}
-            </div>
+            <DateNavigation selectedDate={selectedDate} onSelectDate={setSelectedDate} />
             <div className={styles.cinemaShowtimes}>
                 {Object.keys(groupedShowtimes).length > 0 ? renderCinemaShowtimes() : <p>No showtimes available.</p>}
             </div>

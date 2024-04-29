@@ -1,0 +1,24 @@
+.dateNavigation {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .dateButton,
+  .selectedDate {
+    background-color: #e6f7ff; /* Light blue background for the buttons */
+    color: #007bff; /* Text color to match the blue theme */
+    border: 2px solid #007bff; /* Blue border to match the theme */
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    outline: none;
+  }
+  
+  .dateButton:hover,
+  .selectedDate {
+    background-color: #aadffa; /* Darker shade of blue for hover */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow effect for hover */
+  }

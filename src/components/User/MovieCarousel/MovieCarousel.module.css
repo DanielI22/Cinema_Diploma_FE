@@ -3,6 +3,6 @@
 }
 
 .customArrowNext::before, .customArrowPrev::before {
-    color: #273c75 !important;
+    color: var(--secondary-color) !important;
     font-size: 1.5rem !important;
 }

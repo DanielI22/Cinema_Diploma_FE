@@ -5,6 +5,7 @@ import { useAuth } from '../../contexts/authContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import LanguageToggleButton from '../LanguageToggleButton/LanguageToggleButton';
+import { useCinema } from '../../contexts/cinemaContext';
 
 export default function Header() {
     const {
@@ -12,21 +13,55 @@ export default function Header() {
         userDetails
     } = useAuth();
 
-    const renderMiddleSection = () => {
-        if (userDetails.role == 'admin') {
-            return <Link to={PATHS.HOME}>Dashboard</Link>
-        } else if (userDetails.role == 'operator') {
-            return <div>OPERATOR</div>;
-        } else if (userDetails.role == 'validator') {
-            return <div>VALIDATOTR</div>;
-        } else if (userDetails.role == 'projector') {
-            return <div>PROJECTOR</div>;
-        } else {
-            return (<div className={styles.navLeft}>
-                <Link to={PATHS.MOVIES}>Our Movies</Link>
-            </div>);
+    const { selectedCinema } = useCinema();
+
+    const renderUserRoleSpecificOptions = () => {
+        if (userDetails.role === 'user') {
+            return (
+                <>
+                    <Link to={PATHS.RESERVATIONS}>Reservations</Link>
+                    <Link to={PATHS.FAVOURITES}>Favourites</Link>
+                </>
+            );
         }
-    }
+        if (['operator', 'validator', 'projector'].includes(userDetails.role) && selectedCinema) {
+            return <Link to={PATHS.SELECT_CINEMA}>Change Cinema</Link>;
+        }
+        return null;
+    };
+
+    const renderProfileDropdown = () => {
+        const cinemaName = selectedCinema ? ` - ${selectedCinema.name}` : '';
+        return (
+            <div className={styles.profileDropdown}>
+                <button className={styles.profileButton}>
+                    {userDetails.username}{cinemaName} <FontAwesomeIcon icon={faCaretDown} />
+                </button>
+                <div className={styles.dropdownContent}>
+                    {renderUserRoleSpecificOptions()}
+                </div>
+            </div>
+        );
+    };
+
+
+    const renderMiddleSection = () => {
+        switch (userDetails.role) {
+            case 'admin':
+                return <Link to={PATHS.HOME}>Dashboard</Link>;
+            case 'operator':
+            case 'validator':
+            case 'projector':
+                return <div>{userDetails.role.toUpperCase()}</div>;
+            default:
+                return (
+                    <div className={styles.navLeft}>
+                        <Link to={PATHS.MOVIES}>Movies</Link>
+                        <Link to={PATHS.PROGRAM}>Program</Link>
+                    </div>
+                );
+        }
+    };
 
 
     return (
@@ -36,17 +71,7 @@ export default function Header() {
             <div className={styles.navRight}>
                 {isAuthenticated ? (
                     <>
-                        <div className={styles.profileDropdown}>
-                            <button className={styles.profileButton}>
-                                {userDetails.username} <FontAwesomeIcon icon={faCaretDown} />
-                            </button>
-                            {userDetails.role=='user' ? (
-                            <div className={styles.dropdownContent}>
-                                <Link to={PATHS.RESERVATIONS}>Reservations</Link>
-                                <Link to={PATHS.FAVOURITES}>Favourites</Link>
-                            </div>
-                            ) : <></>}
-                        </div>
+                        {renderProfileDropdown()}
                         <Link to={PATHS.LOGOUT}>Log out</Link>
                     </>
                 ) : (

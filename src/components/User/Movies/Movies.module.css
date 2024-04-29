@@ -1,0 +1,42 @@
+.filters {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px;
+    width: 100%;
+}
+
+.searchInput {
+    width: 50%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.genreFilter {
+    margin-bottom: 20px;
+}
+
+.genreSelect {
+    width: 50%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 30px;
+}
+
+.moviesContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-auto-rows: 1fr;
+    gap: 20px;
+    background-color: #ecf0f1;
+}
+
+.noMovies {
+    font-size: 1.5rem;
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
