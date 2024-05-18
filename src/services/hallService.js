@@ -31,6 +31,15 @@ export const getOne = async (hallId) => {
     }
 };
 
+export const getShowtimeHall = async (showtimeId) => {
+    try {
+        const response = await axiosInstance.get(`/halls/showtimes/${showtimeId}`);
+        return response.data;
+    } catch (error) {
+        toast.error(GENERAL_ERROR);
+    }
+};
+
 export const addHall = async (hall) => {
     try {
         const response = await axiosInstance.post(`/halls`, hall);

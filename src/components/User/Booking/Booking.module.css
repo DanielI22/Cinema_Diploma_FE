@@ -1,0 +1,146 @@
+.bookingPage {
+    padding: 20px;
+}
+
+.screenLabel {
+    padding: 10px;
+    border-radius: 20px;
+    color: var(--background-color);
+    width: 100%;
+    margin-bottom: 20px;
+    text-align: center;
+    background-color: var(--primary-color);
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10%;
+}
+
+
+.hall {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.rowNumber {
+    font-weight: bold;
+}
+
+.seat {
+    width: 40px;
+    height: 40px;
+    margin: 3px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: #CCCCCC;
+    color: white;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+.emptySeat {
+    background-color: transparent;
+    border: 1px solid transparent;
+    cursor: default;
+}
+
+.bookedSeat {
+    background-color: #f44336;
+    cursor: not-allowed;
+}
+
+.selectedSeat {
+    background-color: var(--primary-color);
+}
+
+.selectedSeats {
+    margin-top: 50px;
+    width: 100%;
+    text-align: center;
+}
+
+.selectedSeatRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.ticketTypeSelect {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333;
+    background-color: #fff;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.ticketTypeSelect:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.totalPrice {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.actionButtons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.bookingButton,
+.paymentButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.bookingButton {
+    background-color: #007bff;
+    color: white;
+}
+
+.paymentButton {
+    background-color: #28a745;
+    color: white;
+}
+
+.bookingButton:hover {
+    background-color: #0056b3;
+}
+
+.paymentButton:hover {
+    background-color: #218838;
+}
+
+.bookingButton:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+
+.paymentButton:hover:not(:disabled) {
+    background-color: #218838;
+}
+
+.bookingButton:disabled, .paymentButton:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}

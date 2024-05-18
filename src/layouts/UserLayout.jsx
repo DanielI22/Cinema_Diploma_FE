@@ -12,6 +12,7 @@ import MovieDetails from "../components/User/MovieDetails/MovieDetails";
 import Movies from "../components/User/Movies/Movies";
 import CinemaListPage from "../components/User/Program/CinemaListPage";
 import CinemaProgram from "../components/User/Program/CinemaProgram";
+import Booking from "../components/User/Booking/Booking";
 
 const UserLayout = () => (
   <>
@@ -22,8 +23,8 @@ const UserLayout = () => (
       <Route path={`${PATHS.PROGRAM}`} element={<CinemaListPage />} />
       <Route path={`${PATHS.PROGRAM}/:cinemaId`} element={<CinemaProgram />} />
       {/* <Route path={PATHS.RESERVATIONS} element={<ProtectedRoute><Reservations /></ProtectedRoute>} />
-            <Route path={PATHS.FAVOURITES} element={<ProtectedRoute><Favourites /></ProtectedRoute>} />
-            <Route path={`${PATHS.MOVIES}/:movieId${PATHS.BOOKING}`} element={<ProtectedRoute><Booking /></ProtectedRoute>} /> */}
+            <Route path={PATHS.FAVOURITES} element={<ProtectedRoute><Favourites /></ProtectedRoute>} /> */}
+            <Route path={`${PATHS.BOOKING}/:showtimeId`} element={<ProtectedRoute><Booking /></ProtectedRoute>} />
       <Route path={PATHS.LOGIN} element={<GuestRoute><Login /></GuestRoute>} />
       <Route path={PATHS.REGISTER} element={<GuestRoute><Register /></GuestRoute>} />
       <Route path={PATHS.LOGOUT} element={<ProtectedRoute><Logout /></ProtectedRoute>} />

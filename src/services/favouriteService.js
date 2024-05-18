@@ -3,12 +3,8 @@ import { GENERAL_ADD, GENERAL_DELETE, GENERAL_ERROR } from "../utils/constants";
 import axiosInstance from "../config/axiosInstance";
 
 export const verifyFavourite = async (movieId) => {
-    try {
-        const response = await axiosInstance.get(`/favourites/${movieId}`);
-        return response.data;
-    } catch (error) {
-        toast.error(GENERAL_ERROR);
-    }
+    const response = await axiosInstance.get(`/favourites/${movieId}`);
+    return response.data;
 };
 
 export const addFavourite = async (movieId) => {

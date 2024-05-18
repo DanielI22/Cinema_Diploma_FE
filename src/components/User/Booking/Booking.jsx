@@ -1,0 +1,188 @@
+import React, { useState, useEffect } from 'react';
+import styles from './Booking.module.css';
+import * as hallService from "../../../services/hallService";
+import * as showtimeService from "../../../services/showtimeService";
+import * as bookingService from "../../../services/bookingService";
+import { isValidUUID } from '../../../utils/functions';
+import { MAX_SEATS_BOOK, NORMAL_TICKET, REDUCED_PRICE, REDUCED_TICKET } from '../../../utils/constants';
+import Spinner from '../../Spinner/Spinner';
+import NotFound from '../../NotFound/NotFound';
+import { toast } from 'react-toastify';
+import { useNavigate, useParams } from 'react-router-dom';
+import PaymentModal from '../PaymentModal/PaymentModal';
+
+const Booking = () => {
+    const { showtimeId } = useParams();
+    const [rows, setRows] = useState(null);
+    const [showtime, setShowtime] = useState(null);
+    const [selectedSeats, setSelectedSeats] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [isValidId, setIsValidId] = useState(true);
+    const [orderInfo, setOrderInfo] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const navigate = useNavigate();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const closeModal = () => setIsModalOpen(false);
+    const openModal = () => setIsModalOpen(true);
+
+    useEffect(() => {
+        if (!showtimeId || !isValidUUID(showtimeId)) {
+            setIsValidId(false);
+            setIsLoading(false);
+            return;
+        }
+        const fetchShowtime = async () => {
+            try {
+                const showtimeResponse = await showtimeService.getOne(showtimeId)
+                const hallResponse = await hallService.getShowtimeHall(showtimeId)
+
+                setRows(hallResponse.rows);
+                setShowtime(showtimeResponse.showtime);
+                setIsLoading(false);
+            } catch (error) {
+                setIsValidId(false);
+            }
+        }
+
+        fetchShowtime();
+    }, [showtimeId]);
+
+    const handleSeatClick = (rowIndex, seatIndex) => {
+        const selectedSeat = rows[rowIndex].seats[seatIndex];
+        if (selectedSeat.isBooked || selectedSeat.isEmpty) {
+            return;
+        }
+
+        const isSelected = selectedSeats.some(seat => seat.id === selectedSeat.id);
+        if (isSelected) {
+            setSelectedSeats(prevSelected => prevSelected.filter(seat => seat.id !== selectedSeat.id));
+        } else {
+            if (selectedSeats.length < MAX_SEATS_BOOK) {
+                setSelectedSeats(prevSelected => [...prevSelected, { ...selectedSeat, ticketType: NORMAL_TICKET }]);
+            } else {
+                toast.warning('You can select a maximum of 5 seats');
+            }
+        }
+    };
+
+    const handleTicketTypeChange = (seatId, ticketType) => {
+        setSelectedSeats(prevSelected =>
+            prevSelected.map(seat => (seat.id === seatId ? { ...seat, ticketType } : seat))
+        );
+    };
+
+    useEffect(() => {
+        calculateTotalPrice();
+    }, [selectedSeats]);
+
+    const calculateTotalPrice = () => {
+        let price = selectedSeats.reduce((total, seat) => {
+            const seatPrice = showtime.ticketPrice;
+            if (seat.ticketType === REDUCED_TICKET) {
+                return total + seatPrice * (1 - REDUCED_PRICE);
+            }
+            return total + seatPrice;
+        }, 0);
+        setTotalPrice(price);
+    };
+
+    const handleBooking = async () => {
+        setIsLoading(true);
+        const orderInfo = {
+            orderInfo: {
+                showtimeId,
+                seats: selectedSeats.map(seat => ({
+                    seatId: seat.id,
+                    ticketType: seat.ticketType
+                })
+                )
+            }
+        };
+
+        const response = await bookingService.book(orderInfo);
+        setIsLoading(false);
+        navigate(-1);
+    };
+
+    const handlePayment = async () => {
+        const order = {
+            showtimeId,
+            seats: selectedSeats.map(seat => ({
+                seatId: seat.id,
+                ticketType: seat.ticketType
+            })),
+        };
+        setOrderInfo(order);
+        openModal();
+    };
+
+    if (!isValidId) {
+        return <NotFound />;
+    }
+
+    if (isLoading) {
+        return <Spinner />;
+    }
+
+    return (
+        <div className={styles.bookingPage}>
+            <div className={styles.screenLabel}>Screen</div>
+            <div className={styles.hall}>
+                {rows.map((row, rowIndex) => (
+                    <div key={row.id} className={styles.row}>
+                        <span className={styles.rowNumber}>{rowIndex + 1}</span>
+                        {row.seats.map((seat, seatIndex) => (
+                            <div
+                                key={seat.id}
+                                className={`${styles.seat} 
+                                            ${seat.isBooked ? styles.bookedSeat : ''}
+                                            ${seat.isEmpty ? styles.emptySeat : ''}
+                                            ${selectedSeats.some(s => s.id === seat.id) ? styles.selectedSeat : ''}`}
+                                onClick={() => !seat.isEmptySpace && handleSeatClick(rowIndex, seatIndex)}
+                            >
+                                {seat.isEmpty ? '' : seat.isBooked ? 'X' : seat.seatNumber}
+                            </div>
+                        ))}
+                    </div>
+                ))}
+            </div>
+            <div className={styles.selectedSeats}>
+                {selectedSeats.map(seat => (
+                    <div key={seat.id} className={styles.selectedSeatRow}>
+                        <span>Seat {seat.seatNumber}:</span>
+                        <select
+                            value={seat.ticketType}
+                            onChange={e => handleTicketTypeChange(seat.id, e.target.value)}
+                            className={styles.ticketTypeSelect}
+                        >
+                            <option value={NORMAL_TICKET}>Normal</option>
+                            <option value={REDUCED_TICKET}>Reduced (Student, Child)</option>
+                        </select>
+                    </div>
+                ))}
+            </div>
+            <div className={styles.totalPrice}>
+                Total Price: {totalPrice.toFixed(2)} BGN
+            </div>
+            <div className={styles.actionButtons}>
+                <button
+                    onClick={handleBooking}
+                    className={styles.bookingButton}
+                    disabled={selectedSeats.length === 0}
+                >
+                    Book Tickets
+                </button>
+                <button
+                    onClick={handlePayment}
+                    className={styles.paymentButton}
+                    disabled={selectedSeats.length === 0}
+                >
+                    Buy Now
+                </button>
+                <PaymentModal isOpen={isModalOpen} onClose={closeModal} orderInfo={orderInfo} />
+            </div>
+        </div>
+    );
+};
+
+export default Booking;

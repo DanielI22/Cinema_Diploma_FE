@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as reviewService from '../../../services/reviewService';
 import ReviewList from '../ReviewList/ReviewList';
-import { REVIEWS_PER_PAGE } from '../../../utils/constants';
+import { PATHS, REVIEWS_PER_PAGE } from '../../../utils/constants';
 import { useAuth } from '../../../contexts/authContext';
 import styles from './ReviewArea.module.css';
 import DeleteModal from '../../DeleteModal/DeleteModal';
@@ -66,7 +66,7 @@ export default function ReviewArea() {
                     <button onClick={onSubmitReview} className={styles.submitButton}>Send</button>
                 </>
             ) : (
-                <p className={styles.noSignIn}>Sign in to leave a review.</p>
+                <p className={styles.noSignIn}><a href={PATHS.LOGIN}>Sign in to leave a review.</a></p>
             )}
             {isLoading ? <Spinner /> :  <ReviewList reviews={currentReviews} onDeleteReview={showDeleteModal} />}
             <DeleteModal

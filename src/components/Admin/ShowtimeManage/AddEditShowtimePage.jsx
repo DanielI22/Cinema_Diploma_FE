@@ -19,6 +19,7 @@ export default function AddEditShowtimePage() {
     const [selectedHall, setSelectedHall] = useState(null);
     const [startingTime, setStartingTime] = useState('');
     const [ticketPrice, setTicketPrice] = useState('');
+    const [addNext7Days, setAddNext7Days] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const { showtimeId } = useParams();
@@ -74,9 +75,9 @@ export default function AddEditShowtimePage() {
             hallId: selectedHall.value,
             movieId: selectedMovie.value,
             startingTime,
-            ticketPrice
+            ticketPrice,
+            addNext7Days: showtimeId ? undefined : addNext7Days,
         };
-        console.log(showtimeData);
         if (showtimeId) {
             await showtimeService.editShowtime(showtimeId, showtimeData);
         }
@@ -128,6 +129,18 @@ export default function AddEditShowtimePage() {
                         step="0.01"
                         required
                     />
+
+                    {!showtimeId && (
+                        <div className={styles.checkboxContainer}>
+                            <label htmlFor="addNext7Days">Add for the next 7 days</label>
+                            <input
+                                type="checkbox"
+                                id="addNext7Days"
+                                checked={addNext7Days}
+                                onChange={e => setAddNext7Days(e.target.checked)}
+                            />
+                        </div>
+                    )}
                     <button type="submit" className="submit-button">{showtimeId ? 'Update Showtime' : 'Add Showtime'}</button>
                 </form>
             )}

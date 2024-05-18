@@ -13,7 +13,6 @@ const AdminHome = () => {
       <Link to={PATHS.MANAGE_GENRES} className={styles.dashboardItem}>Manage Genres</Link>
       <Link to={PATHS.MANAGE_SHOWTIMES} className={styles.dashboardItem}>Manage Showtimes</Link>
       <Link to={PATHS.MANAGE_BOOKINGS} className={styles.dashboardItem}>Manage Bookings</Link>
-      <Link to={PATHS.MANAGE_TICKETS} className={styles.dashboardItem}>Manage Tickets</Link>
       <Link to={PATHS.MANAGE_USERS} className={styles.dashboardItem}>Manage Users</Link>
     </div>
   </div>
