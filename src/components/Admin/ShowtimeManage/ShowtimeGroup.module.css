@@ -11,7 +11,7 @@
     margin-top: 10px;
 }
 
-.editButton, .deleteButton {
+.viewButton, .editButton, .deleteButton {
     background-color: var(--primary-color);
     color:  var(--background-color);
     padding: 10px 20px;
@@ -26,7 +26,7 @@
     background-color: #dc3545;
 }
 
-.editButton {
+.viewButton, .editButton {
     text-decoration: none;
     display: inline-block;
     color: var(--background-color);

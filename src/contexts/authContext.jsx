@@ -11,7 +11,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
-    const [authToken, setAuthToken] = usePersistedState(AUTH_TOKEN_HEADER, null, 'sessionStorage');
+    const [authToken, setAuthToken] = usePersistedState(AUTH_TOKEN_HEADER, null, 'localStorage');
     const [refreshToken, setRefreshToken] = usePersistedState(REFRESH_TOKEN_HEADER, null, 'localStorage');
     const [userDetails, setUserDetails] = useState({});
     const { clearCinema } = useCinema();

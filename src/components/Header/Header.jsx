@@ -19,8 +19,9 @@ export default function Header() {
         if (userDetails.role === 'user') {
             return (
                 <>
-                    <Link to={PATHS.RESERVATIONS}>Reservations</Link>
                     <Link to={PATHS.FAVOURITES}>Favourites</Link>
+                    <Link to={PATHS.MY_BOOKINGS}>Bookings</Link>
+                    <Link to={PATHS.MY_TICKETS}>Tickets</Link>
                 </>
             );
         }
@@ -35,7 +36,7 @@ export default function Header() {
         return (
             <div className={styles.profileDropdown}>
                 <button className={styles.profileButton}>
-                    {userDetails.username}{cinemaName} <FontAwesomeIcon icon={faCaretDown} />
+                <Link to={PATHS.MY_PROFILE}>{userDetails.username}{cinemaName} <FontAwesomeIcon icon={faCaretDown} /></Link>
                 </button>
                 <div className={styles.dropdownContent}>
                     {renderUserRoleSpecificOptions()}

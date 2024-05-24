@@ -130,7 +130,7 @@ const Booking = () => {
             <div className={styles.hall}>
                 {rows.map((row, rowIndex) => (
                     <div key={row.id} className={styles.row}>
-                        <span className={styles.rowNumber}>{rowIndex + 1}</span>
+                        <span className={styles.rowNumber}>{row.rowNumber}</span>
                         {row.seats.map((seat, seatIndex) => (
                             <div
                                 key={seat.id}
@@ -149,7 +149,7 @@ const Booking = () => {
             <div className={styles.selectedSeats}>
                 {selectedSeats.map(seat => (
                     <div key={seat.id} className={styles.selectedSeatRow}>
-                        <span>Seat {seat.seatNumber}:</span>
+                        <span>Row {seat.rowNumber} - Seat {seat.seatNumber}:</span>
                         <select
                             value={seat.ticketType}
                             onChange={e => handleTicketTypeChange(seat.id, e.target.value)}

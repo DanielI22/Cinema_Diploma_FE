@@ -3,9 +3,9 @@ import { GENERAL_ADD, GENERAL_DELETE, GENERAL_ERROR, GENERAL_UPDATE } from "../u
 import axiosInstance from "../config/axiosInstance";
 
 
-export const book = async (booking) => {
+export const book = async (bookingInfo) => {
     try {
-        const response = await axiosInstance.post(`/bookings`, booking);
+        const response = await axiosInstance.post(`/bookings`, bookingInfo);
         toast.success("Tickets booked successfully!");
         return response.data;
     } catch (error) {
@@ -14,19 +14,19 @@ export const book = async (booking) => {
 }
 
 
-export const getAll = async () => {
+export const getShotimeBookings = async (showtimeId) => {
     try {
-        const response = await axiosInstance.get(`/bookings`);
+        const response = await axiosInstance.get(`/bookings/showtimes/${showtimeId}`);
         return response.data;
     } catch (error) {
         toast.error(GENERAL_ERROR);
     }
 };
 
-export const deleteBooking = async (bookingId) => {
+export const cancelBooking = async (bookingId) => {
     try {
-        const response = await axiosInstance.delete(`/bookings/${bookingId}`);
-        toast.success(GENERAL_DELETE);
+        const response = await axiosInstance.put(`/bookings/${bookingId}`);
+        toast.success("Booking is cancelled successfully");
         return response.data;
     } catch (error) {
         toast.error(GENERAL_ERROR);

@@ -1,0 +1,41 @@
+.favoritesPage {
+    display: flex;
+}
+
+.content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.header {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.moviesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px; /* Increase the gap between rows */
+}
+
+.movieCard {
+    display: flex;
+    flex-direction: column;
+}
+
+.removeButton {
+    margin-top: 10px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f44336;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    align-self: center; /* Center the button */
+}
+
+.removeButton:hover {
+    background-color: #d32f2f;
+}

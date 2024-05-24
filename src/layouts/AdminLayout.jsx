@@ -13,9 +13,11 @@ import MovieDetails from '../components/User/MovieDetails/MovieDetails';
 import AddEditMoviePage from '../components/Admin/MovieManage/AddEditMoviePage';
 import AddSearchMovieApiPage from '../components/Admin/MovieManage/AddSearchMovieApiPage';
 import GenreManagementPage from '../components/Admin/GenreManage/GenreManagementPage';
-import BookingManagementPage from '../components/Admin/BookingManage/BookingManagementPage';
 import ShowtimeManagementPage from '../components/Admin/ShowtimeManage/ShowtimeManagementPage';
 import AddEditShowtimePage from '../components/Admin/ShowtimeManage/AddEditShowtimePage';
+import BookingsManagementPage from '../components/Admin/ShowtimeManage/BookingsManagementPage';
+import UserManagementPage from '../components/Admin/UserManage/UserManagementPage';
+import ProfilePage from '../components/ProfilePage/ProfilePage';
 
 const AdminLayout = () => (
   <>
@@ -36,7 +38,9 @@ const AdminLayout = () => (
       <Route path={PATHS.MANAGE_SHOWTIMES} element={<ShowtimeManagementPage />} />
       <Route path={PATHS.MANAGE_SHOWTIME} element={<AddEditShowtimePage />} />
       <Route path={`${PATHS.MANAGE_SHOWTIME}/:showtimeId`} element={<AddEditShowtimePage />} />
-      <Route path={PATHS.MANAGE_BOOKINGS} element={<BookingManagementPage />} />
+      <Route path={`${PATHS.MANAGE_BOOKINGS}/:showtimeId`} element={<BookingsManagementPage />} />
+      <Route path={PATHS.MANAGE_USERS} element={<UserManagementPage />} />
+      <Route path={PATHS.MY_PROFILE} element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
       <Route path={PATHS.LOGOUT} element={<ProtectedRoute><Logout /></ProtectedRoute>} />
       <Route path="*" element={<NotFound />} />
     </Routes>

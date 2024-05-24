@@ -13,6 +13,8 @@ import Movies from "../components/User/Movies/Movies";
 import CinemaListPage from "../components/User/Program/CinemaListPage";
 import CinemaProgram from "../components/User/Program/CinemaProgram";
 import Booking from "../components/User/Booking/Booking";
+import ProfilePage from "../components/ProfilePage/ProfilePage";
+import FavouritesPage from "../components/User/Favourites/FavouritesPage";
 
 const UserLayout = () => (
   <>
@@ -22,9 +24,9 @@ const UserLayout = () => (
       <Route path={`${PATHS.MOVIES}/:movieId`} element={<MovieDetails />} />
       <Route path={`${PATHS.PROGRAM}`} element={<CinemaListPage />} />
       <Route path={`${PATHS.PROGRAM}/:cinemaId`} element={<CinemaProgram />} />
-      {/* <Route path={PATHS.RESERVATIONS} element={<ProtectedRoute><Reservations /></ProtectedRoute>} />
-            <Route path={PATHS.FAVOURITES} element={<ProtectedRoute><Favourites /></ProtectedRoute>} /> */}
-            <Route path={`${PATHS.BOOKING}/:showtimeId`} element={<ProtectedRoute><Booking /></ProtectedRoute>} />
+      <Route path={`${PATHS.BOOKING}/:showtimeId`} element={<ProtectedRoute><Booking /></ProtectedRoute>} />
+      <Route path={PATHS.MY_PROFILE} element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+      <Route path={PATHS.FAVOURITES} element={<ProtectedRoute><FavouritesPage /></ProtectedRoute>} />
       <Route path={PATHS.LOGIN} element={<GuestRoute><Login /></GuestRoute>} />
       <Route path={PATHS.REGISTER} element={<GuestRoute><Register /></GuestRoute>} />
       <Route path={PATHS.LOGOUT} element={<ProtectedRoute><Logout /></ProtectedRoute>} />

@@ -1,0 +1,73 @@
+.profilePage {
+    display: flex;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+.header {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.formGroup {
+    margin-bottom: 20px;
+}
+
+.formGroup label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.formGroup input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.formGroup p {
+    margin: 0;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+}
+
+.editButton,
+.submitButton,
+.cancelButton,
+.changePasswordButton {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px; /* Only for form buttons */
+}
+
+.editButton:hover,
+.submitButton:hover,
+.cancelButton:hover,
+.changePasswordButton:hover {
+    background-color: #0056b3;
+}
+
+.cancelButton {
+    background-color: #dc3545;
+}
+
+.cancelButton:hover {
+    background-color: #b21f2d;
+}
+
+.editButton {
+    margin-top: 10px;
+}

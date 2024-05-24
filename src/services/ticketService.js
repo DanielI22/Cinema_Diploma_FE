@@ -12,3 +12,12 @@ export const buyTickets = async (orderInfo) => {
         toast.error(GENERAL_ERROR);
     }
 }
+
+export const getShotimePurchasedTickets = async (showtimeId) => {
+    try {
+        const response = await axiosInstance.get(`/tickets/showtimes/${showtimeId}`);
+        return response.data;
+    } catch (error) {
+        toast.error(GENERAL_ERROR);
+    }
+};

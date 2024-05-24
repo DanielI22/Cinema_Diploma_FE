@@ -13,6 +13,11 @@ export const PATHS = {
     LOGOUT: "/logout",
 
     SELECT_CINEMA: "/select-cinema",
+    
+    MY_PROFILE: "/my-profile",
+    MY_BOOKINGS: "/my-bookings",
+    MY_TICKETS: "/my-tickets",
+    FAVOURITES: "/favourites",
 
     MANAGE_CINEMAS: "/manage-cinemas",
     MANAGE_HALLS: "/manage-halls",
@@ -20,14 +25,13 @@ export const PATHS = {
     MANAGE_GENRES: "/manage-genres",
     MANAGE_SHOWTIMES: "/manage-showtimes",
     MANAGE_USERS: "/manage-users",
-    MANAGE_BOOKINGS: "/manage-bookings",
 
     MANAGE_CINEMA: "/manage-cinema",
     MANAGE_HALL: "/manage-hall",
     MANAGE_MOVIE: "/manage-movie",
     MANAGE_MOVIE_API: "/manage-movie-api",
     MANAGE_SHOWTIME: "/manage-showtime",
-    MANAGE_USER: "/manage-user",
+    MANAGE_BOOKINGS: "/manage-showtime-bookings",
 };
 
 export const GENERAL_ERROR = "An unexpected error occurred. Please try again later.";
@@ -50,3 +54,6 @@ export const REDUCED_TICKET = 'reduced';
 export const REDUCED_PRICE = 0.2;
 
 export const STRIPE_PK = 'pk_test_51PHnLxKYvpYr3mXZvjQiwYnmcmU45My8OgoGsk4je2db1ld8xqPctS9xBnoWA4OqC3vpbCfgGlAdh3ygb4SW5wYK006Q3Gg8ak';
+
+export const ITEMS_PER_PAGE_BOOKINGS = 3;
+export const ITEMS_PER_PAGE_TICKETS = 5;

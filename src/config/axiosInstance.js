@@ -7,7 +7,7 @@ const axiosInstance = axios.create({
 });
 
 const getAccessToken = () => {
-  return sessionStorage.getItem(AUTH_TOKEN_HEADER);
+  return localStorage.getItem(AUTH_TOKEN_HEADER);
 };
 
 // Request Interceptor

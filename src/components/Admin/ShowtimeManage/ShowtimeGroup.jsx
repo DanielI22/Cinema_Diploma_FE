@@ -17,6 +17,7 @@ const ShowtimeGroup = ({ groupedShowtimes, showDeleteModal }) => {
                                         {new Date(showtime.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })} - {showtime.hallName}
                                     </div>
                                     <div className={styles.showtimeActions}>
+                                        <Link to={`${PATHS.MANAGE_BOOKINGS}/${showtime.id}`} className={styles.viewButton}>View</Link>
                                         <Link to={`${PATHS.MANAGE_SHOWTIME}/${showtime.id}`} className={styles.editButton}>Edit</Link>
                                         <button onClick={() => showDeleteModal(showtime.id)} className={styles.deleteButton}>
                                             Delete
