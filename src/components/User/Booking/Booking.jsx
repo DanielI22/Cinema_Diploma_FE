@@ -4,7 +4,7 @@ import * as hallService from "../../../services/hallService";
 import * as showtimeService from "../../../services/showtimeService";
 import * as bookingService from "../../../services/bookingService";
 import { isValidUUID } from '../../../utils/functions';
-import { MAX_SEATS_BOOK, NORMAL_TICKET, REDUCED_PRICE, REDUCED_TICKET } from '../../../utils/constants';
+import { MAX_SEATS_BOOK, NORMAL_TICKET, PATHS, REDUCED_PRICE, REDUCED_TICKET } from '../../../utils/constants';
 import Spinner from '../../Spinner/Spinner';
 import NotFound from '../../NotFound/NotFound';
 import { toast } from 'react-toastify';
@@ -99,9 +99,9 @@ const Booking = () => {
             }
         };
 
-        const response = await bookingService.book(orderInfo);
+        await bookingService.book(orderInfo);
         setIsLoading(false);
-        navigate(-1);
+        navigate(PATHS.MY_BOOKINGS);
     };
 
     const handlePayment = async () => {

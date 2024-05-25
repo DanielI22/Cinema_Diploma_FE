@@ -15,6 +15,7 @@ import CinemaProgram from "../components/User/Program/CinemaProgram";
 import Booking from "../components/User/Booking/Booking";
 import ProfilePage from "../components/ProfilePage/ProfilePage";
 import FavouritesPage from "../components/User/Favourites/FavouritesPage";
+import MyBookingsPage from "../components/User/MyBookings/MyBookingsPage";
 
 const UserLayout = () => (
   <>
@@ -27,6 +28,7 @@ const UserLayout = () => (
       <Route path={`${PATHS.BOOKING}/:showtimeId`} element={<ProtectedRoute><Booking /></ProtectedRoute>} />
       <Route path={PATHS.MY_PROFILE} element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
       <Route path={PATHS.FAVOURITES} element={<ProtectedRoute><FavouritesPage /></ProtectedRoute>} />
+      <Route path={PATHS.MY_BOOKINGS} element={<ProtectedRoute><MyBookingsPage /></ProtectedRoute>} />
       <Route path={PATHS.LOGIN} element={<GuestRoute><Login /></GuestRoute>} />
       <Route path={PATHS.REGISTER} element={<GuestRoute><Register /></GuestRoute>} />
       <Route path={PATHS.LOGOUT} element={<ProtectedRoute><Logout /></ProtectedRoute>} />

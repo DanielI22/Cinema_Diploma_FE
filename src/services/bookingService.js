@@ -13,6 +13,14 @@ export const book = async (bookingInfo) => {
     }
 }
 
+export const getMyBookings = async () => {
+    try {
+        const response = await axiosInstance.get(`/bookings/my-bookings`);
+        return response.data;
+    } catch (error) {
+        toast.error(GENERAL_ERROR);
+    }
+};
 
 export const getShotimeBookings = async (showtimeId) => {
     try {

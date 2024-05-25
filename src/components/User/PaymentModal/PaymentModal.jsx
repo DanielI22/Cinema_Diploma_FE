@@ -5,7 +5,7 @@ import { Elements, CardElement, useStripe, useElements } from '@stripe/react-str
 import styles from './PaymentModal.module.css';
 import * as paymentService from "../../../services/paymentService";
 import * as ticketService from "../../../services/ticketService";
-import { GENERAL_ERROR, STRIPE_PK } from '../../../utils/constants';
+import { GENERAL_ERROR, PATHS, STRIPE_PK } from '../../../utils/constants';
 import { useNavigate } from 'react-router-dom';
 
 // Load your publishable key from the Stripe dashboard
@@ -71,6 +71,7 @@ const CheckoutForm = ({ onClose, setSuccess, orderInfo }) => {
                 orderInfo
             }
             await ticketService.buyTickets(ticketInfo);
+            navigate(PATHS.MY_TICKETS);
         }
     };
 
