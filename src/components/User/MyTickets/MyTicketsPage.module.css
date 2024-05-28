@@ -1,14 +1,9 @@
-.myBookingsPage {
+.myTicketsPage {
     display: flex;
 }
 
-.sidebar {
-    flex: 0 0 250px;
-    padding: 20px;
-}
-
 .content {
-    flex: 1;
+    flex-grow: 1;
     padding: 20px;
 }
 
@@ -22,12 +17,12 @@
     margin-bottom: 40px;
 }
 
-.bookingCard {
+.ticketCard {
     display: flex;
     align-items: center;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
     margin-bottom: 20px;
 }
 
@@ -39,8 +34,8 @@
     margin-right: 20px;
 }
 
-.bookingDetails {
-    flex: 1;
+.ticketDetails {
+    flex-grow: 1;
 }
 
 .movieTitle {
@@ -48,8 +43,8 @@
     margin-bottom: 10px;
 }
 
-.ticketDetails {
-    margin-bottom: 5px;
+.ticketDetails p {
+    margin: 5px 0;
 }
 
 .barcodeContainer {
@@ -57,52 +52,40 @@
 }
 
 .actionButtons {
-    display: flex;
-    gap: 10px;
     margin-top: 10px;
-}
-
-.cancelButton, .downloadButton {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.cancelButton {
-    background-color: #f44336;
-    color: white;
 }
 
 .downloadButton {
     background-color: #007bff;
     color: white;
+    font-size: 14px;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 .pagination {
     display: flex;
     justify-content: center;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .pageButton {
-    background-color: #f0f0f0;
-    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
     margin: 0 5px;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .pageButton:hover {
-    background-color: #007bff;
-    color: white;
+    background-color: #0056b3;
 }
 
-
 .activePageButton {
-    background-color: #007bff;
-    color: white;
-    font-weight: bold;
-    cursor: default;
+    background-color: #0056b3;
 }

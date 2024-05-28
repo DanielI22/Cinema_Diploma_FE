@@ -14,9 +14,9 @@ const ProjectorLayout = () => (
             <Route path={PATHS.HOME} element={<PersonnelRoute><Home /></PersonnelRoute>} />
             <Route path={PATHS.SELECT_CINEMA} element={<SelectCinema />} />
 
-            <Route path={PATHS.MY_PROFILE} element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+            <Route path={PATHS.MY_PROFILE} element={<PersonnelRoute><ProfilePage /></PersonnelRoute>} />
 
-            <Route path={PATHS.LOGOUT} element={<ProtectedRoute><Logout /></ProtectedRoute>} />
+            <Route path={PATHS.LOGOUT} element={<Logout />} />
             <Route path="*" element={<NotFound />} />
         </Routes>
     </>

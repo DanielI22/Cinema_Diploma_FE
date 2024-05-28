@@ -19,10 +19,18 @@ export default function AddEditShowtimePage() {
     const [selectedHall, setSelectedHall] = useState(null);
     const [startingTime, setStartingTime] = useState('');
     const [ticketPrice, setTicketPrice] = useState('');
+    const [showtimeType, setShowtimeType] = useState(null);
     const [addNext7Days, setAddNext7Days] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const { showtimeId } = useParams();
+
+    const showtimeTypeOptions = [
+        { value: 'TWO_D', label: '2D' },
+        { value: 'THREE_D', label: '3D' },
+        { value: 'IMAX', label: 'IMAX' },
+        { value: 'FOUR_DX', label: '4DX' },
+    ];
 
     useEffect(() => {
         fetchCinemas();
@@ -50,11 +58,13 @@ export default function AddEditShowtimePage() {
     const fetchShowtimeDetails = async (id) => {
         setIsLoading(true);
         const response = await showtimeService.getOne(id);
+        console.log(response);
         setSelectedCinema({ value: response.cinemaId, label: response.showtime.cinemaName });
         setSelectedHall({ value: response.hallId, label: response.showtime.hallName });
         setSelectedMovie({ value: response.movieId, label: response.showtime.movieName });
         setStartingTime(response.showtime.startTime);
         setTicketPrice(response.showtime.ticketPrice);
+        setShowtimeType(showtimeTypeOptions.find(option => option.label === response.showtime.type));
         setIsLoading(false);
     };
 
@@ -76,6 +86,7 @@ export default function AddEditShowtimePage() {
             movieId: selectedMovie.value,
             startingTime,
             ticketPrice,
+            type: showtimeType.value,
             addNext7Days: showtimeId ? undefined : addNext7Days,
         };
         if (showtimeId) {
@@ -113,6 +124,13 @@ export default function AddEditShowtimePage() {
                         onChange={selected => setSelectedMovie(selected)}
                         value={selectedMovie}
                         placeholder="Select Movie"
+                        required
+                    />
+                    <Select
+                        options={showtimeTypeOptions}
+                        onChange={selected => setShowtimeType(selected)}
+                        value={showtimeType}
+                        placeholder="Select Showtime Type"
                         required
                     />
                     <input

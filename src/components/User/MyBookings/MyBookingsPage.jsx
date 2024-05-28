@@ -4,7 +4,7 @@ import * as bookingService from '../../../services/bookingService';
 import Spinner from '../../Spinner/Spinner';
 import Sidebar from '../Sidebar/Sidebar';
 import Barcode from 'react-barcode';
-import { generatePDF } from '../../../utils/pdfGenerator';
+import { generateBookingPDF } from '../../../utils/pdfGenerator';
 import useDeleteModal from '../../../hooks/useDeleteModal';
 import DeleteModal from '../../DeleteModal/DeleteModal';
 
@@ -74,7 +74,7 @@ const MyBookingsPage = () => {
                     <p><strong>Status:</strong> {status}</p>
                     <p><strong>Total Price:</strong> {totalPrice} BGN</p>
                     <div className={styles.actionButtons}>
-                        <button onClick={() => generatePDF(booking)} className={styles.downloadButton}>Download as PDF</button>
+                        <button onClick={() => generateBookingPDF(booking)} className={styles.downloadButton}>Download as PDF</button>
                         {status === 'available' && (
                             <button onClick={() => showDeleteModal(booking.id)} className={styles.cancelButton}>
                                 Cancel Booking

@@ -13,7 +13,6 @@ export const PATHS = {
     LOGOUT: "/logout",
 
     SELECT_CINEMA: "/select-cinema",
-    
     MY_PROFILE: "/my-profile",
     MY_BOOKINGS: "/my-bookings",
     MY_TICKETS: "/my-tickets",
@@ -34,13 +33,20 @@ export const PATHS = {
     MANAGE_BOOKINGS: "/manage-showtime-bookings",
 };
 
+export const ROLES = {
+    USER: "user",
+    ADMIN: "admin",
+    OPERATOR: "operator",
+    VALIDATOR: "validator",
+    PROJECTOR: "projector"
+}
+
 export const GENERAL_ERROR = "An unexpected error occurred. Please try again later.";
 export const GENERAL_ADD = "Added Successfully.";
 export const GENERAL_UPDATE = "Updated Successfully.";
 export const GENERAL_DELETE = "Deleted Successfully.";
 
-export const ACCESS_TOKEN_CHECK_TIME = 1000  * 60 * 2;
-export const ACCESS_TOKEN_EXPIRE = 60 * 2;
+export const ACCESS_TOKEN_EXPIRE = 60;  // 1 minute
 
 export const MAX_ROWS = 20;
 export const MAX_SEATS = 20;

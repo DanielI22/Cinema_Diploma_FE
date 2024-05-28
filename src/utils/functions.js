@@ -1,13 +1,15 @@
+import { ROLES } from "./constants";
+
 export function genresToString(genres) {
     return genres.map(genre => genre.name).map(genre => capitalizeFirstLetter(genre)).join(", ");
 }
 
 export function getUserRole(decodedRoles) {
     if (!decodedRoles) {
-        return 'user';
+        return ROLES.USER;
     }
     const roles = decodedRoles || [];
-    const roleHierarchy = ['admin', 'operator', 'validator', 'projector'];
+    const roleHierarchy = [ROLES.ADMIN, ROLES.OPERATOR, ROLES.VALIDATOR, ROLES.PROJECTOR];
 
     // Find the highest priority role the user has
     for (const role of roleHierarchy) {
@@ -17,7 +19,7 @@ export function getUserRole(decodedRoles) {
     }
 
     // Default to 'user' if no other roles are found
-    return 'user';
+    return ROLES.USER;
 }
 
 function capitalizeFirstLetter(string) {

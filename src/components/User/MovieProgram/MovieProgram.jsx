@@ -40,7 +40,7 @@ function MovieProgram({ movieId }) {
                             <Link to={`/booking/${showtime.id}`} key={showtime.id} className={styles.showtime}>
                                 <div>
                                     {showtimeDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
-                                    <span className={styles.priceTag}>{`${showtime.ticketPrice.toFixed(2)} BGN`}</span>
+                                    <span className={styles.priceTag}>{`${showtime.type} | ${showtime.ticketPrice.toFixed(2)} BGN`}</span>
                                 </div>
                             </Link>
                         );

@@ -1,6 +1,11 @@
 import { toast } from 'react-toastify';
 import axiosInstance from '../config/axiosInstance';
-import { GENERAL_ERROR } from '../utils/constants';
+import { API_BASE_URL, AUTH_TOKEN_HEADER, GENERAL_ERROR, PATHS } from '../utils/constants';
+import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/authContext';
+import { emitEvent } from '../utils/eventEmitter';
 
 export const register = async ({ username, email, password }) => {
     try {
@@ -37,42 +42,25 @@ export const login = async ({ email, password }) => {
     }
 };
 
-export const logout = async () => {
-    await axiosInstance.post(`/users/logout`);
+export const logout = async (authToken) => {
+    const decodedToken = jwtDecode(authToken);
+    const userId = decodedToken.sub;
+    await axios.post(`${API_BASE_URL}/users/logout`, { userId });
 };
 
 export const refreshToken = async (refreshToken) => {
     try {
-        const response = await axiosInstance.post(`/users/refresh`, { refreshToken });
+        const response = await axios.post(`${API_BASE_URL}/users/refresh`, { refreshToken });
+        toast.success("Token refreshed");
         return response.data;
     } catch (error) {
-        toast.error(GENERAL_ERROR)
+        if (error.response && error.response.status === 400) {
+            // await logout(localStorage.getItem(AUTH_TOKEN_HEADER));
+            // localStorage.clear();
+            emitEvent('sessionExpired');
+            console.log('emitter')
+            toast.error('Session expired. Please log in again.');
+        }
+        return null;
     }
 };
-
-
-export const refreshAccessToken = async (refreshToken) => {
-    const clientId="cinema-quarkus";
-    const clientSecret="6XU73V4dJNGWDmuXwq0WnIIJtys9PBI5";
-    const serverUrl = "http://localhost:8080";
-    const realmName = "cinema";
-
-    const params = new URLSearchParams();
-    params.append('client_id', clientId);
-    params.append('client_secret', clientSecret);
-    params.append('grant_type', 'refresh_token');
-    params.append('refresh_token', refreshToken);
-  
-    try {
-      const response = await axiosInstance.post(serverUrl + '/realms/' + realmName + '/protocol/openid-connect/token', params, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      });
-      toast.success("Token refresh");
-      return response.data;
-    } catch (error) {
-      console.error('Error refreshing access token:', error);
-      throw error;
-    }
-  };

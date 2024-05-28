@@ -8,6 +8,7 @@ import AppRoutes from './AppRoutes';
 import './locales/i18n';
 import Header from './components/Header/Header';
 import { CinemaProvider } from './contexts/cinemaContext';
+import EventListener from './components/AuthGuards/EventListener';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <AuthProvider>
           <Header />
           <ToastContainer />
+          <EventListener />
           <div className="container min-h-[90vh]">
             <AppRoutes />
           </div>

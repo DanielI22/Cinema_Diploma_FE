@@ -1,5 +1,5 @@
 import styles from './Header.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { PATHS } from '../../utils/constants';
 import { useAuth } from '../../contexts/authContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,6 +13,7 @@ export default function Header() {
         userDetails
     } = useAuth();
 
+    const location = useLocation();
     const { selectedCinema } = useCinema();
 
     const renderUserRoleSpecificOptions = () => {
@@ -36,7 +37,7 @@ export default function Header() {
         return (
             <div className={styles.profileDropdown}>
                 <button className={styles.profileButton}>
-                <Link to={PATHS.MY_PROFILE}>{userDetails.username}{cinemaName} <FontAwesomeIcon icon={faCaretDown} /></Link>
+                    <Link to={PATHS.MY_PROFILE}>{userDetails.username}{cinemaName} <FontAwesomeIcon icon={faCaretDown} /></Link>
                 </button>
                 <div className={styles.dropdownContent}>
                     {renderUserRoleSpecificOptions()}
@@ -77,7 +78,7 @@ export default function Header() {
                     </>
                 ) : (
                     <>
-                        <Link to={PATHS.LOGIN}>Login</Link>
+                        <Link to={{ pathname: PATHS.LOGIN, state: { from: location } }}>Login</Link>
                         <Link to={PATHS.REGISTER}>Register</Link>
                     </>
                 )}
