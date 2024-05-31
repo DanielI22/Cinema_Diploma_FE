@@ -12,12 +12,12 @@ export const PATHS = {
     REGISTER: "/register",
     LOGOUT: "/logout",
 
-    SELECT_CINEMA: "/select-cinema",
     MY_PROFILE: "/my-profile",
     MY_BOOKINGS: "/my-bookings",
     MY_TICKETS: "/my-tickets",
     FAVOURITES: "/favourites",
 
+    //admin
     MANAGE_CINEMAS: "/manage-cinemas",
     MANAGE_HALLS: "/manage-halls",
     MANAGE_MOVIES: "/manage-movies",
@@ -31,6 +31,11 @@ export const PATHS = {
     MANAGE_MOVIE_API: "/manage-movie-api",
     MANAGE_SHOWTIME: "/manage-showtime",
     MANAGE_BOOKINGS: "/manage-showtime-bookings",
+
+    //operator
+    SELECT_CINEMA: "/select-cinema",
+    VALIDATE_BOOKING: "/validate-booking",
+    TICKET_HISTORY: "/ticket-history"
 };
 
 export const ROLES = {

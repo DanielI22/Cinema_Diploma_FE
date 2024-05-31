@@ -1,9 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PATHS } from '../../../utils/constants';
-import styles from './Sidebar.module.css';
+import styles from './UserSidebar.module.css';
 
-const Sidebar = () => {
+const UserSidebar = () => {
     const navigate = useNavigate();
 
     return (
@@ -16,4 +16,4 @@ const Sidebar = () => {
     );
 };
 
-export default Sidebar;
+export default UserSidebar;

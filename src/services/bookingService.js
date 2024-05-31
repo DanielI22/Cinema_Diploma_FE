@@ -40,3 +40,19 @@ export const cancelBooking = async (bookingId) => {
         toast.error(GENERAL_ERROR);
     }
 };
+
+
+export const validateBooking = async (bookingCode, selectedCinemaId) => {
+    const response = await axiosInstance.get(`/bookings/validate/${bookingCode}?cinema=${selectedCinemaId}`);
+    return response;
+};
+
+export const takeBooking = async (bookingId) => {
+    try {
+        const response = await axiosInstance.get(`/bookings/take/${bookingId}`);
+        toast.success("Booking is taken successfully");
+        return response.data;
+    } catch (error) {
+        toast.error(GENERAL_ERROR);
+    }
+};

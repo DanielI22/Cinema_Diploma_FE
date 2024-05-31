@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import styles from './MyBookingsPage.module.css';
 import * as bookingService from '../../../services/bookingService';
 import Spinner from '../../Spinner/Spinner';
-import Sidebar from '../Sidebar/Sidebar';
 import Barcode from 'react-barcode';
 import { generateBookingPDF } from '../../../utils/pdfGenerator';
 import useDeleteModal from '../../../hooks/useDeleteModal';
 import DeleteModal from '../../DeleteModal/DeleteModal';
+import UserSidebar from '../UserSidebar/UserSidebar';
 
 const ITEMS_PER_PAGE = 2;
 
@@ -49,13 +49,14 @@ const MyBookingsPage = () => {
     }
 
     const renderBooking = (booking) => {
-        const { movieTitle, moviePoster, cinemaName, showtimeStartTime, tickets, status, shortcode, totalPrice } = booking;
+        const { movieTitle, moviePoster, cinemaName, hallName, showtimeStartTime, tickets, status, shortcode, totalPrice } = booking;
         return (
             <div key={booking.id} className={styles.bookingCard}>
                 <img src={moviePoster} alt={movieTitle} className={styles.moviePoster} />
                 <div className={styles.bookingDetails}>
                     <h3 className={styles.movieTitle}>{movieTitle}</h3>
                     <p><strong>{cinemaName}</strong></p>
+                    <p><strong>Hall:</strong> {hallName}</p>
                     <p>
                         <strong>Showtime:</strong> {new Date(showtimeStartTime).toLocaleString('en-GB', {
                             hour: '2-digit',
@@ -91,7 +92,7 @@ const MyBookingsPage = () => {
 
     return (
         <div className={styles.myBookingsPage}>
-            <Sidebar />
+            <UserSidebar />
             <div className={styles.content}>
                 <h1 className={styles.header}>My Bookings</h1>
                 <div className={styles.section}>

@@ -55,10 +55,7 @@ export const refreshToken = async (refreshToken) => {
         return response.data;
     } catch (error) {
         if (error.response && error.response.status === 400) {
-            // await logout(localStorage.getItem(AUTH_TOKEN_HEADER));
-            // localStorage.clear();
             emitEvent('sessionExpired');
-            console.log('emitter')
             toast.error('Session expired. Please log in again.');
         }
         return null;

@@ -10,6 +10,8 @@ import NotFound from '../../NotFound/NotFound';
 import { toast } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
 import PaymentModal from '../PaymentModal/PaymentModal';
+import { useAuth } from '../../../contexts/authContext';
+import PhysicalPaymentModal from '../../Operator/PhysicalPaymentModal/PhysicalPaymentModal';
 
 const Booking = () => {
     const { showtimeId } = useParams();
@@ -20,10 +22,15 @@ const Booking = () => {
     const [isValidId, setIsValidId] = useState(true);
     const [orderInfo, setOrderInfo] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isCashModalOpen, setIsCashModalOpen] = useState(false);
+    const { userDetails } = useAuth();
+    const navigate = useNavigate();
+
     const closeModal = () => setIsModalOpen(false);
     const openModal = () => setIsModalOpen(true);
+    const closeCashModal = () => setIsCashModalOpen(false);
+    const openCashModal = () => setIsCashModalOpen(true);
 
     useEffect(() => {
         if (!showtimeId || !isValidUUID(showtimeId)) {
@@ -33,8 +40,8 @@ const Booking = () => {
         }
         const fetchShowtime = async () => {
             try {
-                const showtimeResponse = await showtimeService.getOne(showtimeId)
-                const hallResponse = await hallService.getShowtimeHall(showtimeId)
+                const showtimeResponse = await showtimeService.getOne(showtimeId);
+                const hallResponse = await hallService.getShowtimeHall(showtimeId);
 
                 setRows(hallResponse.rows);
                 setShowtime(showtimeResponse.showtime);
@@ -42,7 +49,7 @@ const Booking = () => {
             } catch (error) {
                 setIsValidId(false);
             }
-        }
+        };
 
         fetchShowtime();
     }, [showtimeId]);
@@ -94,8 +101,7 @@ const Booking = () => {
                 seats: selectedSeats.map(seat => ({
                     seatId: seat.id,
                     ticketType: seat.ticketType
-                })
-                )
+                }))
             }
         };
 
@@ -110,10 +116,22 @@ const Booking = () => {
             seats: selectedSeats.map(seat => ({
                 seatId: seat.id,
                 ticketType: seat.ticketType
-            })),
+            }))
         };
         setOrderInfo(order);
         openModal();
+    };
+
+    const handlePhysicalPayment = async () => {
+        const order = {
+            showtimeId,
+            seats: selectedSeats.map(seat => ({
+                seatId: seat.id,
+                ticketType: seat.ticketType
+            }))
+        };
+        setOrderInfo(order);
+        openCashModal();
     };
 
     if (!isValidId) {
@@ -165,21 +183,34 @@ const Booking = () => {
                 Total Price: {totalPrice.toFixed(2)} BGN
             </div>
             <div className={styles.actionButtons}>
-                <button
-                    onClick={handleBooking}
-                    className={styles.bookingButton}
-                    disabled={selectedSeats.length === 0}
-                >
-                    Book Tickets
-                </button>
-                <button
-                    onClick={handlePayment}
-                    className={styles.paymentButton}
-                    disabled={selectedSeats.length === 0}
-                >
-                    Buy Now
-                </button>
+                {userDetails.role === 'operator' ? (
+                    <button
+                        onClick={handlePhysicalPayment}
+                        className={styles.paymentButton}
+                        disabled={selectedSeats.length === 0}
+                    >
+                        Get Tickets
+                    </button>
+                ) : (
+                    <>
+                        <button
+                            onClick={handleBooking}
+                            className={styles.bookingButton}
+                            disabled={selectedSeats.length === 0}
+                        >
+                            Book Tickets
+                        </button>
+                        <button
+                            onClick={handlePayment}
+                            className={styles.paymentButton}
+                            disabled={selectedSeats.length === 0}
+                        >
+                            Buy Now
+                        </button>
+                    </>
+                )}
                 <PaymentModal isOpen={isModalOpen} onClose={closeModal} orderInfo={orderInfo} />
+                <PhysicalPaymentModal isOpen={isCashModalOpen} onClose={closeCashModal} orderInfo={{...orderInfo, totalPrice}} />
             </div>
         </div>
     );

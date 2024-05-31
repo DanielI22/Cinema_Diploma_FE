@@ -92,7 +92,7 @@ const BookingsManagementPage = () => {
                                 <strong>Seats:</strong>
                                 {booking.tickets.map(ticket => (
                                     <div key={ticket.id} className={styles.ticketItem}>
-                                        Row {ticket.seat.rowNumber}, Seat {ticket.seat.seatNumber} ({ticket.type} - {ticket.price} BGN)
+                                        Row {ticket.seat.rowNumber}, Seat {ticket.seat.seatNumber} ({ticket.type} - {ticket.price.toFixed(2)} BGN)
                                     </div>
                                 ))}
                             </div>
@@ -149,7 +149,7 @@ const BookingsManagementPage = () => {
                             <strong>Type:</strong> {ticket.type}
                         </div>
                         <div>
-                            <strong>Price:</strong> {ticket.price} BGN
+                            <strong>Price:</strong> {ticket.price.toFixed(2)} BGN
                         </div>
                     </div>
                 ))}

@@ -4,19 +4,21 @@
     padding: 0 20px;
     background-color: var(--secondary-color);
     color: white;
+    flex-wrap: wrap; /* Allow items to wrap on small screens */
 }
 
 .logo {
     max-width: 80px;
     height: auto;
     border-radius: 10px;
-    margin-left: 50px;
+    margin: 10px 0; /* Adjust margin for better spacing */
 }
 
 .navRight {
     display: flex;
     margin-left: auto;
     align-items: center;
+    flex-wrap: wrap; /* Allow items to wrap on small screens */
 }
 
 .header a {
@@ -83,12 +85,35 @@
 }
 
 @media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: center;
+    }
+
     .navLeft, .navRight {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
+        width: 100%;
     }
 
     .navLeft > a, .navRight > a, .navRight > div {
         margin: 5px 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    .logo {
+        margin: 10px 0;
+    }
+
+    .profileDropdown {
+        width: 100%;
+        text-align: center;
+    }
+
+    .dropdownContent {
+        left: 0;
+        right: 0;
+        margin: 0 auto;
     }
 }

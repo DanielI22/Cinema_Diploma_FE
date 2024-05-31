@@ -3,7 +3,7 @@ import styles from './FavouritesPage.module.css';
 import * as favouriteService from '../../../services/favouriteService';
 import MovieCard from '../MovieCard/MovieCard';
 import Spinner from '../../Spinner/Spinner';
-import Sidebar from '../Sidebar/Sidebar';
+import UserSidebar from '../UserSidebar/UserSidebar';
 
 const FavouritesPage = () => {
     const [favorites, setFavorites] = useState([]);
@@ -30,7 +30,7 @@ const FavouritesPage = () => {
 
     return (
         <div className={styles.favoritesPage}>
-            <Sidebar />
+            <UserSidebar />
             <div className={styles.content}>
                 <h1 className={styles.header}>My Favourites</h1>
                 <div className={styles.moviesGrid}>

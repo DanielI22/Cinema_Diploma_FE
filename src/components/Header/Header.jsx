@@ -1,6 +1,6 @@
 import styles from './Header.module.css';
 import { Link, useLocation } from 'react-router-dom';
-import { PATHS } from '../../utils/constants';
+import { PATHS, ROLES } from '../../utils/constants';
 import { useAuth } from '../../contexts/authContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
@@ -17,7 +17,7 @@ export default function Header() {
     const { selectedCinema } = useCinema();
 
     const renderUserRoleSpecificOptions = () => {
-        if (userDetails.role === 'user') {
+        if (userDetails.role === ROLES.USER) {
             return (
                 <>
                     <Link to={PATHS.FAVOURITES}>Favourites</Link>
@@ -26,7 +26,15 @@ export default function Header() {
                 </>
             );
         }
-        if (['operator', 'validator', 'projector'].includes(userDetails.role) && selectedCinema) {
+        if (userDetails.role === ROLES.OPERATOR) {
+            return (
+                <>
+                    <Link to={PATHS.TICKET_HISTORY}>Tickets History</Link>
+                    <Link to={PATHS.SELECT_CINEMA}>Change Cinema</Link>
+                </>
+            );
+        }
+        if ([ROLES.VALIDATOR, ROLES.PROJECTOR].includes(userDetails.role) && selectedCinema) {
             return <Link to={PATHS.SELECT_CINEMA}>Change Cinema</Link>;
         }
         return null;
@@ -52,6 +60,7 @@ export default function Header() {
             case 'admin':
                 return <Link to={PATHS.HOME}>Dashboard</Link>;
             case 'operator':
+                return <Link to={PATHS.HOME}>Dashboard</Link>;
             case 'validator':
             case 'projector':
                 return <div>{userDetails.role.toUpperCase()}</div>;

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import styles from './MyTicketsPage.module.css';
 import * as ticketService from '../../../services/ticketService';
 import Spinner from '../../Spinner/Spinner';
-import Sidebar from '../Sidebar/Sidebar';
 import Barcode from 'react-barcode';
 import { generateTicketPDF } from '../../../utils/pdfGenerator';
+import UserSidebar from '../UserSidebar/UserSidebar';
 
 const ITEMS_PER_PAGE = 2;
 
@@ -41,13 +41,14 @@ const MyTicketsPage = () => {
     }
 
     const renderTicket = (ticket) => {
-        const { movieTitle, moviePoster, cinemaName, showtimeStartTime, seat, type, price, shortcode } = ticket;
+        const { movieTitle, moviePoster, cinemaName, hallName, showtimeStartTime, seat, type, price, shortcode } = ticket;
         return (
             <div key={ticket.id} className={styles.ticketCard}>
                 <img src={moviePoster} alt={movieTitle} className={styles.moviePoster} />
                 <div className={styles.ticketDetails}>
                     <h3 className={styles.movieTitle}>{movieTitle}</h3>
                     <p><strong>{cinemaName}</strong></p>
+                    <p><strong>Hall:</strong> {hallName}</p>
                     <p>
                         <strong>Showtime:</strong> {new Date(showtimeStartTime).toLocaleString('en-GB', {
                             hour: '2-digit',
@@ -74,7 +75,7 @@ const MyTicketsPage = () => {
 
     return (
         <div className={styles.myTicketsPage}>
-            <Sidebar />
+            <UserSidebar />
             <div className={styles.content}>
                 <h1 className={styles.header}>My Tickets</h1>
                 <div className={styles.section}>

@@ -4,8 +4,9 @@ import styles from './ProfilePage.module.css';
 import * as userService from '../../services/userService';
 import ChangePasswordModal from './ChangePasswordModal';
 import { useNavigate } from 'react-router-dom';
-import { PATHS } from '../../utils/constants';
-import Sidebar from '../User/Sidebar/Sidebar';
+import { PATHS, ROLES } from '../../utils/constants';
+import OperatorSidebar from '../Operator/OperatorSidebar/OperatorSidebar';
+import UserSidebar from '../User/UserSidebar/UserSidebar';
 
 const ProfilePage = () => {
     const { userDetails, logoutHandler } = useAuth();
@@ -25,7 +26,6 @@ const ProfilePage = () => {
         }
         await userService.updateUsername({ username });
         logoutHandler();
-        navigate(PATHS.LOGIN);
     };
 
     const openModal = () => setIsModalOpen(true);
@@ -38,7 +38,8 @@ const ProfilePage = () => {
 
     return (
         <div className={styles.profilePage}>
-            {userDetails.role === 'user' && <Sidebar />}
+            {userDetails.role === ROLES.USER && <UserSidebar />}
+            {userDetails.role === ROLES.OPERATOR && <OperatorSidebar />}
             <div className={styles.content}>
                 <h1 className={styles.header}>Profile</h1>
                 <div className={styles.formGroup}>
