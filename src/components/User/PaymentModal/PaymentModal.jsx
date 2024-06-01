@@ -67,7 +67,7 @@ const CheckoutForm = ({ onClose, setSuccess, orderInfo }) => {
         if (paymentIntent.status === 'succeeded') {
             setSuccess(true);
             setTimeout(onClose, 2000);
-            await ticketService.buyTickets(orderInfo);
+            await ticketService.buyTickets({orderInfo});
             navigate(PATHS.MY_TICKETS);
         }
     };

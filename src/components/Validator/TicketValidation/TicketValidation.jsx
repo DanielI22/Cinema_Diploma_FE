@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
-import styles from './BookingValidation.module.css';
-import * as bookingService from '../../../services/bookingService';
+import React, { useRef, useState } from 'react';
+import styles from './TicketValidation.module.css';
+import * as ticketService from '../../../services/ticketService';
 import Spinner from '../../Spinner/Spinner';
 import { useCinema } from '../../../contexts/cinemaContext';
-import PhysicalPaymentModal from '../PhysicalPaymentModal/PhysicalPaymentModal';
+import { useParams } from 'react-router-dom';
 
-const BookingValidation = () => {
+const TicketValidation = () => {
     const { selectedCinema } = useCinema();
-    const [bookingCode, setBookingCode] = useState('');
+    const [ticketCode, setTicketCode] = useState('');
     const [isValid, setIsValid] = useState(null); // null for no validation, true for valid, false for invalid
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [booking, setBooking] = useState(null);
-    const [orderInfo, setOrderInfo] = useState(null);
+    const [ticket, setTicket] = useState(null);
+    const { showtimeId } = useParams();
+    const inputRef = useRef(null);
 
     const handleChange = (e) => {
-        setBookingCode(e.target.value);
+        setTicketCode(e.target.value);
         setIsValid(null);
         setError(null);
     };
@@ -28,55 +28,45 @@ const BookingValidation = () => {
     };
 
     const handleValidate = async () => {
-        if (bookingCode.length !== 5 || isNaN(bookingCode)) {
-            setError('Invalid booking code. Must be 5 digits.');
+        if (ticketCode.length !== 5 || isNaN(ticketCode)) {
+            setError('Invalid ticket code. Must be 5 digits.');
             setIsValid(false);
             return;
         }
 
         setIsLoading(true);
         try {
-            const response = await bookingService.validateBooking(bookingCode, selectedCinema.id);
+            const response = await ticketService.validateTicket(ticketCode, selectedCinema.id, showtimeId);
             if (response.status == 200) {
                 setIsValid(true);
                 setError(null);
-                const booking = response.data.booking;
-                setBooking(booking);
-                const orderInfo = {
-                    bookingId: booking.id,
-                    totalPrice: booking.totalPrice
-                };
-                setOrderInfo(orderInfo);
+                const ticket = response.data.ticket;
+                setTicket(ticket);
             }
         } catch (err) {
             if (err.response && err.response.data) {
                 setError(err.response.data);
             } else {
-                setError('Failed to validate booking. Please try again.');
+                setError('Failed to validate ticket. Please try again.');
             }
             setIsValid(false);
         } finally {
             setIsLoading(false);
+            setTicketCode('');
+            inputRef.current.focus(); // Set focus on input
         }
-    };
-
-    const handleModalClose = () => {
-        setIsModalOpen(false);
-    };
-
-    const handleOpenModal = () => {
-        setIsModalOpen(true);
     };
 
     return (
         <div className={styles.container}>
-            <h2>Validate Booking</h2>
+            <h2>Validate Ticket</h2>
             <input
+                ref={inputRef}
                 type="text"
-                value={bookingCode}
+                value={ticketCode}
                 onChange={handleChange}
                 onKeyDown={handleKeyPress}
-                placeholder="Enter booking code"
+                placeholder="Enter ticket code"
                 className={styles.input}
             />
             <button onClick={handleValidate} className={styles.validateButton} disabled={isLoading}>Validate</button>
@@ -84,20 +74,19 @@ const BookingValidation = () => {
             {isValid && !isLoading && (
                 <div className={styles.success}>
                     <span className={styles.checkMark}>&#10004;</span>
-                    <p className={styles.bookingInfo}>Valid booking  <br />
-                        {booking.tickets.length} Tickets <br />
-                        {booking.movieTitle} - {new Date(booking.showtimeStartTime).toLocaleString('en-GB', {
+                    <p className={styles.ticketInfo}>Valid ticket<br />
+                        {ticket.movieTitle} - {new Date(ticket.showtimeStartTime).toLocaleString('en-GB', {
                             hour: '2-digit',
                             minute: '2-digit',
                             hour12: false,
                             day: '2-digit',
                             month: '2-digit',
                             year: 'numeric'
-                        })}
+                        })}<br />
+                        Hall: {ticket.hallName}<br />
+                        Row: {ticket.seat.rowNumber}<br />
+                        Seat: {ticket.seat.seatNumber}<br />
                     </p>
-                    <button onClick={handleOpenModal} className={styles.createTicketsButton}>
-                        Payment
-                    </button>
                 </div>
             )}
             {isValid === false && !isLoading && (
@@ -106,9 +95,8 @@ const BookingValidation = () => {
                     <p className={styles.error}>{error}</p>
                 </div>
             )}
-            <PhysicalPaymentModal isOpen={isModalOpen} onClose={handleModalClose} orderInfo={orderInfo} />
         </div>
     );
 };
 
-export default BookingValidation;
+export default TicketValidation;

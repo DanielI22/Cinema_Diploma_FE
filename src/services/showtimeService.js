@@ -65,3 +65,21 @@ export const deleteShowtime = async (showtimeId) => {
         toast.error(GENERAL_ERROR);
     }
 };
+
+export const setCurrentShowtime = async (showtimeId) => {
+    try {
+        const response = await axiosInstance.put(`/showtimes/${showtimeId}/current`);
+        return response.data;
+    } catch (error) {
+        toast.error(GENERAL_ERROR);
+    }
+};
+
+export const endShowtime = async (showtimeId) => {
+    try {
+        const response = await axiosInstance.put(`/showtimes/${showtimeId}/end`);
+        return response.data;
+    } catch (error) {
+        toast.error(GENERAL_ERROR);
+    }
+};

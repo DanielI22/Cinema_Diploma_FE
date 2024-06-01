@@ -61,7 +61,7 @@ const MyTicketsPage = () => {
                     </p>
                     <p><strong>Seat:</strong> Row {seat.rowNumber} Seat {seat.seatNumber}</p>
                     <p><strong>Type:</strong> {type}</p>
-                    <p><strong>Price:</strong> {price} BGN</p>
+                    <p><strong>Price:</strong> {price.toFixed(2)} BGN</p>
                     <div className={styles.actionButtons}>
                         <button onClick={() => generateTicketPDF(ticket)} className={styles.downloadButton}>Download as PDF</button>
                     </div>

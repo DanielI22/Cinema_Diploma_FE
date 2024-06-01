@@ -35,7 +35,10 @@ export const PATHS = {
     //operator
     SELECT_CINEMA: "/select-cinema",
     VALIDATE_BOOKING: "/validate-booking",
-    TICKET_HISTORY: "/ticket-history"
+    TICKET_HISTORY: "/ticket-history",
+
+    //validator
+    VALIDATE_TICKET: "/validate-ticket",
 };
 
 export const ROLES = {

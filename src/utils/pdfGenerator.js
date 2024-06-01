@@ -44,7 +44,7 @@ export const generateTicketPDF = async (ticket) => {
     const doc = new jsPDF();
     generateTicket(ticket, doc);
 
-    doc.save(`ticket_${shortcode}.pdf`);
+    doc.save(`ticket_${ticket.shortcode}.pdf`);
 };
 
 export const generateTicketsPDF = async (tickets) => {

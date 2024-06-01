@@ -69,11 +69,11 @@ const MyBookingsPage = () => {
                     </p>
                     <p><strong>Seats:</strong> {tickets.map(ticket => (
                         <div key={ticket.id} className={styles.ticketDetails}>
-                            Row {ticket.seat.rowNumber} Seat {ticket.seat.seatNumber} ({ticket.type} - {ticket.price} BGN)
+                            Row {ticket.seat.rowNumber} Seat {ticket.seat.seatNumber} ({ticket.type} - {ticket.price.toFixed(2)} BGN)
                         </div>
                     ))}</p>
                     <p><strong>Status:</strong> {status}</p>
-                    <p><strong>Total Price:</strong> {totalPrice} BGN</p>
+                    <p><strong>Total Price:</strong> {totalPrice.toFixed(2)} BGN</p>
                     <div className={styles.actionButtons}>
                         <button onClick={() => generateBookingPDF(booking)} className={styles.downloadButton}>Download as PDF</button>
                         {status === 'available' && (

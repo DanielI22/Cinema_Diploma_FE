@@ -10,8 +10,11 @@ import DateNavigation from '../DataNavigation/DateNavigation';
 import { isValidUUID } from '../../../utils/functions';
 import MovieCard from '../MovieCard/MovieCard';
 import BackButton from '../../BackButton/BackButton';
+import { useAuth } from '../../../contexts/authContext';
+import { ROLES } from '../../../utils/constants';
 
 function CinemaProgram() {
+    const { userDetails } = useAuth();
     const [cinema, setCinema] = useState(null);
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [movies, setMovies] = useState({});
@@ -27,7 +30,7 @@ function CinemaProgram() {
                 setIsLoading(false);
                 return;
             }
-    
+
             setIsLoading(true);
             try {
                 const cinemaResponse = await cinemaService.getOne(cinemaId);
@@ -35,21 +38,21 @@ function CinemaProgram() {
                 const formattedDate = selectedDate.toISOString().slice(0, 10);
                 const response = await showtimeService.getByCinemaDate(cinemaResponse.cinema.id, formattedDate);
                 const showtimes = response.showtimes;
-    
+
                 const movieIds = [...new Set(showtimes.map(showtime => showtime.movieId))];
                 const movieDetails = {};
                 const groupedShowtimes = {};
-    
+
                 for (const movieId of movieIds) {
                     const movieDetail = await movieService.getOne(movieId);
                     movieDetails[movieId] = movieDetail.movie;
                     groupedShowtimes[movieId] = [];
                 }
-    
+
                 showtimes.forEach(showtime => {
                     groupedShowtimes[showtime.movieId].push(showtime);
                 });
-    
+
                 setMovies(movieDetails);
                 setShowtimesByMovie(groupedShowtimes);
                 setIsValidId(true);
@@ -59,7 +62,7 @@ function CinemaProgram() {
                 setIsLoading(false);
             }
         }
-    
+
         fetchShowtimes();
     }, [cinemaId, selectedDate]);
 
@@ -74,10 +77,21 @@ function CinemaProgram() {
                     </div>
                     {showtimes.map(showtime => {
                         const showtimeDate = new Date(showtime.startTime);
-                        const isActive = (showtimeDate - now) / 60000 > 15;
+                        const movieDurationInMs = movie.duration * 60000;
+                        const showtimeEndDate = new Date(showtimeDate.getTime() + movieDurationInMs);
+                        const linkPath = userDetails.role === ROLES.VALIDATOR
+                            ? `/validate-ticket/${showtime.id}`
+                            : `/booking/${showtime.id}`;
+
+                        // if personnel movie is active if it is not finished
+                        // if not 15 minutes before start
+                        const isActive = userDetails.role === ROLES.VALIDATOR || userDetails.role === ROLES.OPERATOR
+                            ? now < showtimeEndDate
+                            : (showtimeDate - now) / 60000 > 15;
+
                         if (isActive) {
                             return (
-                                <Link to={`/booking/${showtime.id}`} key={showtime.id} className={styles.showtime}>
+                                <Link to={linkPath} key={showtime.id} className={styles.showtime}>
                                     <div>
                                         {showtimeDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
                                         <span className={styles.priceTag}>{`${showtime.type} | ${showtime.ticketPrice.toFixed(2)} BGN`}</span>

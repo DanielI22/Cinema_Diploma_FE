@@ -74,16 +74,6 @@
     transform: translateY(0);
 }
 
-.profileButton {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    background: transparent;
-    border: none;
-    color: inherit;
-    font: inherit;
-}
-
 @media (max-width: 768px) {
     .header {
         flex-direction: column;

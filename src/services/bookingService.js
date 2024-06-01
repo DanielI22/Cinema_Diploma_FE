@@ -49,7 +49,7 @@ export const validateBooking = async (bookingCode, selectedCinemaId) => {
 
 export const takeBooking = async (bookingId) => {
     try {
-        const response = await axiosInstance.get(`/bookings/take/${bookingId}`);
+        const response = await axiosInstance.put(`/bookings/take/${bookingId}`);
         toast.success("Booking is taken successfully");
         return response.data;
     } catch (error) {

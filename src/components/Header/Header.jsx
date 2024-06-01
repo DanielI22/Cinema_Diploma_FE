@@ -34,7 +34,7 @@ export default function Header() {
                 </>
             );
         }
-        if ([ROLES.VALIDATOR, ROLES.PROJECTOR].includes(userDetails.role) && selectedCinema) {
+        if ([ROLES.VALIDATOR, ROLES.PROJECTOR].includes(userDetails.role)) {
             return <Link to={PATHS.SELECT_CINEMA}>Change Cinema</Link>;
         }
         return null;
@@ -44,9 +44,7 @@ export default function Header() {
         const cinemaName = selectedCinema ? ` - ${selectedCinema.name}` : '';
         return (
             <div className={styles.profileDropdown}>
-                <button className={styles.profileButton}>
-                    <Link to={PATHS.MY_PROFILE}>{userDetails.username}{cinemaName} <FontAwesomeIcon icon={faCaretDown} /></Link>
-                </button>
+                <Link to={PATHS.MY_PROFILE}>{userDetails.username}{cinemaName} <FontAwesomeIcon icon={faCaretDown} /></Link>
                 <div className={styles.dropdownContent}>
                     {renderUserRoleSpecificOptions()}
                 </div>
@@ -57,13 +55,11 @@ export default function Header() {
 
     const renderMiddleSection = () => {
         switch (userDetails.role) {
-            case 'admin':
+            case ROLES.ADMIN:
+            case ROLES.OPERATOR:
+            case ROLES.VALIDATOR:
+            case ROLES.PROJECTOR:
                 return <Link to={PATHS.HOME}>Dashboard</Link>;
-            case 'operator':
-                return <Link to={PATHS.HOME}>Dashboard</Link>;
-            case 'validator':
-            case 'projector':
-                return <div>{userDetails.role.toUpperCase()}</div>;
             default:
                 return (
                     <div className={styles.navLeft}>

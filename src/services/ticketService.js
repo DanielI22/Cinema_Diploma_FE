@@ -49,3 +49,8 @@ export const getShotimePurchasedTickets = async (showtimeId) => {
         toast.error(GENERAL_ERROR);
     }
 };
+
+export const validateTicket = async (ticketCode, selectedCinemaId, showtimeId) => {
+    const response = await axiosInstance.get(`/tickets/validate/${ticketCode}?cinema=${selectedCinemaId}&showtime=${showtimeId}`);
+    return response;
+};
