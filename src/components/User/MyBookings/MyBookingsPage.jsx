@@ -7,6 +7,7 @@ import { generateBookingPDF } from '../../../utils/pdfGenerator';
 import useDeleteModal from '../../../hooks/useDeleteModal';
 import DeleteModal from '../../DeleteModal/DeleteModal';
 import UserSidebar from '../UserSidebar/UserSidebar';
+import { formatLocalDate } from '../../../utils/functions';
 
 const ITEMS_PER_PAGE = 2;
 
@@ -58,14 +59,7 @@ const MyBookingsPage = () => {
                     <p><strong>{cinemaName}</strong></p>
                     <p><strong>Hall:</strong> {hallName}</p>
                     <p>
-                        <strong>Showtime:</strong> {new Date(showtimeStartTime).toLocaleString('en-GB', {
-                            hour: '2-digit',
-                            minute: '2-digit',
-                            hour12: false,
-                            day: '2-digit',
-                            month: '2-digit',
-                            year: 'numeric'
-                        })}
+                        <strong>Showtime:</strong> {formatLocalDate(showtimeStartTime)}
                     </p>
                     <p><strong>Seats:</strong> {tickets.map(ticket => (
                         <div key={ticket.id} className={styles.ticketDetails}>

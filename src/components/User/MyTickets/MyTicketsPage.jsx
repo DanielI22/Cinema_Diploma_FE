@@ -5,6 +5,7 @@ import Spinner from '../../Spinner/Spinner';
 import Barcode from 'react-barcode';
 import { generateTicketPDF } from '../../../utils/pdfGenerator';
 import UserSidebar from '../UserSidebar/UserSidebar';
+import { formatLocalDate } from '../../../utils/functions';
 
 const ITEMS_PER_PAGE = 2;
 
@@ -50,14 +51,7 @@ const MyTicketsPage = () => {
                     <p><strong>{cinemaName}</strong></p>
                     <p><strong>Hall:</strong> {hallName}</p>
                     <p>
-                        <strong>Showtime:</strong> {new Date(showtimeStartTime).toLocaleString('en-GB', {
-                            hour: '2-digit',
-                            minute: '2-digit',
-                            hour12: false,
-                            day: '2-digit',
-                            month: '2-digit',
-                            year: 'numeric'
-                        })}
+                        <strong>Showtime:</strong> {formatLocalDate(showtimeStartTime)}
                     </p>
                     <p><strong>Seat:</strong> Row {seat.rowNumber} Seat {seat.seatNumber}</p>
                     <p><strong>Type:</strong> {type}</p>

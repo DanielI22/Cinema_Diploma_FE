@@ -4,6 +4,7 @@ import * as ticketService from '../../../services/ticketService';
 import Spinner from '../../Spinner/Spinner';
 import { useCinema } from '../../../contexts/cinemaContext';
 import { useParams } from 'react-router-dom';
+import { formatLocalDate } from '../../../utils/functions';
 
 const TicketValidation = () => {
     const { selectedCinema } = useCinema();
@@ -75,14 +76,7 @@ const TicketValidation = () => {
                 <div className={styles.success}>
                     <span className={styles.checkMark}>&#10004;</span>
                     <p className={styles.ticketInfo}>Valid ticket<br />
-                        {ticket.movieTitle} - {new Date(ticket.showtimeStartTime).toLocaleString('en-GB', {
-                            hour: '2-digit',
-                            minute: '2-digit',
-                            hour12: false,
-                            day: '2-digit',
-                            month: '2-digit',
-                            year: 'numeric'
-                        })}<br />
+                        {ticket.movieTitle} - {formatLocalDate(ticket.showtimeStartTime)}<br />
                         Hall: {ticket.hallName}<br />
                         Row: {ticket.seat.rowNumber}<br />
                         Seat: {ticket.seat.seatNumber}<br />

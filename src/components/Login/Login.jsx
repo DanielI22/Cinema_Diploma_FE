@@ -18,17 +18,18 @@ export default function Login() {
         e.preventDefault();
         setIsLoading(true);
         const role = await loginSubmitHandler({ email, password });
-        console.log(role);
-        if (role === ROLES.USER) {
-            if (fromPath.pathname === PATHS.LOGOUT) {
-                navigate(PATHS.HOME);
+        if (role) {
+            if (role === ROLES.USER) {
+                if (fromPath.pathname === PATHS.LOGOUT) {
+                    navigate(PATHS.HOME);
+                } else {
+                    navigate(fromPath);
+                }
+            } else if ([ROLES.OPERATOR, ROLES.VALIDATOR, ROLES.PROJECTOR].includes(role)) {
+                navigate(PATHS.SELECT_CINEMA);
             } else {
-                navigate(fromPath);
+                navigate(PATHS.HOME);
             }
-        } else if ([ROLES.OPERATOR, ROLES.VALIDATOR, ROLES.PROJECTOR].includes(role)) {
-            navigate(PATHS.SELECT_CINEMA);
-        } else {
-            navigate(PATHS.HOME);
         }
         setIsLoading(false);
     };

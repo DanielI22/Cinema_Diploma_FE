@@ -49,10 +49,12 @@ export const ROLES = {
     PROJECTOR: "projector"
 }
 
-export const GENERAL_ERROR = "An unexpected error occurred. Please try again later.";
-export const GENERAL_ADD = "Added Successfully.";
-export const GENERAL_UPDATE = "Updated Successfully.";
-export const GENERAL_DELETE = "Deleted Successfully.";
+export const TOAST_ERROR = "error";
+export const TOAST_SUCCESS = "success";
+export const GENERAL_ERROR = "errors.general"
+export const GENERAL_ADD = "messages.add"
+export const GENERAL_UPDATE = "messages.update"
+export const GENERAL_DELETE = "messages.delete"
 
 export const ACCESS_TOKEN_EXPIRE = 60;  // 1 minute
 

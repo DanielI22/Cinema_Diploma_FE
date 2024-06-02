@@ -4,6 +4,10 @@ export function genresToString(genres) {
     return genres.map(genre => genre.name).map(genre => capitalizeFirstLetter(genre)).join(", ");
 }
 
+export function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 export function getUserRole(decodedRoles) {
     if (!decodedRoles) {
         return ROLES.USER;
@@ -22,11 +26,7 @@ export function getUserRole(decodedRoles) {
     return ROLES.USER;
 }
 
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
-export function groupShowtimesByCinemaAndMovie (showtimes) {
+export function groupShowtimesByCinemaAndMovie(showtimes) {
     const groupedByCinema = showtimes.reduce((acc, curr) => {
         if (!acc[curr.cinemaName]) {
             acc[curr.cinemaName] = [];
@@ -54,9 +54,19 @@ export function groupShowtimesByCinemaAndMovie (showtimes) {
     });
 };
 
-export function isValidUUID (uuid) {
-    console.log(uuid)
+export function isValidUUID(uuid) {
     return /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/.test(uuid);
 };
+
+export function formatLocalDate(localDate) {
+    return new Date(localDate).toLocaleString('en-GB', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+    })
+}
 
 

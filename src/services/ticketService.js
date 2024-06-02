@@ -1,10 +1,14 @@
-import { toast } from "react-toastify";
-import { GENERAL_ADD, GENERAL_DELETE, GENERAL_ERROR, GENERAL_UPDATE } from "../utils/constants";
 import axiosInstance from "../config/axiosInstance";
+import { TOAST_ERROR, TOAST_SUCCESS, GENERAL_ERROR } from "../utils/constants";
+import { showToast } from "../utils/toast";
 
 export const getOne = async (ticketId) => {
-    const response = await axiosInstance.get(`/tickets/${ticketId}`);
-    return response.data;
+    try {
+        const response = await axiosInstance.get(`/tickets/${ticketId}`);
+        return response.data;
+    } catch (error) {
+        showToast(TOAST_ERROR, GENERAL_ERROR);
+    }
 };
 
 export const getOperatorTickets = async (cinemaId, pageNumber, pageSize) => {
@@ -18,7 +22,7 @@ export const getOperatorTickets = async (cinemaId, pageNumber, pageSize) => {
         });
         return response.data;
     } catch (error) {
-        toast.error(GENERAL_ERROR);
+        showToast(TOAST_ERROR, GENERAL_ERROR);
     }
 };
 
@@ -27,30 +31,34 @@ export const getMyTickets = async () => {
         const response = await axiosInstance.get(`/tickets/my-tickets`);
         return response.data;
     } catch (error) {
-        toast.error(GENERAL_ERROR);
+        showToast(TOAST_ERROR, GENERAL_ERROR);
     }
 };
 
 export const buyTickets = async (orderInfo) => {
     try {
         const response = await axiosInstance.post(`/tickets`, orderInfo);
-        toast.success("Tickets bought succesfully!");
+        showToast(TOAST_SUCCESS, 'messages.buySuccess');
         return response.data;
     } catch (error) {
-        toast.error(GENERAL_ERROR);
+        showToast(TOAST_ERROR, GENERAL_ERROR);
     }
-}
+};
 
 export const getShotimePurchasedTickets = async (showtimeId) => {
     try {
         const response = await axiosInstance.get(`/tickets/showtimes/${showtimeId}`);
         return response.data;
     } catch (error) {
-        toast.error(GENERAL_ERROR);
+        showToast(TOAST_ERROR, GENERAL_ERROR);
     }
 };
 
 export const validateTicket = async (ticketCode, selectedCinemaId, showtimeId) => {
-    const response = await axiosInstance.get(`/tickets/validate/${ticketCode}?cinema=${selectedCinemaId}&showtime=${showtimeId}`);
-    return response;
+    try {
+        const response = await axiosInstance.get(`/tickets/validate/${ticketCode}?cinema=${selectedCinemaId}&showtime=${showtimeId}`);
+        return response.data;
+    } catch (error) {
+        showToast(TOAST_ERROR, GENERAL_ERROR);
+    }
 };

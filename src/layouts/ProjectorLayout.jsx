@@ -7,15 +7,14 @@ import NotFound from '../components/NotFound/NotFound';
 import SelectCinema from '../components/Personnel/SelectCinema/SelectCinema';
 import PersonnelRoute from '../components/AuthGuards/PersonnelRoute';
 import ProfilePage from '../components/ProfilePage/ProfilePage';
+import ProjectorHome from '../components/Projector/ProjectorHome/ProjectorHome';
 
 const ProjectorLayout = () => (
     <>
         <Routes>
-            <Route path={PATHS.HOME} element={<PersonnelRoute><Home /></PersonnelRoute>} />
+            <Route path={PATHS.HOME} element={<PersonnelRoute><ProjectorHome /></PersonnelRoute>} />
             <Route path={PATHS.SELECT_CINEMA} element={<SelectCinema />} />
-
             <Route path={PATHS.MY_PROFILE} element={<PersonnelRoute><ProfilePage /></PersonnelRoute>} />
-
             <Route path={PATHS.LOGOUT} element={<Logout />} />
             <Route path="*" element={<NotFound />} />
         </Routes>

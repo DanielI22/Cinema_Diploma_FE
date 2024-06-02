@@ -1,43 +1,42 @@
-import { toast } from "react-toastify";
-import { GENERAL_ADD, GENERAL_DELETE, GENERAL_ERROR, GENERAL_UPDATE } from "../utils/constants";
+import { showToast } from "../utils/toast";
 import axiosInstance from "../config/axiosInstance";
+import { GENERAL_ADD, GENERAL_DELETE, GENERAL_ERROR, GENERAL_UPDATE, TOAST_ERROR, TOAST_SUCCESS } from "../utils/constants";
 
 export const getAll = async () => {
     try {
         const response = await axiosInstance.get(`/genres`);
         return response.data;
     } catch (error) {
-        toast.error(GENERAL_ERROR);
+        showToast(TOAST_ERROR, GENERAL_ERROR);
     }
 };
 
 export const addGenre = async (genre) => {
     try {
         const response = await axiosInstance.post(`/genres`, genre);
-        toast.success(GENERAL_ADD);
+        showToast(TOAST_SUCCESS, GENERAL_ADD);
         return response.data;
     } catch (error) {
-        toast.error(GENERAL_ERROR);
+        showToast(TOAST_ERROR, GENERAL_ERROR);
     }
-}
+};
 
 export const editGenre = async (genreId, genre) => {
     try {
         const response = await axiosInstance.put(`/genres/${genreId}`, genre);
-        toast.success(GENERAL_UPDATE);
+        showToast(TOAST_SUCCESS, GENERAL_UPDATE);
         return response.data;
     } catch (error) {
-        toast.error(G);
+        showToast(TOAST_ERROR, GENERAL_ERROR);
     }
 };
-
 
 export const deleteGenre = async (genreId) => {
     try {
         const response = await axiosInstance.delete(`/genres/${genreId}`);
-        toast.success(GENERAL_DELETE);
+        showToast(TOAST_SUCCESS, GENERAL_DELETE);
         return response.data;
     } catch (error) {
-        toast.error(GENERAL_ERROR);
+        showToast(TOAST_ERROR, GENERAL_ERROR);
     }
 };

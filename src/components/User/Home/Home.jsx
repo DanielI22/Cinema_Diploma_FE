@@ -9,11 +9,11 @@ export default function Home() {
 
   return (
     <div className="container mx-auto px-4">
-      <h1 className={styles.welcomeTitle}>{t('welcomeMessage')}</h1>
+      <h1 className={styles.welcomeTitle}>{t('messages.welcome')}</h1>
       <p className={styles.welcomeDescription}>
-        {t('descriptionMessage')}
+        {t('messages.description')}
       </p>
-      <h2 className={styles.upcomingShowingsTitle}>{t('upcomingMessage')}</h2>
+      <h2 className={styles.upcomingShowingsTitle}>{t('messages.upcoming')}</h2>
       <MovieCarousel />
       <div className={styles.programButtonContainer}>
         <Link to={PATHS.PROGRAM} className={styles.programButton}>Get your tickets now!</Link>

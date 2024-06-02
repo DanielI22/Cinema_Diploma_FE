@@ -1,6 +1,6 @@
-import { toast } from "react-toastify";
-import { GENERAL_ADD, GENERAL_DELETE, GENERAL_ERROR, GENERAL_UPDATE } from "../utils/constants";
+import { GENERAL_ERROR, TOAST_ERROR } from "../utils/constants";
 import axiosInstance from "../config/axiosInstance";
+import { showToast } from "../utils/toast";
 
 
 export const pay = async (paymentInfo) => {
@@ -8,7 +8,7 @@ export const pay = async (paymentInfo) => {
         const response = await axiosInstance.post(`/payments/create-payment-intent`, paymentInfo);
         return response;
     } catch (error) {
-        toast.error(GENERAL_ERROR);
+        showToast(TOAST_ERROR, GENERAL_ERROR);
         return error;
     }
 }

@@ -86,14 +86,7 @@ const BookingValidation = () => {
                     <span className={styles.checkMark}>&#10004;</span>
                     <p className={styles.bookingInfo}>Valid booking  <br />
                         {booking.tickets.length} Tickets <br />
-                        {booking.movieTitle} - {new Date(booking.showtimeStartTime).toLocaleString('en-GB', {
-                            hour: '2-digit',
-                            minute: '2-digit',
-                            hour12: false,
-                            day: '2-digit',
-                            month: '2-digit',
-                            year: 'numeric'
-                        })}
+                        {booking.movieTitle} - {formatLocalDate(booking.showtimeStartTime)}
                     </p>
                     <button onClick={handleOpenModal} className={styles.createTicketsButton}>
                         Payment

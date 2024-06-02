@@ -1,5 +1,23 @@
 {
-    "welcomeMessage": "Welcome to your cinema",
-    "descriptionMessage": "Here you will find the latest movie titles and you can get your ticket",
-    "upcomingMessage": "Upcoming Titles"
+    "errors": {
+        "general": "An error occurred. Please try again later.",
+        "usernameOrEmailExists": "This username or email already exists. Please try another one.",
+        "usernameExists": "This username already exists. Please try another one.",
+        "badCredentials": "Bad credentials. Please check your email and password.",
+        "sessionExpired": "Session expired. Please log in again.",
+        "cinemaNotFound": "Cinema not found."
+    },
+    "messages": {
+        "add": "Successfully added.",
+        "update": "Successfully updated.",
+        "delete": "Successfully deleted.",
+        "welcome": "Welcome to your cinema",
+        "description": "Here you will find the latest movie titles and you can get your ticket",
+        "upcoming": "Upcoming titles",
+        "tokenRefreshed": "Token refreshed successfully.",
+        "bookingSuccess": "Tickets booked successfully!",
+        "bookingCancelled": "Booking is cancelled successfully.",
+        "bookingTaken": "Booking is taken successfully.",
+        "buySuccess": "Tickets bought successfully."
+    }
 }

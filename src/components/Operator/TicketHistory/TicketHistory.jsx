@@ -4,6 +4,7 @@ import Spinner from '../../Spinner/Spinner';
 import styles from './TicketHistory.module.css';
 import OperatorSidebar from '../OperatorSidebar/OperatorSidebar';
 import { useCinema } from '../../../contexts/cinemaContext';
+import { formatLocalDate } from '../../../utils/functions';
 
 const TicketHistory = () => {
     const {selectedCinema} = useCinema();
@@ -60,25 +61,11 @@ const TicketHistory = () => {
                         {tickets.map(ticket => (
                             <tr key={ticket.id}>
                                 <td>{ticket.movieTitle}</td>
-                                <td>{new Date(ticket.showtimeStartTime).toLocaleString('en-GB', {
-                                    hour: '2-digit',
-                                    minute: '2-digit',
-                                    hour12: false,
-                                    day: '2-digit',
-                                    month: '2-digit',
-                                    year: 'numeric'
-                                })}</td>
+                                <td>{formatLocalDate(ticket.showtimeStartTime)}</td>
                                 <td>{ticket.type}</td>
                                 <td>{ticket.price.toFixed(2)} BGN</td>
                                 <td>{ticket.shortcode}</td>
-                                <td>{new Date(ticket.soldTime).toLocaleString('en-GB', {
-                                    hour: '2-digit',
-                                    minute: '2-digit',
-                                    hour12: false,
-                                    day: '2-digit',
-                                    month: '2-digit',
-                                    year: 'numeric'
-                                })}</td>
+                                <td>{formatLocalDate(ticket.soldTime)}</td>
                             </tr>
                         ))}
                     </tbody>

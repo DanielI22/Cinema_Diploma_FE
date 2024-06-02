@@ -1,0 +1,134 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.error {
+    color: red;
+    margin-bottom: 20px;
+}
+
+label {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.select {
+    padding: 10px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f2f2f2;
+}
+
+.actionButton {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    margin-right: 5px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.actionButton:hover {
+    background-color: #0056b3;
+}
+
+.actionButton:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.liveStatus {
+    display: flex;
+    align-items: center;
+}
+
+.glowingDot {
+    height: 10px;
+    width: 10px;
+    background-color: red;
+    border-radius: 50%;
+    margin-left: 5px;
+    box-shadow: 0 0 5px red, 0 0 10px red, 0 0 15px red, 0 0 20px red;
+    animation: glowing 1.5s infinite;
+}
+
+@keyframes glowing {
+    0% { box-shadow: 0 0 5px red; }
+    50% { box-shadow: 0 0 20px red; }
+    100% { box-shadow: 0 0 5px red; }
+}
+
+.indicator {
+    background-color: #e0f7fa;
+    border: 1px solid #b2ebf2;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    color: #00796b;
+    width: 100%;
+    text-align: center;
+}
+
+.dateToggle {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.dateButton {
+    padding: 10px 20px;
+    font-size: 1rem;
+    margin: 0 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.dateButton:hover {
+    background-color: #f0f0f0;
+}
+
+.dateButton:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.noActions {
+    color: #999;
+    font-size: 0.9rem;
+}
