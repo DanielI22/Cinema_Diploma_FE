@@ -1,7 +1,7 @@
 import axiosInstance from '../config/axiosInstance';
 import { API_BASE_URL, GENERAL_ERROR, TOAST_ERROR, TOAST_SUCCESS } from '../utils/constants';
 import axios from 'axios';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import { showToast } from '../utils/toast';
 import { emitEvent } from '../utils/eventEmitter';
 
@@ -16,8 +16,9 @@ export const register = async ({ username, email, password }) => {
     } catch (error) {
         if (error.response?.status === 409) {
             showToast(TOAST_ERROR, 'errors.usernameOrEmailExists');
-        } else {
-            showToast(TOAST_ERROR, GENERAL_ERROR);
+        }
+        else {
+            showToast(TOAST_ERROR, 'errors.general');
         }
     }
 };
@@ -32,8 +33,8 @@ export const login = async ({ email, password }) => {
     } catch (error) {
         if (error.response?.status === 404 || error.response?.status === 400) {
             showToast(TOAST_ERROR, 'errors.badCredentials');
-        } else {
-            showToast(TOAST_ERROR, GENERAL_ERROR);
+        } else if (error.response?.status === 401) {
+            showToast('warning', 'messages.verifyMail');
         }
     }
 };
@@ -57,5 +58,33 @@ export const refreshToken = async (refreshToken) => {
             showToast(TOAST_ERROR, GENERAL_ERROR);
         }
         return null;
+    }
+};
+
+export const sendForgotPasswordEmail = async (email) => {
+    try {
+        await axiosInstance.post(`/users/forgot-password`, { email });
+        showToast(TOAST_SUCCESS, 'messages.send');
+    } catch (error) {
+        if (error.response && error.response.status === 404) {
+            showToast(TOAST_ERROR, 'errors.badEmail');
+        }
+        else {
+            showToast(TOAST_ERROR, 'errors.failSend');
+        }
+    }
+};
+
+export const sendVerificationEmail = async (email) => {
+    try {
+        await axiosInstance.post(`/users/resend-verification`, { email });
+        showToast(TOAST_SUCCESS, 'messages.send');
+    } catch (error) {
+        if (error.response && error.response.status === 404) {
+            showToast(TOAST_ERROR, 'errors.badEmail');
+        }
+        else {
+            showToast(TOAST_ERROR, 'errors.failSend');
+        }
     }
 };

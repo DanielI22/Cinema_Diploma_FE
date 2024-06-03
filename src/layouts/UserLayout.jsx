@@ -17,6 +17,8 @@ import ProfilePage from "../components/ProfilePage/ProfilePage";
 import FavouritesPage from "../components/User/Favourites/FavouritesPage";
 import MyBookingsPage from "../components/User/MyBookings/MyBookingsPage";
 import MyTicketsPage from "../components/User/MyTickets/MyTicketsPage";
+import ResendVerification from "../components/ResendVerification/ResendVerification";
+import ForgotPassword from "../components/ForgotPassword/ForgotPassword";
 
 const UserLayout = () => (
   <>
@@ -33,6 +35,8 @@ const UserLayout = () => (
       <Route path={PATHS.MY_TICKETS} element={<ProtectedRoute><MyTicketsPage /></ProtectedRoute>} />
       <Route path={PATHS.LOGIN} element={<GuestRoute><Login /></GuestRoute>} />
       <Route path={PATHS.REGISTER} element={<GuestRoute><Register /></GuestRoute>} />
+      <Route path={PATHS.FORGOT_PASSWORD} element={<GuestRoute><ForgotPassword /></GuestRoute>} />
+      <Route path={PATHS.RESEND_VERIFICATION} element={<GuestRoute><ResendVerification /></GuestRoute>} />
       <Route path={PATHS.LOGOUT} element={<ProtectedRoute><Logout /></ProtectedRoute>} />
       <Route path="*" element={<NotFound />} />
     </Routes>

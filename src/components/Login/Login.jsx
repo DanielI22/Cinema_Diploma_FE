@@ -60,6 +60,10 @@ export default function Login() {
                     />
                 </div>
                 <button type="submit" className={styles.loginButton}>Log In</button>
+                <div className={styles.extraOptions}>
+                    <Link to={PATHS.FORGOT_PASSWORD} className={styles.extraLink}>Forgot Password?</Link>
+                    <Link to={PATHS.RESEND_VERIFICATION} className={styles.extraLink}>Resend Verification Link</Link>
+                </div>
                 <div className={styles.registerPrompt}>
                     Don&apos;t have an account? <Link to={PATHS.REGISTER} className={styles.registerLink}>Register</Link>
                 </div>

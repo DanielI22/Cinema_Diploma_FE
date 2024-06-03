@@ -57,3 +57,19 @@ input {
 .registerLink:hover {
     text-decoration: underline;
 }
+
+.extraOptions {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.extraLink {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #00a8ff;
+    text-decoration: none;
+}
+
+.extraLink:hover {
+    text-decoration: underline;
+}

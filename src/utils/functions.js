@@ -1,3 +1,4 @@
+import i18n from "../locales/i18n";
 import { ROLES } from "./constants";
 
 export function genresToString(genres) {
@@ -69,4 +70,12 @@ export function formatLocalDate(localDate) {
     })
 }
 
+export function mapTicketType(type) {
+    const typeMapping = {
+        'normal': i18n.t('normal'),
+        'reduced': i18n.t('reduced'),
+    };
+
+    return typeMapping[type] || type;
+};
 

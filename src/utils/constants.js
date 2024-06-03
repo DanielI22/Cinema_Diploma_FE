@@ -10,6 +10,8 @@ export const PATHS = {
     BOOKING: "/booking",
     LOGIN: "/login",
     REGISTER: "/register",
+    FORGOT_PASSWORD: "/forgot-password",
+    RESEND_VERIFICATION: "/resend-verification",
     LOGOUT: "/logout",
 
     MY_PROFILE: "/my-profile",

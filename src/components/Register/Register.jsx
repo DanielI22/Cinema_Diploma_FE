@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './Register.module.css';
-import { PATHS } from '../../utils/constants';
+import { GENERAL_ERROR, PATHS } from '../../utils/constants';
 import { useAuth } from "../../contexts/authContext"
 import Spinner from '../Spinner/Spinner';
+import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 export default function Register() {
     const [username, setUsername] = useState('');
@@ -13,6 +15,8 @@ export default function Register() {
     const [error, setError] = useState('');
     const { registerSubmitHandler } = useAuth();
     const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -30,10 +34,11 @@ export default function Register() {
             setError('Passwords do not match!');
             return
         }
-        
+
         setError('');
         setIsLoading(true);
         await registerSubmitHandler({ username, email, password })
+        toast.warning(t('messages.verifyMail'));
         setIsLoading(false);
     };
 

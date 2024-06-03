@@ -47,12 +47,8 @@ export const AuthProvider = ({ children }) => {
     };
 
     const registerSubmitHandler = async (values) => {
-        const result = await authService.register(values);
-        if (result) {
-            setAuthToken(result.accessToken);
-            setRefreshToken(result.refreshToken);
-            navigate(PATHS.HOME);
-        }
+        await authService.register(values);
+        navigate(PATHS.HOME);
     };
 
     const logoutHandler = async () => {
