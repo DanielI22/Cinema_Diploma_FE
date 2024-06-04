@@ -48,7 +48,6 @@ export const logout = async (authToken) => {
 export const refreshToken = async (refreshToken) => {
     try {
         const response = await axios.post(`${API_BASE_URL}/users/refresh`, { refreshToken });
-        showToast(TOAST_SUCCESS, 'messages.tokenRefreshed');
         return response.data;
     } catch (error) {
         if (error.response && error.response.status === 400) {

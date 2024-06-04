@@ -29,7 +29,6 @@
 .moviePoster {
     width: 150px;
     height: 225px;
-    object-fit: cover;
     border-radius: 10px;
     margin-right: 20px;
 }

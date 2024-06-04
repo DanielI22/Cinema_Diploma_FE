@@ -12,6 +12,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import PaymentModal from '../PaymentModal/PaymentModal';
 import { useAuth } from '../../../contexts/authContext';
 import PhysicalPaymentModal from '../../Operator/PhysicalPaymentModal/PhysicalPaymentModal';
+import i18n from '../../../locales/i18n';
 
 const Booking = () => {
     const { showtimeId } = useParams();
@@ -101,7 +102,8 @@ const Booking = () => {
                 seats: selectedSeats.map(seat => ({
                     seatId: seat.id,
                     ticketType: seat.ticketType
-                }))
+                })),
+                language: i18n.language
             }
         };
 
@@ -116,7 +118,8 @@ const Booking = () => {
             seats: selectedSeats.map(seat => ({
                 seatId: seat.id,
                 ticketType: seat.ticketType
-            }))
+            })),
+            language: i18n.language
         };
         setOrderInfo(order);
         openModal();

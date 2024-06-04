@@ -24,21 +24,23 @@ const CheckoutForm = ({ onClose, setSuccess, orderInfo }) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         setIsLoading(true);
+        setError(null); // Clear the error state on form submission
 
         if (!stripe || !elements) {
+            setIsLoading(false);
             return;
         }
 
         const cardElement = elements.getElement(CardElement);
 
         // Create a payment method
-        const { error, paymentMethod } = await stripe.createPaymentMethod({
+        const { error: createError, paymentMethod } = await stripe.createPaymentMethod({
             type: 'card',
             card: cardElement,
         });
 
-        if (error) {
-            setError(error.message);
+        if (createError) {
+            setError(createError.message);
             setIsLoading(false);
             return;
         }
@@ -51,6 +53,7 @@ const CheckoutForm = ({ onClose, setSuccess, orderInfo }) => {
 
         if (response.status !== 200) {
             setError(GENERAL_ERROR);
+            setIsLoading(false);
             return;
         }
 
@@ -72,9 +75,14 @@ const CheckoutForm = ({ onClose, setSuccess, orderInfo }) => {
         }
     };
 
+    // Clear error when user starts typing in the CardElement
+    const handleChange = () => {
+        setError(null);
+    };
+
     return (
         <form onSubmit={handleSubmit} className={styles.form}>
-            <CardElement />
+            <CardElement onChange={handleChange} />
             <button type="submit" disabled={!stripe || isLoading} className={styles.payButton}>
                 {isLoading ? 'Processing...' : 'Pay'}
             </button>

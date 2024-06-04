@@ -32,7 +32,6 @@
         "welcome": "Welcome to your cinema",
         "description": "Here you will find the latest movie titles and you can get your ticket",
         "upcoming": "Upcoming titles",
-        "tokenRefreshed": "Token refreshed successfully.",
         "bookingSuccess": "Tickets booked successfully!",
         "bookingCancelled": "Booking is cancelled successfully.",
         "bookingTaken": "Booking is taken successfully.",
