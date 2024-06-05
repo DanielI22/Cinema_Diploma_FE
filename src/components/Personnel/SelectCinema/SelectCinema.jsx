@@ -7,6 +7,7 @@ import styles from './SelectCinema.module.css';
 import Spinner from '../../Spinner/Spinner';
 import OperatorSidebar from '../../Operator/OperatorSidebar/OperatorSidebar';
 import { useAuth } from '../../../contexts/authContext';
+import { useTranslation } from 'react-i18next';
 
 const SelectCinema = () => {
     const [cinemas, setCinemas] = useState([]);
@@ -14,6 +15,7 @@ const SelectCinema = () => {
     const { userDetails } = useAuth();
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     useEffect(() => {
         const fetchCinemas = async () => {
@@ -38,7 +40,7 @@ const SelectCinema = () => {
         <div className={styles.container}>
             {userDetails.role === ROLES.OPERATOR && selectedCinema && <OperatorSidebar />}
             <div className={styles.mainContent}>
-                <h1 className={styles.title}>Select a Cinema</h1>
+                <h1 className={styles.title}>{t('selectCinema')}</h1>
                 {cinemas.map(cinema => (
                     <button key={cinema.id} onClick={() => handleCinemaSelect(cinema)} className={styles.cinemaButton}>
                         {cinema.name}

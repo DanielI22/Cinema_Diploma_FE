@@ -4,8 +4,10 @@ import * as genreService from '../../../services/genreService';
 import styles from "./Movies.module.css";
 import MovieCard from "../MovieCard/MovieCard";
 import Spinner from "../../Spinner/Spinner";
+import { useTranslation } from 'react-i18next';
 
 export default function Movies() {
+    const { t } = useTranslation();
     const [movies, setMovies] = useState([]);
     const [genres, setGenres] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -16,7 +18,6 @@ export default function Movies() {
         const fetchMovies = async () => {
             setIsLoading(true);
             const response = await movieService.getAll();
-            console.log(response)
             setMovies(response.movies);
             setIsLoading(false);
         };
@@ -26,7 +27,6 @@ export default function Movies() {
     useEffect(() => {
         const fetchGenres = async () => {
             const response = await genreService.getAll();
-            console.log(response)
             setGenres(response.genres);
         };
         fetchGenres();
@@ -42,7 +42,7 @@ export default function Movies() {
             <div className={styles.filters}>
                 <input
                     type="text"
-                    placeholder="Search movies..."
+                    placeholder={t('searchMovies')}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className={styles.searchInput}
@@ -52,7 +52,7 @@ export default function Movies() {
                     onChange={(e) => { setSelectedGenre(e.target.value); setSearchQuery('') }}
                     className={styles.genreSelect}
                 >
-                    <option value="">All Genres</option>
+                    <option value="">{t('allGenres')}</option>
                     {genres.map(genre => (
                         <option key={genre.id} value={genre.name}>{genre.name}</option>
                     ))}
@@ -70,7 +70,7 @@ export default function Movies() {
                         ))}
                     </div>
                 ) : (
-                    <div className={styles.noMovies}>No movies match your criteria</div>
+                    <div className={styles.noMovies}>{t('noMovies')}</div>
                 )
             )}
         </div>)

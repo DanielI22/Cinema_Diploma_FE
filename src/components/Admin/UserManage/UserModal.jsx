@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import styles from './UserModal.module.css';
 import * as userService from '../../../services/userService';
+import { useTranslation } from 'react-i18next';
 
 const UserModal = ({ isOpen, onClose, role, refreshUsers }) => {
+    const { t } = useTranslation();
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -21,21 +23,21 @@ const UserModal = ({ isOpen, onClose, role, refreshUsers }) => {
 
     return (
         <Modal isOpen={isOpen} onRequestClose={onClose} className={styles.modal}>
-            <h2>Add {role}</h2>
+            <h2>{t('add')} {t(role)}</h2>
             <form onSubmit={handleAddUser} className={styles.form}>
                 <label>
-                    Username:
+                    {t('username')}:
                     <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required />
                 </label>
                 <label>
-                    Email:
+                    {t('email')}:
                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                 </label>
                 <label>
-                    Password:
+                    {t('password')}:
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                 </label>
-                <button className={styles.submitButton}>Add {role}</button>
+                <button className={styles.submitButton}>{t('add')} {t(role)}</button>
             </form>
         </Modal>
     );

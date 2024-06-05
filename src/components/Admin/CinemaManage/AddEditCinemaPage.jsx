@@ -2,13 +2,15 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './AddEditCinemaPage.module.css';
 import { PATHS } from '../../../utils/constants';
-import * as cinemaService from '../../../services/cinemaService'
-import * as hallService from '../../../services/hallService'
+import * as cinemaService from '../../../services/cinemaService';
+import * as hallService from '../../../services/hallService';
 import BackButton from '../../BackButton/BackButton';
 import Spinner from '../../Spinner/Spinner';
 import HallSelect from './HallSelect';
+import { useTranslation } from 'react-i18next';
 
 export default function AddEditCinemaPage() {
+    const { t } = useTranslation();
     const [cinema, setCinema] = useState({
         name: '',
         location: '',
@@ -63,28 +65,27 @@ export default function AddEditCinemaPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
         if (cinemaId) {
-            setIsLoading(true);
             await cinemaService.editCinema(cinemaId, cinema);
-            setIsLoading(false);
         } else {
-            setIsLoading(true);
             await cinemaService.addCinema(cinema);
-            setIsLoading(false);
         }
+        setIsLoading(false);
         navigate(PATHS.MANAGE_CINEMAS);
     };
 
     if (isLoading) {
         return <Spinner />;
     }
+
     return (
         <div className={styles.addEditCinemaContainer}>
             <BackButton />
-            <h2>{cinemaId ? 'Edit Cinema' : 'Add New Cinema'}</h2>
+            <h2>{cinemaId ? t('editCinema') : t('addNewCinema')}</h2>
             <form onSubmit={handleSubmit} className={styles.addEditCinemaForm}>
                 <div className={styles.formGroup}>
-                    <label htmlFor="name">Name:</label>
+                    <label htmlFor="name">{t('name')}:</label>
                     <input
                         id="name"
                         name="name"
@@ -95,7 +96,7 @@ export default function AddEditCinemaPage() {
                     />
                 </div>
                 <div className={styles.formGroup}>
-                    <label htmlFor="location">Location:</label>
+                    <label htmlFor="location">{t('location')}:</label>
                     <input
                         id="location"
                         name="location"
@@ -106,7 +107,7 @@ export default function AddEditCinemaPage() {
                     />
                 </div>
                 <div className={styles.formGroup}>
-                    <label htmlFor="imageUrl">Image URL:</label>
+                    <label htmlFor="imageUrl">{t('imageUrl')}:</label>
                     <input
                         id="imageUrl"
                         name="imageUrl"
@@ -116,7 +117,7 @@ export default function AddEditCinemaPage() {
                     />
                 </div>
                 <div className={styles.formGroup}>
-                    <label htmlFor="halls">Halls:</label>
+                    <label htmlFor="halls">{t('halls')}:</label>
                     <HallSelect
                         availableHalls={availableHalls}
                         selectedHalls={selectedHalls}
@@ -124,7 +125,7 @@ export default function AddEditCinemaPage() {
                     />
                 </div>
                 <button type="submit" className="submit-button">
-                    {cinemaId ? 'Update Cinema' : 'Add Cinema'}
+                    {cinemaId ? t('updateCinema') : t('addCinema')}
                 </button>
             </form>
         </div>

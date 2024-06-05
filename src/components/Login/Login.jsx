@@ -2,10 +2,12 @@ import { useState } from 'react';
 import styles from './Login.module.css';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { PATHS, ROLES } from '../../utils/constants';
-import { useAuth } from "../../contexts/authContext"
+import { useAuth } from "../../contexts/authContext";
 import Spinner from '../Spinner/Spinner';
+import { useTranslation } from 'react-i18next';
 
 export default function Login() {
+    const { t } = useTranslation();
     const location = useLocation();
     const navigate = useNavigate();
     const fromPath = location.state?.from || PATHS.HOME;
@@ -35,16 +37,16 @@ export default function Login() {
     };
 
     if (isLoading) {
-        return <Spinner />
+        return <Spinner />;
     }
     return (
         <div className={styles.loginContainer}>
             <form onSubmit={handleSubmit} className={styles.loginForm}>
-                <h2>Login</h2>
+                <h2>{t('login')}</h2>
                 <div className={styles.inputGroup}>
                     <input
                         type="email"
-                        placeholder="Email"
+                        placeholder={t('email')}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
@@ -53,19 +55,19 @@ export default function Login() {
                 <div className={styles.inputGroup}>
                     <input
                         type="password"
-                        placeholder="Password"
+                        placeholder={t('password')}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
                 </div>
-                <button type="submit" className={styles.loginButton}>Log In</button>
+                <button type="submit" className={styles.loginButton}>{t('login')}</button>
                 <div className={styles.extraOptions}>
-                    <Link to={PATHS.FORGOT_PASSWORD} className={styles.extraLink}>Forgot Password?</Link>
-                    <Link to={PATHS.RESEND_VERIFICATION} className={styles.extraLink}>Resend Verification Link</Link>
+                    <Link to={PATHS.FORGOT_PASSWORD} className={styles.extraLink}>{t('forgotPassword')}</Link>
+                    <Link to={PATHS.RESEND_VERIFICATION} className={styles.extraLink}>{t('resendVerification')}</Link>
                 </div>
                 <div className={styles.registerPrompt}>
-                    Don&apos;t have an account? <Link to={PATHS.REGISTER} className={styles.registerLink}>Register</Link>
+                    {t('noAccount')} <Link to={PATHS.REGISTER} className={styles.registerLink}>{t('register')}</Link>
                 </div>
             </form>
         </div>

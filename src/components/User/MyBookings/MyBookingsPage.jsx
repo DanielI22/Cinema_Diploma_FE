@@ -7,11 +7,13 @@ import { generateBookingPDF } from '../../../utils/pdfGenerator';
 import useDeleteModal from '../../../hooks/useDeleteModal';
 import DeleteModal from '../../DeleteModal/DeleteModal';
 import UserSidebar from '../UserSidebar/UserSidebar';
-import { formatLocalDate } from '../../../utils/functions';
+import { formatLocalDate, mapBookingStatus } from '../../../utils/functions';
+import { useTranslation } from 'react-i18next';
 
 const ITEMS_PER_PAGE = 2;
 
 const MyBookingsPage = () => {
+    const { t } = useTranslation();
     const [upcomingBookings, setUpcomingBookings] = useState([]);
     const [passedBookings, setPassedBookings] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -57,22 +59,22 @@ const MyBookingsPage = () => {
                 <div className={styles.bookingDetails}>
                     <h3 className={styles.movieTitle}>{movieTitle}</h3>
                     <p><strong>{cinemaName}</strong></p>
-                    <p><strong>Hall:</strong> {hallName}</p>
+                    <p><strong>{t('hall')}:</strong> {hallName}</p>
                     <p>
-                        <strong>Showtime:</strong> {formatLocalDate(showtimeStartTime)}
+                        <strong>{t('showtime')}:</strong> {formatLocalDate(showtimeStartTime)}
                     </p>
-                    <p><strong>Seats:</strong> {tickets.map(ticket => (
+                    <p><strong>{t('seats')}:</strong> {tickets.map(ticket => (
                         <div key={ticket.id} className={styles.ticketDetails}>
-                            Row {ticket.seat.rowNumber} Seat {ticket.seat.seatNumber} ({ticket.type} - {ticket.price.toFixed(2)} BGN)
+                            {t('row')} {ticket.seat.rowNumber} {t('seat')} {ticket.seat.seatNumber} ({ticket.type} - {ticket.price.toFixed(2)} {t('BGN')})
                         </div>
                     ))}</p>
-                    <p><strong>Status:</strong> {status}</p>
-                    <p><strong>Total Price:</strong> {totalPrice.toFixed(2)} BGN</p>
+                    <p><strong>{t('status')}:</strong> {mapBookingStatus(status)}</p>
+                    <p><strong>{t('totalPrice')}:</strong> {totalPrice.toFixed(2)} {t('BGN')}</p>
                     <div className={styles.actionButtons}>
-                        <button onClick={() => generateBookingPDF(booking)} className={styles.downloadButton}>Download as PDF</button>
+                        <button onClick={() => generateBookingPDF(booking)} className={styles.downloadButton}>{t('downloadAsPDF')}</button>
                         {status === 'available' && (
                             <button onClick={() => showDeleteModal(booking.id)} className={styles.cancelButton}>
-                                Cancel Booking
+                                {t('cancelBooking')}
                             </button>
                         )}
                     </div>
@@ -88,13 +90,13 @@ const MyBookingsPage = () => {
         <div className={styles.myBookingsPage}>
             <UserSidebar />
             <div className={styles.content}>
-                <h1 className={styles.header}>My Bookings</h1>
+                <h1 className={styles.header}>{t('myBookings')}</h1>
                 <div className={styles.section}>
-                    <h2>Upcoming</h2>
+                    <h2>{t('upcoming')}</h2>
                     {upcomingBookings.length > 0 ? (
                         upcomingBookings.map(renderBooking)
                     ) : (
-                        <p>No upcoming bookings.</p>
+                        <p>{t('noUpcomingBookings')}</p>
                     )}
                     <DeleteModal
                         showModal={isModalVisible}
@@ -103,11 +105,11 @@ const MyBookingsPage = () => {
                     />
                 </div>
                 <div className={styles.section}>
-                    <h2>Already Passed</h2>
+                    <h2>{t('alreadyPassed')}</h2>
                     {currentBookings.length > 0 ? (
                         currentBookings.map(renderBooking)
                     ) : (
-                        <p>No already passed bookings.</p>
+                        <p>{t('noAlreadyPassedBookings')}</p>
                     )}
                     <div className={styles.pagination}>
                         {Array.from({ length: Math.ceil(passedBookings.length / ITEMS_PER_PAGE) }, (_, i) => (

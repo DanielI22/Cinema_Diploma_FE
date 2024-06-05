@@ -4,8 +4,10 @@ import * as favouriteService from '../../../services/favouriteService';
 import MovieCard from '../MovieCard/MovieCard';
 import Spinner from '../../Spinner/Spinner';
 import UserSidebar from '../UserSidebar/UserSidebar';
+import { useTranslation } from 'react-i18next';
 
 const FavouritesPage = () => {
+    const { t } = useTranslation();
     const [favorites, setFavorites] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -32,7 +34,7 @@ const FavouritesPage = () => {
         <div className={styles.favoritesPage}>
             <UserSidebar />
             <div className={styles.content}>
-                <h1 className={styles.header}>My Favourites</h1>
+                <h1 className={styles.header}>{t('myFavourites.myFavourites')}</h1>
                 <div className={styles.moviesGrid}>
                     {favorites.length > 0 ? (
                         favorites.map(movie => (
@@ -42,12 +44,12 @@ const FavouritesPage = () => {
                                     className={styles.removeButton}
                                     onClick={() => handleRemoveFavorite(movie.id)}
                                 >
-                                    Remove from Favourites
+                                    {t('myFavourites.removeFromFavourites')}
                                 </button>
                             </div>
                         ))
                     ) : (
-                        <p>No favorite movies yet.</p>
+                        <p>{t('myFavourites.noFavourites')}</p>
                     )}
                 </div>
             </div>

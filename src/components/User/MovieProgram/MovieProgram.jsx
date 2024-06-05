@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import styles from './MovieProgram.module.css';
 import * as showtimeService from '../../../services/showtimeService';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import DateNavigation from '../DataNavigation/DateNavigation';
 
 function MovieProgram({ movieId }) {
+    const { t } = useTranslation();
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [groupedShowtimes, setGroupedShowtimes] = useState({});
 
@@ -40,7 +42,7 @@ function MovieProgram({ movieId }) {
                             <Link to={`/booking/${showtime.id}`} key={showtime.id} className={styles.showtime}>
                                 <div>
                                     {showtimeDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
-                                    <span className={styles.priceTag}>{`${showtime.type} | ${showtime.ticketPrice.toFixed(2)} BGN`}</span>
+                                    <span className={styles.priceTag}>{`${showtime.type} | ${showtime.ticketPrice.toFixed(2)} ${t('BGN')}`}</span>
                                 </div>
                             </Link>
                         );
@@ -58,10 +60,10 @@ function MovieProgram({ movieId }) {
 
     return (
         <div className={styles.movieProgram}>
-            <h2 className={styles.programLabel}>Program</h2>
+            <h2 className={styles.programLabel}>{t('program')}</h2>
             <DateNavigation selectedDate={selectedDate} onSelectDate={setSelectedDate} />
             <div className={styles.cinemaShowtimes}>
-                {Object.keys(groupedShowtimes).length > 0 ? renderCinemaShowtimes() : <p>No showtimes available.</p>}
+                {Object.keys(groupedShowtimes).length > 0 ? renderCinemaShowtimes() : <p>{t('noShowtimesAvailable')}</p>}
             </div>
         </div>
     );

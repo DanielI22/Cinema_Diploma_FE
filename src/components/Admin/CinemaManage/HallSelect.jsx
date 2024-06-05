@@ -1,9 +1,12 @@
+import { useTranslation } from 'react-i18next';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 
 const animatedComponents = makeAnimated();
 
 const HallSelect = ({ availableHalls, selectedHalls, handleHallChange }) => {
+    const { t } = useTranslation();
+
     const options = [...availableHalls, ...selectedHalls].map(hall => ({
         value: hall.id,
         label: hall.name
@@ -29,8 +32,10 @@ const HallSelect = ({ availableHalls, selectedHalls, handleHallChange }) => {
             onChange={onChange}
             options={options}
             value={selectedValues}
+            placeholder={t('selectHall')}
             classNamePrefix="react-select"
-            noOptionsMessage={() => 'No available halls'}
+            noOptionsMessage={() => t('noHalls')
+            }
         />
     );
 };

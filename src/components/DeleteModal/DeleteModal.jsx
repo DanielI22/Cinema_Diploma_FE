@@ -1,6 +1,10 @@
+import React from 'react';
 import styles from './DeleteModal.module.css';
+import { useTranslation } from 'react-i18next';
 
 export default function DeleteModal({ showModal, onConfirm, onCancel }) {
+    const { t } = useTranslation();
+
     if (!showModal) return null;
 
     const handleBackgroundClick = (e) => {
@@ -12,10 +16,10 @@ export default function DeleteModal({ showModal, onConfirm, onCancel }) {
     return (
         <div className={styles.modalBackground} onClick={handleBackgroundClick}>
             <div className={styles.modalContent}>
-                <h2>Delete Confirmation</h2>
-                <p>Are you sure you want to delete this item?</p>
-                <button className={styles.deleteButton} onClick={onConfirm}>Confirm</button>
-                <button className={styles.cancelButton} onClick={onCancel}>Cancel</button>
+                <h2>{t('deleteConfirmation')}</h2>
+                <p>{t('deleteConfirmationMessage')}</p>
+                <button className={styles.deleteButton} onClick={onConfirm}>{t('confirm')}</button>
+                <button className={styles.cancelButton} onClick={onCancel}>{t('cancel')}</button>
             </div>
         </div>
     );

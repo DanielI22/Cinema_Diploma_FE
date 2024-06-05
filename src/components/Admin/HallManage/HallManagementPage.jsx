@@ -8,8 +8,10 @@ import { toast } from 'react-toastify';
 import DeleteModal from '../../DeleteModal/DeleteModal';
 import useDeleteModal from '../../../hooks/useDeleteModal';
 import BackButton from '../../BackButton/BackButton';
+import { useTranslation } from 'react-i18next';
 
 const HallManagementPage = () => {
+    const { t } = useTranslation();
     const [halls, setHalls] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const { isModalVisible, showDeleteModal, hideDeleteModal, confirmDeletion } = useDeleteModal();
@@ -34,7 +36,7 @@ const HallManagementPage = () => {
 
     const groupHallsByCinema = (halls) => {
         const grouped = halls.reduce((acc, hall) => {
-            const key = hall.cinemaName ? hall.cinemaName : 'Available';
+            const key = hall.cinemaName ? hall.cinemaName : t('available');
             if (!acc[key]) {
                 acc[key] = [];
             }
@@ -59,8 +61,8 @@ const HallManagementPage = () => {
                 onCancel={hideDeleteModal}
             />
             <div className={styles.manageHeader}>
-                <h2>Manage Halls</h2>
-                <Link to={PATHS.MANAGE_HALL} className={styles.addButton}>Add New Hall</Link>
+                <h2>{t('manageHalls')}</h2>
+                <Link to={PATHS.MANAGE_HALL} className={styles.addButton}>{t('addNewHall')}</Link>
             </div>
             {Object.entries(groupedHalls).map(([group, halls]) => (
                 <div key={group}>
@@ -72,8 +74,8 @@ const HallManagementPage = () => {
                                     <p>{hall.name}</p>
                                 </div>
                                 <div className={styles.hallActions}>
-                                    <Link to={`${PATHS.MANAGE_HALL}/${hall.id}`} className={styles.editButton}>Edit</Link>
-                                    <button onClick={() => showDeleteModal(hall.id)} className={styles.deleteButton}>Delete</button>
+                                    <Link to={`${PATHS.MANAGE_HALL}/${hall.id}`} className={styles.editButton}>{t('edit')}</Link>
+                                    <button onClick={() => showDeleteModal(hall.id)} className={styles.deleteButton}>{t('delete')}</button>
                                 </div>
                             </div>
                         ))}

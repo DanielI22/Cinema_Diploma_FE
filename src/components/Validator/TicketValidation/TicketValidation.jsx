@@ -5,6 +5,7 @@ import Spinner from '../../Spinner/Spinner';
 import { useCinema } from '../../../contexts/cinemaContext';
 import { useParams } from 'react-router-dom';
 import { formatLocalDate } from '../../../utils/functions';
+import { useTranslation } from 'react-i18next';
 
 const TicketValidation = () => {
     const { selectedCinema } = useCinema();
@@ -15,6 +16,7 @@ const TicketValidation = () => {
     const [ticket, setTicket] = useState(null);
     const { showtimeId } = useParams();
     const inputRef = useRef(null);
+    const { t } = useTranslation();
 
     const handleChange = (e) => {
         setTicketCode(e.target.value);
@@ -30,7 +32,7 @@ const TicketValidation = () => {
 
     const handleValidate = async () => {
         if (ticketCode.length !== 5 || isNaN(ticketCode)) {
-            setError('Invalid ticket code. Must be 5 digits.');
+            setError(t('invalidTicketCode'));
             setIsValid(false);
             return;
         }
@@ -38,7 +40,7 @@ const TicketValidation = () => {
         setIsLoading(true);
         try {
             const response = await ticketService.validateTicket(ticketCode, selectedCinema.id, showtimeId);
-            if (response.status == 200) {
+            if (response.status === 200) {
                 setIsValid(true);
                 setError(null);
                 const ticket = response.data.ticket;
@@ -48,7 +50,7 @@ const TicketValidation = () => {
             if (err.response && err.response.data) {
                 setError(err.response.data);
             } else {
-                setError('Failed to validate ticket. Please try again.');
+                setError(t('validationError'));
             }
             setIsValid(false);
         } finally {
@@ -60,26 +62,27 @@ const TicketValidation = () => {
 
     return (
         <div className={styles.container}>
-            <h2>Validate Ticket</h2>
+            <h2>{t('validateTicket')}</h2>
             <input
                 ref={inputRef}
                 type="text"
                 value={ticketCode}
                 onChange={handleChange}
                 onKeyDown={handleKeyPress}
-                placeholder="Enter ticket code"
+                placeholder={t('enterTicketCode')}
                 className={styles.input}
             />
-            <button onClick={handleValidate} className={styles.validateButton} disabled={isLoading}>Validate</button>
+            <button onClick={handleValidate} className={styles.validateButton} disabled={isLoading}>{t('validate')}</button>
             {isLoading && <Spinner />}
             {isValid && !isLoading && (
                 <div className={styles.success}>
                     <span className={styles.checkMark}>&#10004;</span>
-                    <p className={styles.ticketInfo}>Valid ticket<br />
+                    <p className={styles.ticketInfo}>
+                        {t('validTicket')}<br />
                         {ticket.movieTitle} - {formatLocalDate(ticket.showtimeStartTime)}<br />
-                        Hall: {ticket.hallName}<br />
-                        Row: {ticket.seat.rowNumber}<br />
-                        Seat: {ticket.seat.seatNumber}<br />
+                        {t('hall')}: {ticket.hallName}<br />
+                        {t('row')}: {ticket.seat.rowNumber}<br />
+                        {t('seat')}: {ticket.seat.seatNumber}<br />
                     </p>
                 </div>
             )}

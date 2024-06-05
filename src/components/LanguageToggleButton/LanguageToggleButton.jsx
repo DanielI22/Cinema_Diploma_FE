@@ -10,6 +10,7 @@ const LanguageToggleButton = () => {
     const currentLanguage = i18n.language;
     const newLanguage = currentLanguage === 'en' ? 'bg' : 'en';
     i18n.changeLanguage(newLanguage);
+    localStorage.setItem('language', newLanguage);
   };
 
   return (

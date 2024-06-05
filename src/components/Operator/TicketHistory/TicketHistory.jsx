@@ -5,19 +5,20 @@ import styles from './TicketHistory.module.css';
 import OperatorSidebar from '../OperatorSidebar/OperatorSidebar';
 import { useCinema } from '../../../contexts/cinemaContext';
 import { formatLocalDate } from '../../../utils/functions';
+import { useTranslation } from 'react-i18next';
 
 const TicketHistory = () => {
-    const {selectedCinema} = useCinema();
+    const { selectedCinema } = useCinema();
     const [tickets, setTickets] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(1);
+    const { t } = useTranslation();
 
     const fetchTickets = async (page) => {
-        console.log(selectedCinema.id);
         const result = await ticketService.getOperatorTickets(selectedCinema.id, page, 20);
         setTickets(result.tickets);
-        setTotalPages(result.totalPages)
+        setTotalPages(result.totalPages);
         setIsLoading(false);
     };
 
@@ -45,16 +46,16 @@ const TicketHistory = () => {
         <div className={styles.ticketHistoryPage}>
             <OperatorSidebar />
             <div className={styles.content}>
-                <h2 className={styles.header}>Sold Tickets History</h2>
+                <h2 className={styles.header}>{t('soldTicketsHistory')}</h2>
                 <table className={styles.table}>
                     <thead>
                         <tr>
-                            <th>Movie Title</th>
-                            <th>Showtime</th>
-                            <th>Type</th>
-                            <th>Price</th>
-                            <th>Shortcode</th>
-                            <th>Sold Time</th>
+                            <th>{t('movieTitle')}</th>
+                            <th>{t('showtime')}</th>
+                            <th>{t('type')}</th>
+                            <th>{t('price')}</th>
+                            <th>{t('shortcode')}</th>
+                            <th>{t('soldTime')}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -71,9 +72,9 @@ const TicketHistory = () => {
                     </tbody>
                 </table>
                 <div className={styles.pagination}>
-                    <button onClick={handlePreviousPage} disabled={page === 0}>Previous</button>
-                    <span>Page {page + 1} of {totalPages}</span>
-                    <button onClick={handleNextPage} disabled={page >= totalPages - 1}>Next</button>
+                    <button onClick={handlePreviousPage} disabled={page === 0}>{t('previous')}</button>
+                    <span>{t('page')} {page + 1} {t('of')} {totalPages}</span>
+                    <button onClick={handleNextPage} disabled={page >= totalPages - 1}>{t('next')}</button>
                 </div>
             </div>
         </div>

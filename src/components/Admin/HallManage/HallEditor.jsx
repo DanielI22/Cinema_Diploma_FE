@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import styles from './HallEditor.module.css';
 import { INITIAL_SEATS, MAX_ROWS, MAX_SEATS } from '../../../utils/constants';
+import { useTranslation } from 'react-i18next';
 
 const HallEditor = ({ rows, onRowsChange }) => {
+    const { t } = useTranslation();
+
     const addRow = () => {
         if (rows.length >= MAX_ROWS) return;
         const newRow = {
@@ -68,10 +71,10 @@ const HallEditor = ({ rows, onRowsChange }) => {
 
     return (
         <div className={styles.hallEditor}>
-            <div className={styles.screenLabel}>Screen</div>
+            <div className={styles.screenLabel}>{t('screen')}</div>
             <div className={styles.controls}>
                 {rows.length < MAX_ROWS && (
-                    <button type="button" className={styles.addRowBtn} onClick={addRow}>+ Add Row</button>
+                    <button type="button" className={styles.addRowBtn} onClick={addRow}>{t('addRow')}</button>
                 )}
             </div>
             {rows.map((row, rowIndex) => (
@@ -83,7 +86,7 @@ const HallEditor = ({ rows, onRowsChange }) => {
                                 className={`${styles.seat} ${seat.isEmpty ? styles.emptySeat : ''}`}
                                 onClick={() => toggleSeatEmpty(rowIndex, seatIndex)}
                             >
-                                {seat.isEmpty ? 'Empty' : seat.seatNumber}
+                                {seat.isEmpty ? t('empty') : seat.seatNumber}
                             </div>
                         </div>
                     ))}

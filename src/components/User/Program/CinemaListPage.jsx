@@ -5,8 +5,10 @@ import * as cinemaService from '../../../services/cinemaService';
 import CinemaCard from '../../User/CinemaCard/CinemaCard';
 import { PATHS } from '../../../utils/constants';
 import Spinner from '../../Spinner/Spinner';
+import { useTranslation } from 'react-i18next';
 
 const CinemaListPage = () => {
+    const { t } = useTranslation();
     const [cinemas, setCinemas] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -28,7 +30,7 @@ const CinemaListPage = () => {
     return (
         <div className={styles.cinemaListScreen}>
             <div className={styles.header}>
-                <h2>Select a Cinema</h2>
+                <h2>{t('selectCinema')}</h2>
             </div>
             <div className={styles.cinemaList}>
                 {cinemas.map(cinema => (

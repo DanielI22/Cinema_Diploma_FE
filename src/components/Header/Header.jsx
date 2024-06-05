@@ -6,13 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import LanguageToggleButton from '../LanguageToggleButton/LanguageToggleButton';
 import { useCinema } from '../../contexts/cinemaContext';
+import { useTranslation } from 'react-i18next';
 
 export default function Header() {
-    const {
-        isAuthenticated,
-        userDetails
-    } = useAuth();
-
+    const { t } = useTranslation();
+    const { isAuthenticated, userDetails } = useAuth();
     const location = useLocation();
     const { selectedCinema } = useCinema();
 
@@ -20,22 +18,22 @@ export default function Header() {
         if (userDetails.role === ROLES.USER) {
             return (
                 <>
-                    <Link to={PATHS.FAVOURITES}>Favourites</Link>
-                    <Link to={PATHS.MY_BOOKINGS}>Bookings</Link>
-                    <Link to={PATHS.MY_TICKETS}>Tickets</Link>
+                    <Link to={PATHS.FAVOURITES}>{t('favourites')}</Link>
+                    <Link to={PATHS.MY_BOOKINGS}>{t('bookings')}</Link>
+                    <Link to={PATHS.MY_TICKETS}>{t('tickets')}</Link>
                 </>
             );
         }
         if (userDetails.role === ROLES.OPERATOR) {
             return (
                 <>
-                    <Link to={PATHS.TICKET_HISTORY}>Tickets History</Link>
-                    <Link to={PATHS.SELECT_CINEMA}>Change Cinema</Link>
+                    <Link to={PATHS.TICKET_HISTORY}>{t('ticketsHistory')}</Link>
+                    <Link to={PATHS.SELECT_CINEMA}>{t('changeCinema')}</Link>
                 </>
             );
         }
         if ([ROLES.VALIDATOR, ROLES.PROJECTOR].includes(userDetails.role)) {
-            return <Link to={PATHS.SELECT_CINEMA}>Change Cinema</Link>;
+            return <Link to={PATHS.SELECT_CINEMA}>{t('changeCinema')}</Link>;
         }
         return null;
     };
@@ -52,24 +50,22 @@ export default function Header() {
         );
     };
 
-
     const renderMiddleSection = () => {
         switch (userDetails.role) {
             case ROLES.ADMIN:
             case ROLES.OPERATOR:
             case ROLES.VALIDATOR:
             case ROLES.PROJECTOR:
-                return <Link to={PATHS.HOME}>Dashboard</Link>;
+                return <Link to={PATHS.HOME}>{t('dashboard')}</Link>;
             default:
                 return (
                     <div className={styles.navLeft}>
-                        <Link to={PATHS.MOVIES}>Movies</Link>
-                        <Link to={PATHS.PROGRAM}>Program</Link>
+                        <Link to={PATHS.MOVIES}>{t('movies')}</Link>
+                        <Link to={PATHS.PROGRAM}>{t('program')}</Link>
                     </div>
                 );
         }
     };
-
 
     return (
         <header className={styles.header}>
@@ -79,12 +75,12 @@ export default function Header() {
                 {isAuthenticated ? (
                     <>
                         {renderProfileDropdown()}
-                        <Link to={PATHS.LOGOUT}>Log out</Link>
+                        <Link to={PATHS.LOGOUT}>{t('logout')}</Link>
                     </>
                 ) : (
                     <>
-                        <Link to={{ pathname: PATHS.LOGIN, state: { from: location } }}>Login</Link>
-                        <Link to={PATHS.REGISTER}>Register</Link>
+                        <Link to={{ pathname: PATHS.LOGIN, state: { from: location } }}>{t('login')}</Link>
+                        <Link to={PATHS.REGISTER}>{t('register')}</Link>
                     </>
                 )}
                 <LanguageToggleButton />

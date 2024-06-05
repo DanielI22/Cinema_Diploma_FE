@@ -4,8 +4,10 @@ import * as genreService from '../../../services/genreService';
 import Spinner from '../../Spinner/Spinner';
 import DeleteModal from '../../DeleteModal/DeleteModal';
 import useDeleteModal from '../../../hooks/useDeleteModal';
+import { useTranslation } from 'react-i18next';
 
 const GenreManagementPage = () => {
+    const { t } = useTranslation();
     const [genres, setGenres] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [editGenreId, setEditGenreId] = useState(null);
@@ -62,24 +64,24 @@ const GenreManagementPage = () => {
 
     return (
         <div className={styles.genreManagementScreen}>
-            <h2>Manage Genres</h2>
+            <h2>{t('manageGenres')}</h2>
             <form onSubmit={handleAddGenre} className={styles.addEditForm}>
                 <input
                     type="text"
-                    placeholder="Genre Name"
+                    placeholder={t('genreName')}
                     value={genreName}
                     onChange={handleInputChange}
                     required
                 />
                 <button type="submit" className="submit-button">
-                    {editGenreId ? 'Update Genre' : 'Add Genre'}
+                    {editGenreId ? t('updateGenre') : t('addGenre')}
                 </button>
             </form>
             <table className={styles.genresTable}>
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Actions</th>
+                        <th>{t('name')}</th>
+                        <th>{t('actions')}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -87,8 +89,8 @@ const GenreManagementPage = () => {
                         <tr key={genre.id}>
                             <td>{genre.name}</td>
                             <td>
-                                <button className={styles.editButton} onClick={() => handleEditClick(genre)}>Edit</button>
-                                <button className={styles.deleteButton} onClick={() => showDeleteModal(genre.id)}>Delete</button>
+                                <button className={styles.editButton} onClick={() => handleEditClick(genre)}>{t('edit')}</button>
+                                <button className={styles.deleteButton} onClick={() => showDeleteModal(genre.id)}>{t('delete')}</button>
                             </td>
                         </tr>
                     ))}

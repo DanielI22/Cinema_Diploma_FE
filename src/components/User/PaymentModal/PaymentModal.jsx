@@ -7,6 +7,7 @@ import * as paymentService from "../../../services/paymentService";
 import * as ticketService from "../../../services/ticketService";
 import { GENERAL_ERROR, PATHS, STRIPE_PK } from '../../../utils/constants';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 // Load your publishable key from the Stripe dashboard
 const stripePromise = loadStripe(STRIPE_PK);
@@ -15,6 +16,7 @@ const stripePromise = loadStripe(STRIPE_PK);
 Modal.setAppElement('#root'); // This is important for accessibility
 
 const CheckoutForm = ({ onClose, setSuccess, orderInfo }) => {
+    const { t } = useTranslation();
     const stripe = useStripe();
     const elements = useElements();
     const [error, setError] = useState(null);
@@ -24,7 +26,7 @@ const CheckoutForm = ({ onClose, setSuccess, orderInfo }) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         setIsLoading(true);
-        setError(null); // Clear the error state on form submission
+        setError(null);
 
         if (!stripe || !elements) {
             setIsLoading(false);
@@ -75,7 +77,6 @@ const CheckoutForm = ({ onClose, setSuccess, orderInfo }) => {
         }
     };
 
-    // Clear error when user starts typing in the CardElement
     const handleChange = () => {
         setError(null);
     };
@@ -84,7 +85,7 @@ const CheckoutForm = ({ onClose, setSuccess, orderInfo }) => {
         <form onSubmit={handleSubmit} className={styles.form}>
             <CardElement onChange={handleChange} />
             <button type="submit" disabled={!stripe || isLoading} className={styles.payButton}>
-                {isLoading ? 'Processing...' : 'Pay'}
+                {isLoading ? t('processing') : t('pay')}
             </button>
             {error && <div className={styles.error}>{error}</div>}
         </form>
@@ -92,21 +93,22 @@ const CheckoutForm = ({ onClose, setSuccess, orderInfo }) => {
 };
 
 const PaymentModal = ({ isOpen, onClose, orderInfo }) => {
+    const { t } = useTranslation();
     const [success, setSuccess] = useState(false);
 
     return (
         <Modal
             isOpen={isOpen}
             onRequestClose={onClose}
-            contentLabel="Payment Modal"
+            contentLabel={t('paymentModalTitle')}
             className={styles.Modal}
             overlayClassName={styles.Overlay}
         >
-            <h2>Complete Your Payment</h2>
+            <h2>{t('completeYourPayment')}</h2>
             <Elements stripe={stripePromise}>
                 <CheckoutForm onClose={onClose} setSuccess={setSuccess} orderInfo={orderInfo} />
             </Elements>
-            {success && <div className={styles.success}>Payment Successful!</div>}
+            {success && <div className={styles.success}>{t('paymentSuccessful')}</div>}
         </Modal>
     );
 };

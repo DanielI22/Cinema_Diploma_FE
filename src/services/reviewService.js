@@ -30,3 +30,13 @@ export const deleteReview = async (reviewId) => {
         showToast(TOAST_ERROR, GENERAL_ERROR);
     }
 };
+
+export const deleteMyReview = async (reviewId) => {
+    try {
+        const response = await axiosInstance.delete(`/reviews/${reviewId}/my`);
+        showToast(TOAST_SUCCESS, GENERAL_DELETE);
+        return response.data;
+    } catch (error) {
+        showToast(TOAST_ERROR, GENERAL_ERROR);
+    }
+};

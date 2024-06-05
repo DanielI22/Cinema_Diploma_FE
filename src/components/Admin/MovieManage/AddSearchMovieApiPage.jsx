@@ -6,8 +6,10 @@ import * as movieService from '../../../services/movieService';
 import MovieCard from '../../User/MovieCard/MovieCard';
 import Spinner from '../../Spinner/Spinner';
 import BackButton from '../../BackButton/BackButton';
+import { useTranslation } from 'react-i18next';
 
 export default function AddSearchMovieApiPage() {
+    const { t } = useTranslation();
     const [query, setQuery] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [searchResults, setSearchResults] = useState([]);
@@ -47,23 +49,23 @@ export default function AddSearchMovieApiPage() {
                 <form onSubmit={handleSearchSubmit} className={styles.searchForm}>
                     <input
                         type="text"
-                        placeholder="Search by title or IMDb ID..."
+                        placeholder={t('searchPlaceholder')}
                         value={query}
                         onChange={handleSearchChange}
                         required
                     />
-                    <button type="submit" className="submit-button">Search</button>
+                    <button type="submit" className="submit-button">{t('search')}</button>
                 </form>
                 <div className={styles.searchResults}>
                     {isLoading ? (
                         <Spinner />
                     ) : hasSearched && searchResults.length === 0 ? (
-                        <p>No results found.</p>
+                        <p>{t('noResults')}</p>
                     ) : (
                         searchResults.map((movie) => (
                             <div key={movie.id} className={styles.resultItem}>
                                 <MovieCard movie={movie} redirect={false} />
-                                <button onClick={() => handleAddMovie(movie)} className={styles.addButton}>Add</button>
+                                <button onClick={() => handleAddMovie(movie)} className={styles.addButton}>{t('add')}</button>
                             </div>
                         ))
                     )}

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import * as reviewService from '../../../services/reviewService';
 import ReviewList from '../ReviewList/ReviewList';
-import { PATHS, REVIEWS_PER_PAGE } from '../../../utils/constants';
+import { PATHS, REVIEWS_PER_PAGE, ROLES } from '../../../utils/constants';
 import { useAuth } from '../../../contexts/authContext';
 import styles from './ReviewArea.module.css';
 import DeleteModal from '../../DeleteModal/DeleteModal';
 import useDeleteModal from '../../../hooks/useDeleteModal';
 import Spinner from '../../Spinner/Spinner';
+import { useTranslation } from 'react-i18next';
 
 export default function ReviewArea() {
     const { movieId } = useParams();
@@ -18,6 +18,7 @@ export default function ReviewArea() {
     const { isAuthenticated, userDetails } = useAuth();
     const [isLoading, setIsLoading] = useState(false);
     const { isModalVisible, showDeleteModal, hideDeleteModal, confirmDeletion } = useDeleteModal();
+    const { t } = useTranslation();
 
     useEffect(() => {
         fetchReviews(movieId)
@@ -42,7 +43,12 @@ export default function ReviewArea() {
     };
 
     const onDeleteReview = async (reviewId) => {
-        await reviewService.deleteReview(reviewId);
+        if(userDetails.role === ROLES.ADMIN) {
+            await reviewService.deleteReview(reviewId);
+        }
+        else {
+            await reviewService.deleteMyReview(reviewId);
+        }
         setCurrentPage(1);
         setAllReviews(allReviews.filter(review => review.id !== reviewId));
     };
@@ -54,19 +60,19 @@ export default function ReviewArea() {
 
     return (
         <div className={styles.reviewArea}>
-           <h2 className={styles.reviewLabel}>Reviews</h2>
+           <h2 className={styles.reviewLabel}>{t('reviews')}</h2>
             {isAuthenticated ? (
                 <>
                     <textarea
                         className={styles.reviewTextarea}
-                        placeholder="Leave a review..."
+                        placeholder={t('leaveReview')}
                         value={reviewText}
                         onChange={(e) => setReviewText(e.target.value)}
                     ></textarea>
-                    <button onClick={onSubmitReview} className={styles.submitButton}>Send</button>
+                    <button onClick={onSubmitReview} className={styles.submitButton}>{t('send')}</button>
                 </>
             ) : (
-                <p className={styles.noSignIn}><a href={PATHS.LOGIN}>Sign in to leave a review.</a></p>
+                <p className={styles.noSignIn}><a href={PATHS.LOGIN}>{t('signInToReview')}</a></p>
             )}
             {isLoading ? <Spinner /> :  <ReviewList reviews={currentReviews} onDeleteReview={showDeleteModal} />}
             <DeleteModal

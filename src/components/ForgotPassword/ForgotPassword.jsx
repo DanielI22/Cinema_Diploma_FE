@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import styles from './ForgotPassword.module.css';
 import { sendForgotPasswordEmail } from '../../services/authService';
 import Spinner from '../Spinner/Spinner';
+import { useTranslation } from 'react-i18next';
 
 export default function ForgotPassword() {
+    const { t } = useTranslation();
     const [email, setEmail] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
@@ -14,24 +16,25 @@ export default function ForgotPassword() {
         setIsLoading(false);
     };
 
-    if(isLoading) {
-        return <Spinner />
+    if (isLoading) {
+        return <Spinner />;
     }
+
     return (
         <div className={styles.forgotPasswordContainer}>
             <form onSubmit={handleSubmit} className={styles.forgotPasswordForm}>
-                <h2>Forgot Password</h2>
+                <h2>{t('forgotPassword')}</h2>
                 <div className={styles.inputGroup}>
                     <input
                         type="email"
-                        placeholder="Enter your email"
+                        placeholder={t('enterYourEmail')}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
                     />
                 </div>
                 <button className={styles.submitButton} disabled={isLoading}>
-                    Send Reset Link
+                    {t('sendResetLink')}
                 </button>
             </form>
         </div>

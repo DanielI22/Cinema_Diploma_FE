@@ -7,8 +7,10 @@ import * as genreService from '../../../services/genreService';
 import BackButton from '../../BackButton/BackButton';
 import Spinner from '../../Spinner/Spinner';
 import GenreSelect from './GenreSelect';
+import { useTranslation } from 'react-i18next';
 
 export default function AddEditMoviePage() {
+    const { t } = useTranslation();
     const [movie, setMovie] = useState({
         title: '',
         description: '',
@@ -83,10 +85,10 @@ export default function AddEditMoviePage() {
     return (
         <div className={styles.addEditMovieContainer}>
             <BackButton />
-            <h2>{movieId ? 'Edit Movie' : 'Add New Movie'}</h2>
+            <h2>{movieId ? t('editMovie') : t('addNewMovie')}</h2>
             <form onSubmit={handleSubmit} className={styles.addEditMovieForm}>
                 <div className={styles.formGroup}>
-                    <label htmlFor="title">Title:</label>
+                    <label htmlFor="title">{t('title')}:</label>
                     <input
                         id="title"
                         name="title"
@@ -97,7 +99,7 @@ export default function AddEditMoviePage() {
                     />
                 </div>
                 <div className={styles.formGroup}>
-                    <label htmlFor="description">Description:</label>
+                    <label htmlFor="description">{t('movieDescription')}:</label>
                     <textarea
                         id="description"
                         name="description"
@@ -106,7 +108,7 @@ export default function AddEditMoviePage() {
                     />
                 </div>
                 <div className={styles.formGroup}>
-                    <label htmlFor="imageUrl">Image URL:</label>
+                    <label htmlFor="imageUrl">{t('imageUrl')}:</label>
                     <input
                         id="imageUrl"
                         name="imageUrl"
@@ -116,7 +118,7 @@ export default function AddEditMoviePage() {
                     />
                 </div>
                 <div className={styles.formGroup}>
-                    <label htmlFor="genres">Genres:</label>
+                    <label htmlFor="genres">{t('genres')}:</label>
                     <GenreSelect
                         allGenres={allGenres}
                         selectedGenres={selectedGenres}
@@ -124,7 +126,7 @@ export default function AddEditMoviePage() {
                     />
                 </div>
                 <div className={styles.formGroup}>
-                    <label htmlFor="releaseYear">Release Year:</label>
+                    <label htmlFor="releaseYear">{t('releaseYear')}:</label>
                     <input
                         id="releaseYear"
                         name="releaseYear"
@@ -135,7 +137,7 @@ export default function AddEditMoviePage() {
                     />
                 </div>
                 <div className={styles.formGroup}>
-                    <label htmlFor="duration">Duration (minutes):</label>
+                    <label htmlFor="duration">{t('duration')} ({t('minutes')}):</label>
                     <input
                         id="duration"
                         name="duration"
@@ -146,7 +148,7 @@ export default function AddEditMoviePage() {
                     />
                 </div>
                 <div className={styles.formGroup}>
-                    <label htmlFor="trailerUrl">Trailer URL:</label>
+                    <label htmlFor="trailerUrl">{t('trailerUrl')}:</label>
                     <input
                         id="trailerUrl"
                         name="trailerUrl"
@@ -155,9 +157,8 @@ export default function AddEditMoviePage() {
                         onChange={handleChange}
                     />
                 </div>
-
                 <button type="submit" className="submit-button">
-                    {movieId ? 'Update Movie' : 'Add Movie'}
+                    {movieId ? t('updateMovie') : t('addMovie')}
                 </button>
             </form>
         </div>

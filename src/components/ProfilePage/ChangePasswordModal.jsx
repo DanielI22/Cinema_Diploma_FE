@@ -1,10 +1,10 @@
-// ChangePasswordModal.js
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import styles from './ChangePasswordModal.module.css';
 import * as userService from '../../services/userService';
 import { useAuth } from '../../contexts/authContext';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const ChangePasswordModal = ({ isOpen, onClose }) => {
     const { logoutHandler } = useAuth();
@@ -12,19 +12,21 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const handleChangePassword = async (e) => {
         e.preventDefault();
         if (password.length < 3) {
-            setErrorMessage("Password must be at least 3 characters long.")
+            setErrorMessage(t('passwordTooShort'));
             return;
         }
 
         if (confirmPassword !== password) {
-            setErrorMessage('Passwords do not match!');
-            return
+            setErrorMessage(t('passwordsDoNotMatch'));
+            return;
         }
-        await userService.updatePassword({password});
+
+        await userService.updatePassword({ password });
         logoutHandler();
         navigate(PATHS.LOGIN);
     };
@@ -33,14 +35,14 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
         <Modal
             isOpen={isOpen}
             onRequestClose={onClose}
-            contentLabel="Change Password"
+            contentLabel={t('changePassword')}
             className={styles.Modal}
             overlayClassName={styles.Overlay}
         >
             <form onSubmit={handleChangePassword}>
-                <h2>Change Password</h2>
+                <h2>{t('changePassword')}</h2>
                 <div className={styles.formGroup}>
-                    <label>New Password</label>
+                    <label>{t('newPassword')}</label>
                     <input
                         type="password"
                         value={password}
@@ -49,7 +51,7 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
                     />
                 </div>
                 <div className={styles.formGroup}>
-                    <label>Confirm Password</label>
+                    <label>{t('confirmPassword')}</label>
                     <input
                         type="password"
                         value={confirmPassword}
@@ -57,7 +59,7 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
                         required
                     />
                 </div>
-                <button className={styles.submitButton}>Submit</button>
+                <button className={styles.submitButton}>{t('submit')}</button>
             </form>
             {errorMessage && <div className={styles.errorMessage}>{errorMessage}</div>}
         </Modal>

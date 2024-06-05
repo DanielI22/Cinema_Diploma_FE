@@ -5,6 +5,7 @@ import * as cinemaService from '../../../services/cinemaService';
 import { useCinema } from '../../../contexts/cinemaContext';
 import Spinner from '../../Spinner/Spinner';
 import { formatLocalDate } from '../../../utils/functions';
+import { useTranslation } from 'react-i18next';
 
 const ProjectorHome = () => {
     const { selectedCinema } = useCinema();
@@ -15,6 +16,7 @@ const ProjectorHome = () => {
     const [currentShowtime, setCurrentShowtime] = useState(null);
     const [nextShowtime, setNextShowtime] = useState(null);
     const [viewDate, setViewDate] = useState(new Date());
+    const { t } = useTranslation();
 
     useEffect(() => {
         const fetchHalls = async () => {
@@ -86,24 +88,24 @@ const ProjectorHome = () => {
 
     const getStatus = (showtime) => {
         if (showtime.isEnded) {
-            return 'Ended';
+            return t('ended');
         } else if (showtime.isCurrent) {
             return (
                 <div className={styles.liveStatus}>
-                    Live <span className={styles.glowingDot}></span>
+                    {t('live')} <span className={styles.glowingDot}></span>
                 </div>
             );
         } else {
-            return 'Upcoming';
+            return t('upcomingShowtime');
         }
     };
 
     return (
         <div className={styles.container}>
-            <h2>Projector Control</h2>
-            <label htmlFor="hallSelect">Select Hall:</label>
+            <h2>{t('projectorControl')}</h2>
+            <label htmlFor="hallSelect">{t('selectHall')}:</label>
             <select id="hallSelect" onChange={handleHallChange} className={styles.select} value={selectedHall || ''}>
-                {!selectedHall && <option value="">Select a hall</option>}
+                {!selectedHall && <option value="">{t('selectAHall')}</option>}
                 {halls.map(hall => (
                     <option key={hall.id} value={hall.id}>{hall.name}</option>
                 ))}
@@ -111,35 +113,34 @@ const ProjectorHome = () => {
 
             {selectedHall && <div className={styles.dateToggle}>
                 <button onClick={() => handleDateChange(0)} disabled={viewDate.getDate() === new Date().getDate()} className={styles.dateButton}>
-                    Today
+                    {t('today')}
                 </button>
                 <button onClick={() => handleDateChange(1)} disabled={viewDate.getDate() === new Date().getDate() + 1} className={styles.dateButton}>
-                    Tomorrow
+                    {t('tomorrow')}
                 </button>
             </div>}
-
 
             {isLoading && <Spinner />}
             <div className={styles.indicator}>
                 {currentShowtime &&
                     <p>
-                        Expected Live: {currentShowtime.movieName} - {formatLocalDate(currentShowtime.startTime)}
+                        {t('expectedLive')}: {currentShowtime.movieName} - {formatLocalDate(currentShowtime.startTime)}
                     </p>}
                 {nextShowtime &&
                     <p>
-                        Next Showtime: {nextShowtime.movieName} - {formatLocalDate(nextShowtime.startTime)}
+                        {t('nextShowtime')}: {nextShowtime.movieName} - {formatLocalDate(nextShowtime.startTime)}
                     </p>}
             </div>
             {showtimes.length > 0 && (
                 <table className={styles.table}>
                     <thead>
                         <tr>
-                            <th>Movie</th>
-                            <th>Start Time</th>
-                            <th>Duration</th>
-                            <th>Type</th>
-                            <th>Status</th>
-                            <th>Actions</th>
+                            <th>{t('movie')}</th>
+                            <th>{t('startTime')}</th>
+                            <th>{t('duration')}</th>
+                            <th>{t('type')}</th>
+                            <th>{t('status')}</th>
+                            <th>{t('actions')}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -147,18 +148,18 @@ const ProjectorHome = () => {
                             <tr key={showtime.id}>
                                 <td>{showtime.movieName}</td>
                                 <td>{formatLocalDate(showtime.startTime)}</td>
-                                <td>{showtime.movieDuration} mins</td>
+                                <td>{showtime.movieDuration} {t("minutes")}</td>
                                 <td>{showtime.type}</td>
                                 <td>{getStatus(showtime)}</td>
-                                <td>
+                                <td className={styles.actionButtonsContainer}>
                                     {viewDate.getDate() === new Date().getDate() ? (
                                         <>
-                                            <button onClick={() => handleSetCurrentShowtime(showtime.id)} disabled={showtime.isCurrent} className={styles.actionButton}>Set Live</button>
-                                            <button onClick={() => handleMarkShowtimeAsEnded(showtime.id)} disabled={showtime.isEnded} className={styles.actionButton}>Ended</button>
-                                            <button onClick={() => handleMarkShowtimeAsUpcoming(showtime.id)} disabled={!showtime.isEnded && !showtime.isCurrent} className={styles.actionButton}>Upcoming</button>
+                                            <button onClick={() => handleSetCurrentShowtime(showtime.id)} disabled={showtime.isCurrent} className={`${styles.actionButton} ${styles.liveButton}`}>{t('setLive')}</button>
+                                            <button onClick={() => handleMarkShowtimeAsEnded(showtime.id)} disabled={showtime.isEnded} className={`${styles.actionButton} ${styles.endButton}`}>{t('ended')}</button>
+                                            <button onClick={() => handleMarkShowtimeAsUpcoming(showtime.id)} disabled={!showtime.isEnded && !showtime.isCurrent} className={`${styles.actionButton} ${styles.upcomingButton}`}>{t('upcomingShowtime')}</button>
                                         </>
                                     ) : (
-                                        <p className={styles.noActions}>No actions available</p>
+                                        <p className={styles.noActions}>{t('noActions')}</p>
                                     )}
                                 </td>
                             </tr>

@@ -8,13 +8,14 @@ import Spinner from '../../Spinner/Spinner';
 import DeleteModal from '../../DeleteModal/DeleteModal';
 import useDeleteModal from '../../../hooks/useDeleteModal';
 import ShowtimeGroup from './ShowtimeGroup';
+import { useTranslation } from 'react-i18next';
 
 const ShowtimeManagementPage = () => {
+    const { t } = useTranslation();
     const [showtimes, setShowtimes] = useState([]);
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [isLoading, setIsLoading] = useState(true);
     const { isModalVisible, showDeleteModal, hideDeleteModal, confirmDeletion } = useDeleteModal();
-
 
     useEffect(() => {
         fetchShowtimesByDate(selectedDate);
@@ -43,11 +44,13 @@ const ShowtimeManagementPage = () => {
     return (
         <div className={styles.showtimeManagementScreen}>
             <div className={styles.manageHeader}>
-                <h2>Manage Showtimes</h2>
-                <Link to={PATHS.MANAGE_SHOWTIME} className={styles.addButton}>Add Showtime</Link>
+                <h2>{t('manageShowtimes')}</h2>
+                <Link to={PATHS.MANAGE_SHOWTIME} className={styles.addButton}>
+                    {t('addShowtime')}
+                </Link>
             </div>
             <div className={styles.datePickerContainer}>
-                <h4>Select Date:</h4>
+                <h4>{t('selectDate')}:</h4>
                 <input
                     type="date"
                     value={selectedDate.toISOString().split('T')[0]}
@@ -59,7 +62,7 @@ const ShowtimeManagementPage = () => {
                     <ShowtimeGroup groupedShowtimes={groupedShowtimes} showDeleteModal={showDeleteModal} />
                 </div>
             ) : (
-                <p className={styles.noShowtimes}>No showtimes available.</p>
+                <p className={styles.noShowtimes}>{t('noShowtimesAvailable')}</p>
             )}
             <DeleteModal
                 showModal={isModalVisible}

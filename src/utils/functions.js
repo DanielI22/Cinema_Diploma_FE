@@ -79,3 +79,14 @@ export function mapTicketType(type) {
     return typeMapping[type] || type;
 };
 
+export function mapBookingStatus(status) {
+    const statusMapping = {
+        'available': i18n.t('booking.available'),
+        'taken': i18n.t('booking.taken'),
+        'cancelled': i18n.t('booking.cancelled'),
+        'expired': i18n.t('booking.expired'),
+    };
+
+    return statusMapping[status] || status;
+};
+

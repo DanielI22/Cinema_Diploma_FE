@@ -12,6 +12,7 @@ import { genresToString, isValidUUID } from '../../../utils/functions';
 import BackButton from '../../BackButton/BackButton';
 import ReviewArea from '../ReviewArea/ReviewArea';
 import MovieProgram from '../MovieProgram/MovieProgram';
+import { useTranslation } from 'react-i18next';
 
 export default function MovieDetails() {
     const { movieId } = useParams();
@@ -20,6 +21,7 @@ export default function MovieDetails() {
     const [isValidId, setIsValidId] = useState(true);
     const [isLoading, setIsLoading] = useState(true);
     const { userDetails, isAuthenticated } = useAuth();
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (!movieId || !isValidUUID(movieId)) {
@@ -29,13 +31,13 @@ export default function MovieDetails() {
         }
         const fetchMovie = async () => {
             try {
-                const result = await movieService.getOne(movieId)
+                const result = await movieService.getOne(movieId);
                 setMovie(result.movie);
                 setIsLoading(false);
             } catch (error) {
                 setIsValidId(false);
             }
-        }
+        };
         fetchMovie();
     }, [movieId]);
 
@@ -57,17 +59,20 @@ export default function MovieDetails() {
     if (isLoading) {
         return <Spinner />;
     }
+
     const handleFavouriteClick = async () => {
         if (favourite) {
-            await favouriteService.deleteFavourite(movieId)
+            await favouriteService.deleteFavourite(movieId);
             setFavourite(null);
         } else {
             const favourite = await favouriteService.addFavourite(movieId);
             setFavourite(favourite);
         }
     };
+
     return (
-        <><BackButton />
+        <>
+            <BackButton />
             <div className={styles.movieDetails}>
                 <div className={styles.detailsContainer}>
                     <img src={movie.imageUrl} alt={movie.title} className={styles.poster} />
@@ -75,12 +80,14 @@ export default function MovieDetails() {
                         <h1 className={styles.title}>{movie.title} ({movie.releaseYear})</h1>
                         <p className={styles.genre}>{genresToString(movie.genres)}</p>
                         <p className={styles.description}>{movie.description}</p>
-                        <p className={styles.duration}>{`Duration: ${movie.duration} minutes`}</p>
+                        <p className={styles.duration}>{`${t('duration')}: ${movie.duration} ${t('minutes')}`}</p>
                         {userDetails.role === 'user' && (
                             <div className={styles.favouritesContainer}>
-                                <p>Add to Favourites</p>
-                                <button className={`${styles.favouritesButton} ${favourite ? styles.favouriteActive : ''}`}
-                                    onClick={handleFavouriteClick}>
+                                <p>{t('addToFavourites')}</p>
+                                <button
+                                    className={`${styles.favouritesButton} ${favourite ? styles.favouriteActive : ''}`}
+                                    onClick={handleFavouriteClick}
+                                >
                                     <FontAwesomeIcon icon={faStar} />
                                 </button>
                             </div>

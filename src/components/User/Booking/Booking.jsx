@@ -12,10 +12,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import PaymentModal from '../PaymentModal/PaymentModal';
 import { useAuth } from '../../../contexts/authContext';
 import PhysicalPaymentModal from '../../Operator/PhysicalPaymentModal/PhysicalPaymentModal';
-import i18n from '../../../locales/i18n';
+import { useTranslation } from 'react-i18next';
 
 const Booking = () => {
     const { showtimeId } = useParams();
+    const { t, i18n } = useTranslation();
     const [rows, setRows] = useState(null);
     const [showtime, setShowtime] = useState(null);
     const [selectedSeats, setSelectedSeats] = useState([]);
@@ -68,7 +69,7 @@ const Booking = () => {
             if (selectedSeats.length < MAX_SEATS_BOOK) {
                 setSelectedSeats(prevSelected => [...prevSelected, { ...selectedSeat, ticketType: NORMAL_TICKET }]);
             } else {
-                toast.warning('You can select a maximum of 5 seats');
+                toast.warning(t('booking.maxSeats'));
             }
         }
     };
@@ -147,7 +148,7 @@ const Booking = () => {
 
     return (
         <div className={styles.bookingPage}>
-            <div className={styles.screenLabel}>Screen</div>
+            <div className={styles.screenLabel}>{t('booking.screen')}</div>
             <div className={styles.hall}>
                 {rows.map((row, rowIndex) => (
                     <div key={row.id} className={styles.row}>
@@ -170,20 +171,20 @@ const Booking = () => {
             <div className={styles.selectedSeats}>
                 {selectedSeats.map(seat => (
                     <div key={seat.id} className={styles.selectedSeatRow}>
-                        <span>Row {seat.rowNumber} - Seat {seat.seatNumber}:</span>
+                        <span>{t('booking.row')} {seat.rowNumber} - {t('booking.seat')} {seat.seatNumber}:</span>
                         <select
                             value={seat.ticketType}
                             onChange={e => handleTicketTypeChange(seat.id, e.target.value)}
                             className={styles.ticketTypeSelect}
                         >
-                            <option value={NORMAL_TICKET}>Normal</option>
-                            <option value={REDUCED_TICKET}>Reduced (Student, Child)</option>
+                            <option value={NORMAL_TICKET}>{t('booking.normal')}</option>
+                            <option value={REDUCED_TICKET}>{t('booking.reduced')}</option>
                         </select>
                     </div>
                 ))}
             </div>
             <div className={styles.totalPrice}>
-                Total Price: {totalPrice.toFixed(2)} BGN
+                {t('booking.totalPrice')}: {totalPrice.toFixed(2)} {t("BGN")}
             </div>
             <div className={styles.actionButtons}>
                 {userDetails.role === 'operator' ? (
@@ -192,7 +193,7 @@ const Booking = () => {
                         className={styles.paymentButton}
                         disabled={selectedSeats.length === 0}
                     >
-                        Get Tickets
+                        {t('booking.getTickets')}
                     </button>
                 ) : (
                     <>
@@ -201,14 +202,14 @@ const Booking = () => {
                             className={styles.bookingButton}
                             disabled={selectedSeats.length === 0}
                         >
-                            Book Tickets
+                            {t('booking.bookTickets')}
                         </button>
                         <button
                             onClick={handlePayment}
                             className={styles.paymentButton}
                             disabled={selectedSeats.length === 0}
                         >
-                            Buy Now
+                            {t('booking.buyNow')}
                         </button>
                     </>
                 )}

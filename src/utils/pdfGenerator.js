@@ -20,13 +20,13 @@ export const generateBookingPDF = async (booking) => {
     doc.text(`${i18n.t('seats')}:`, 10, 60);
     tickets.forEach((ticket, index) => {
         doc.text(
-            `${i18n.t('row')} ${ticket.seat.rowNumber} ${i18n.t('seat')} ${ticket.seat.seatNumber} (${mapTicketType(ticket.type)} - ${ticket.price.toFixed(2)} BGN)`,
+            `${i18n.t('row')} ${ticket.seat.rowNumber} ${i18n.t('seat')} ${ticket.seat.seatNumber} (${mapTicketType(ticket.type)} - ${ticket.price.toFixed(2)} ${i18n.t('BGN')})`,
             20,
             70 + (index * 10)
         );
     });
     doc.text(`${i18n.t('shortcode')}: ${shortcode}`, 146, 75);
-    doc.text(`${i18n.t('totalPrice')}: ${totalPrice.toFixed(2)} BGN`, 10, 70 + (tickets.length * 10));
+    doc.text(`${i18n.t('totalPrice')}: ${totalPrice.toFixed(2)} ${i18n.t('BGN')}`, 10, 70 + (tickets.length * 10));
     doc.barcode(`${shortcode}`, {
         fontSize: 60,
         x: 140,
@@ -81,7 +81,7 @@ function generateTicket(ticket, doc) {
     doc.text(`${i18n.t('showtime')}: ${formatLocalDate(showtimeStartTime)}`, 10, 50);
     doc.text(`${i18n.t('seat')}: ${i18n.t('row')} ${seat.rowNumber} ${i18n.t('seat')} ${seat.seatNumber}`, 10, 60);
     doc.text(`${i18n.t('type')}: ${mapTicketType(type)}`, 10, 70);
-    doc.text(`${i18n.t('price')}: ${price.toFixed(2)} BGN`, 10, 80);
+    doc.text(`${i18n.t('price')}: ${price.toFixed(2)} ${i18n.t('BGN')}`, 10, 80);
 
     doc.text(`${i18n.t('shortcode')}: ${shortcode}`, 146, 75);
     doc.barcode(`${shortcode}`, {

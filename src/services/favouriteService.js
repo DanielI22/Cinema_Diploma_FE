@@ -23,7 +23,6 @@ export const verifyFavourite = async (movieId) => {
 export const addFavourite = async (movieId) => {
     try {
         const response = await axiosInstance.post(`/favourites/${movieId}`);
-        showToast(TOAST_SUCCESS, GENERAL_ADD);
         return response.data;
     } catch (error) {
         showToast(TOAST_ERROR, GENERAL_ERROR);
@@ -33,7 +32,6 @@ export const addFavourite = async (movieId) => {
 export const deleteFavourite = async (movieId) => {
     try {
         const response = await axiosInstance.delete(`/favourites/${movieId}`);
-        showToast(TOAST_SUCCESS, GENERAL_DELETE);
         return response.data;
     } catch (error) {
         showToast(TOAST_ERROR, GENERAL_ERROR);

@@ -9,8 +9,10 @@ import BackButton from '../../BackButton/BackButton';
 import * as movieService from '../../../services/movieService';
 import * as cinemaService from '../../../services/cinemaService';
 import * as showtimeService from '../../../services/showtimeService';
+import { useTranslation } from 'react-i18next';
 
 export default function AddEditShowtimePage() {
+    const { t } = useTranslation();
     const [cinemas, setCinemas] = useState([]);
     const [selectedCinema, setSelectedCinema] = useState(null);
     const [halls, setHalls] = useState([]);
@@ -26,8 +28,8 @@ export default function AddEditShowtimePage() {
     const { showtimeId } = useParams();
 
     const showtimeTypeOptions = [
-        { value: 'TWO_D', label: '2D' },
-        { value: 'THREE_D', label: '3D' },
+        { value: 'TWO_D', label: t('twoD') },
+        { value: 'THREE_D', label: t('threeD') },
         { value: 'IMAX', label: 'IMAX' },
         { value: 'FOUR_DX', label: '4DX' },
     ];
@@ -39,7 +41,6 @@ export default function AddEditShowtimePage() {
             fetchShowtimeDetails(showtimeId);
         }
     }, [showtimeId]);
-
 
     const fetchCinemas = async () => {
         setIsLoading(true);
@@ -58,7 +59,6 @@ export default function AddEditShowtimePage() {
     const fetchShowtimeDetails = async (id) => {
         setIsLoading(true);
         const response = await showtimeService.getOne(id);
-        console.log(response);
         setSelectedCinema({ value: response.cinemaId, label: response.showtime.cinemaName });
         setSelectedHall({ value: response.hallId, label: response.showtime.hallName });
         setSelectedMovie({ value: response.movieId, label: response.showtime.movieName });
@@ -91,8 +91,7 @@ export default function AddEditShowtimePage() {
         };
         if (showtimeId) {
             await showtimeService.editShowtime(showtimeId, showtimeData);
-        }
-        else {
+        } else {
             await showtimeService.addShowtime(showtimeData);
         }
         navigate(PATHS.MANAGE_SHOWTIMES);
@@ -102,35 +101,35 @@ export default function AddEditShowtimePage() {
     return (
         <div className={styles.container}>
             <BackButton />
-            <h2>{showtimeId ? 'Edit Showtime' : 'Add New Showtime'}</h2>
+            <h2>{showtimeId ? t('editShowtime') : t('addNewShowtime')}</h2>
             {isLoading ? <Spinner /> : (
                 <form onSubmit={handleSubmit} className={styles.form}>
                     <Select
                         options={cinemas}
                         onChange={handleCinemaChange}
                         value={selectedCinema}
-                        placeholder="Select Cinema"
+                        placeholder={t('selectCinema')}
                         required
                     />
                     <Select
                         options={halls}
                         onChange={selected => setSelectedHall(selected)}
                         value={selectedHall}
-                        placeholder="Select Hall"
+                        placeholder={t('selectHall')}
                         required
                     />
                     <Select
                         options={movies.map(movie => ({ value: movie.id, label: movie.title }))}
                         onChange={selected => setSelectedMovie(selected)}
                         value={selectedMovie}
-                        placeholder="Select Movie"
+                        placeholder={t('selectMovie')}
                         required
                     />
                     <Select
                         options={showtimeTypeOptions}
                         onChange={selected => setShowtimeType(selected)}
                         value={showtimeType}
-                        placeholder="Select Showtime Type"
+                        placeholder={t('selectShowtimeType')}
                         required
                     />
                     <input
@@ -141,7 +140,7 @@ export default function AddEditShowtimePage() {
                     />
                     <input
                         type="number"
-                        placeholder="Ticket Price"
+                        placeholder={t('ticketPrice')}
                         value={ticketPrice}
                         onChange={e => setTicketPrice(e.target.value)}
                         step="0.01"
@@ -150,7 +149,7 @@ export default function AddEditShowtimePage() {
 
                     {!showtimeId && (
                         <div className={styles.checkboxContainer}>
-                            <label htmlFor="addNext7Days">Add for the next 7 days</label>
+                            <label htmlFor="addNext7Days">{t('addForNext7Days')}</label>
                             <input
                                 type="checkbox"
                                 id="addNext7Days"
@@ -159,7 +158,7 @@ export default function AddEditShowtimePage() {
                             />
                         </div>
                     )}
-                    <button type="submit" className="submit-button">{showtimeId ? 'Update Showtime' : 'Add Showtime'}</button>
+                    <button type="submit" className="submit-button">{showtimeId ? t('updateShowtime') : t('addShowtime')}</button>
                 </form>
             )}
         </div>

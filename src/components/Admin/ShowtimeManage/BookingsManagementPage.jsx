@@ -10,8 +10,11 @@ import BackButton from '../../BackButton/BackButton';
 import DeleteModal from '../../DeleteModal/DeleteModal';
 import useDeleteModal from '../../../hooks/useDeleteModal';
 import { ITEMS_PER_PAGE_BOOKINGS, ITEMS_PER_PAGE_TICKETS } from '../../../utils/constants';
+import { useTranslation } from 'react-i18next';
+import { mapBookingStatus } from '../../../utils/functions';
 
 const BookingsManagementPage = () => {
+    const { t } = useTranslation();
     const { showtimeId } = useParams();
     const [rows, setRows] = useState([]);
     const [bookings, setBookings] = useState([]);
@@ -23,7 +26,7 @@ const BookingsManagementPage = () => {
 
     const fetchData = async () => {
         const hallResponse = await hallService.getShowtimeHall(showtimeId);
-        const bookingsResponse = await bookingService.getShotimeBookings(showtimeId);
+        const bookingsResponse = await bookingService.getShowtimeBookings(showtimeId);
         const ticketsResponse = await ticketService.getShotimePurchasedTickets(showtimeId);
 
         setRows(hallResponse.rows);
@@ -61,7 +64,7 @@ const BookingsManagementPage = () => {
     return (
         <div className={styles.bookingsManagementPage}>
             <BackButton />
-            <div className={styles.screenLabel}>Screen</div>
+            <div className={styles.screenLabel}>{t('screen')}</div>
             <div className={styles.hall}>
                 {rows.map((row) => (
                     <div key={row.id} className={styles.row}>
@@ -80,7 +83,7 @@ const BookingsManagementPage = () => {
                 ))}
             </div>
             <div className={styles.bookings}>
-                <h2>Bookings</h2>
+                <h2>{t('bookings')}</h2>
                 {currentBookings.map((booking, index) => {
                     const totalSum = booking.tickets.reduce((sum, ticket) => sum + ticket.price, 0);
                     return (
@@ -89,25 +92,25 @@ const BookingsManagementPage = () => {
                                 <strong>{indexOfFirstBooking + index + 1}.</strong>
                             </div>
                             <div>
-                                <strong>Seats:</strong>
+                                <strong>{t('seats')}:</strong>
                                 {booking.tickets.map(ticket => (
                                     <div key={ticket.id} className={styles.ticketItem}>
-                                        Row {ticket.seat.rowNumber}, Seat {ticket.seat.seatNumber} ({ticket.type} - {ticket.price.toFixed(2)} BGN)
+                                        {t('row')} {ticket.seat.rowNumber}, {t('seat')} {ticket.seat.seatNumber} ({t(ticket.type.toLowerCase())} - {ticket.price.toFixed(2)}  {t("BGN")})
                                     </div>
                                 ))}
                             </div>
                             <div>
-                                <strong>Status:</strong> {booking.status}
+                                <strong>{t('status')}:</strong> {mapBookingStatus(booking.status)}
                             </div>
                             <div>
-                                <strong>User Email:</strong> {booking.userMail}
+                                <strong>{t('userEmail')}:</strong> {booking.userMail}
                             </div>
                             <div>
-                                <strong>Total Sum:</strong> {totalSum.toFixed(2)} BGN
+                                <strong>{t('totalSum')}:</strong> {totalSum.toFixed(2)} {t("BGN")}
                             </div>
                             {booking.status === 'available' && (
                                 <button onClick={() => showDeleteModal(booking.id)} className={styles.cancelButton}>
-                                    Cancel Booking
+                                    {t('cancelBooking')}
                                 </button>
                             )}
                             <DeleteModal
@@ -133,23 +136,23 @@ const BookingsManagementPage = () => {
                 )}
             </div>
             <div className={styles.purchasedTickets}>
-                <h2>Purchased Tickets</h2>
+                <h2>{t('purchasedTickets')}</h2>
                 {currentTickets.map((ticket, index) => (
                     <div key={ticket.id} className={styles.ticketItem}>
                         <div>
                             <strong>{indexOfFirstTicket + index + 1}.</strong>
                         </div>
                         <div>
-                            <strong>Seat:</strong> Row {ticket.seat.rowNumber}, Seat {ticket.seat.seatNumber}
+                            <strong>{t('seat')}:</strong> {t('row')} {ticket.seat.rowNumber}, {t('seat')} {ticket.seat.seatNumber}
                         </div>
                         <div>
-                            <strong>User Email:</strong> {ticket.userMail}
+                            <strong>{t('userEmail')}:</strong> {ticket.userMail}
                         </div>
                         <div>
-                            <strong>Type:</strong> {ticket.type}
+                            <strong>{t('type')}:</strong> {t(ticket.type.toLowerCase())}
                         </div>
                         <div>
-                            <strong>Price:</strong> {ticket.price.toFixed(2)} BGN
+                            <strong>{t('price')}:</strong> {ticket.price.toFixed(2)} {t("BGN")}
                         </div>
                     </div>
                 ))}

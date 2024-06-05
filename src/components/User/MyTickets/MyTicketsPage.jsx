@@ -5,11 +5,13 @@ import Spinner from '../../Spinner/Spinner';
 import Barcode from 'react-barcode';
 import { generateTicketPDF } from '../../../utils/pdfGenerator';
 import UserSidebar from '../UserSidebar/UserSidebar';
-import { formatLocalDate } from '../../../utils/functions';
+import { formatLocalDate, mapTicketType } from '../../../utils/functions';
+import { useTranslation } from 'react-i18next';
 
 const ITEMS_PER_PAGE = 2;
 
 const MyTicketsPage = () => {
+    const { t } = useTranslation();
     const [upcomingTickets, setUpcomingTickets] = useState([]);
     const [passedTickets, setPassedTickets] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -49,15 +51,15 @@ const MyTicketsPage = () => {
                 <div className={styles.ticketDetails}>
                     <h3 className={styles.movieTitle}>{movieTitle}</h3>
                     <p><strong>{cinemaName}</strong></p>
-                    <p><strong>Hall:</strong> {hallName}</p>
+                    <p><strong>{t('hall')}:</strong> {hallName}</p>
                     <p>
-                        <strong>Showtime:</strong> {formatLocalDate(showtimeStartTime)}
+                        <strong>{t('showtime')}:</strong> {formatLocalDate(showtimeStartTime)}
                     </p>
-                    <p><strong>Seat:</strong> Row {seat.rowNumber} Seat {seat.seatNumber}</p>
-                    <p><strong>Type:</strong> {type}</p>
-                    <p><strong>Price:</strong> {price.toFixed(2)} BGN</p>
+                    <p><strong>{t('seat')}:</strong> {t('row')} {seat.rowNumber} {t('seat')} {seat.seatNumber}</p>
+                    <p><strong>{t('type')}:</strong> {mapTicketType(type)}</p>
+                    <p><strong>{t('price')}:</strong> {price.toFixed(2)}  {t('BGN')}</p>
                     <div className={styles.actionButtons}>
-                        <button onClick={() => generateTicketPDF(ticket)} className={styles.downloadButton}>Download as PDF</button>
+                        <button onClick={() => generateTicketPDF(ticket)} className={styles.downloadButton}>{t('downloadAsPDF')}</button>
                     </div>
                 </div>
                 <div className={styles.barcodeContainer}>
@@ -71,21 +73,21 @@ const MyTicketsPage = () => {
         <div className={styles.myTicketsPage}>
             <UserSidebar />
             <div className={styles.content}>
-                <h1 className={styles.header}>My Tickets</h1>
+                <h1 className={styles.header}>{t('myTickets')}</h1>
                 <div className={styles.section}>
-                    <h2>Upcoming</h2>
+                    <h2>{t('upcoming')}</h2>
                     {upcomingTickets.length > 0 ? (
                         upcomingTickets.map(renderTicket)
                     ) : (
-                        <p>No upcoming tickets.</p>
+                        <p>{t('noUpcomingTickets')}</p>
                     )}
                 </div>
                 <div className={styles.section}>
-                    <h2>Already Passed</h2>
+                    <h2>{t('alreadyPassed')}</h2>
                     {currentTickets.length > 0 ? (
                         currentTickets.map(renderTicket)
                     ) : (
-                        <p>No already passed tickets.</p>
+                        <p>{t('noAlreadyPassedTickets')}</p>
                     )}
                     <div className={styles.pagination}>
                         {Array.from({ length: Math.ceil(passedTickets.length / ITEMS_PER_PAGE) }, (_, i) => (

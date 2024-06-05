@@ -6,15 +6,16 @@ import { useAuth } from '../../../contexts/authContext';
 import UserModal from './UserModal';
 import useDeleteModal from '../../../hooks/useDeleteModal';
 import DeleteModal from '../../DeleteModal/DeleteModal';
+import { useTranslation } from 'react-i18next';
 
 const UserManagementPage = () => {
+    const { t } = useTranslation();
     const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedRole, setSelectedRole] = useState('');
     const { isModalVisible, showDeleteModal, hideDeleteModal, confirmDeletion } = useDeleteModal();
     const { userDetails } = useAuth();
-
 
     const fetchUsers = async () => {
         setIsLoading(true);
@@ -38,7 +39,6 @@ const UserManagementPage = () => {
 
     const handleConfirmDeletion = async (userId) => {
         setIsLoading(true);
-        console.log(userId);
         await userService.deleteUser(userId);
         await fetchUsers();
         setIsLoading(false);
@@ -46,13 +46,13 @@ const UserManagementPage = () => {
 
     const renderTable = (role, roleName) => (
         <div className={styles.userTable}>
-            <h2>{roleName}s</h2>
+            <h2>{t(`${roleName}s`)}</h2>
             <table>
                 <thead>
                     <tr>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Actions</th>
+                        <th>{t('username')}</th>
+                        <th>{t('email')}</th>
+                        <th>{t('actions')}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -63,7 +63,7 @@ const UserManagementPage = () => {
                             <td>
                                 {user.id !== userDetails.userId && (
                                     <button onClick={() => showDeleteModal(user.id)} className={styles.deleteButton}>
-                                        Delete
+                                        {t('delete')}
                                     </button>
                                 )}
                             </td>
@@ -71,7 +71,7 @@ const UserManagementPage = () => {
                     ))}
                 </tbody>
             </table>
-            <button onClick={() => openModal(role)} className={styles.addButton}>Add {roleName}</button>
+            <button onClick={() => openModal(role)} className={styles.addButton}>{t('add')} {t(roleName)}</button>
         </div>
     );
 
@@ -80,13 +80,12 @@ const UserManagementPage = () => {
     }
 
     return (
-        
         <div className={styles.userManagementPage}>
-            {renderTable('admin', 'Admin')}
-            {renderTable('operator', 'Operator')}
-            {renderTable('validator', 'Validator')}
-            {renderTable('projector', 'Projector')}
-            {renderTable('user', 'User')}
+            {renderTable('admin', 'admin')}
+            {renderTable('operator', 'operator')}
+            {renderTable('validator', 'validator')}
+            {renderTable('projector', 'projector')}
+            {renderTable('user', 'user')}
             {isModalOpen && <UserModal isOpen={isModalOpen} onClose={closeModal} role={selectedRole} refreshUsers={fetchUsers} />}
             <DeleteModal
                 showModal={isModalVisible}

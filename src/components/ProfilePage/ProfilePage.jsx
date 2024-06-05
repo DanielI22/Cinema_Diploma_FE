@@ -7,13 +7,14 @@ import { useNavigate } from 'react-router-dom';
 import { PATHS, ROLES } from '../../utils/constants';
 import OperatorSidebar from '../Operator/OperatorSidebar/OperatorSidebar';
 import UserSidebar from '../User/UserSidebar/UserSidebar';
+import { useTranslation } from 'react-i18next';
 
 const ProfilePage = () => {
     const { userDetails, logoutHandler } = useAuth();
     const [username, setUsername] = useState(userDetails.username);
     const [isEditingUsername, setIsEditingUsername] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const navigate = useNavigate();
+    const { t } = useTranslation();
 
     useEffect(() => {
         setUsername(userDetails.username);
@@ -41,13 +42,13 @@ const ProfilePage = () => {
             {userDetails.role === ROLES.USER && <UserSidebar />}
             {userDetails.role === ROLES.OPERATOR && <OperatorSidebar />}
             <div className={styles.content}>
-                <h1 className={styles.header}>Profile</h1>
+                <h1 className={styles.header}>{t('profile')}</h1>
                 <div className={styles.formGroup}>
-                    <label>Email</label>
+                    <label>{t('email')}</label>
                     <p>{userDetails.email}</p>
                 </div>
                 <div className={styles.formGroup}>
-                    <label>Username</label>
+                    <label>{t('username')}</label>
                     {isEditingUsername ? (
                         <>
                             <input
@@ -55,17 +56,17 @@ const ProfilePage = () => {
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                             />
-                            <button onClick={handleUsernameChange} className={styles.submitButton}>Submit</button>
-                            <button onClick={handleCancelEdit} className={styles.cancelButton}>Cancel</button>
+                            <button onClick={handleUsernameChange} className={styles.submitButton}>{t('submit')}</button>
+                            <button onClick={handleCancelEdit} className={styles.cancelButton}>{t('cancel')}</button>
                         </>
                     ) : (
                         <>
                             <p>{username}</p>
-                            <button onClick={() => setIsEditingUsername(true)} className={styles.editButton}>Edit</button>
+                            <button onClick={() => setIsEditingUsername(true)} className={styles.editButton}>{t('edit')}</button>
                         </>
                     )}
                 </div>
-                <button onClick={openModal} className={styles.changePasswordButton}>Change Password</button>
+                <button onClick={openModal} className={styles.changePasswordButton}>{t('changePassword')}</button>
             </div>
             <ChangePasswordModal
                 isOpen={isModalOpen}

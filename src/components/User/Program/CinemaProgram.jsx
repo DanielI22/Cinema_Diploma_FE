@@ -12,9 +12,11 @@ import MovieCard from '../MovieCard/MovieCard';
 import BackButton from '../../BackButton/BackButton';
 import { useAuth } from '../../../contexts/authContext';
 import { ROLES } from '../../../utils/constants';
+import { useTranslation } from 'react-i18next';
 
 function CinemaProgram() {
     const { userDetails } = useAuth();
+    const { t } = useTranslation();
     const [cinema, setCinema] = useState(null);
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [movies, setMovies] = useState({});
@@ -83,8 +85,6 @@ function CinemaProgram() {
                             ? `/validate-ticket/${showtime.id}`
                             : `/booking/${showtime.id}`;
 
-                        // if personnel movie is active if it is not finished
-                        // if not 15 minutes before start
                         const isActive = userDetails.role === ROLES.VALIDATOR || userDetails.role === ROLES.OPERATOR
                             ? now < showtimeEndDate
                             : (showtimeDate - now) / 60000 > 15;
@@ -94,7 +94,7 @@ function CinemaProgram() {
                                 <Link to={linkPath} key={showtime.id} className={styles.showtime}>
                                     <div>
                                         {showtimeDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
-                                        <span className={styles.priceTag}>{`${showtime.type} | ${showtime.ticketPrice.toFixed(2)} BGN`}</span>
+                                        <span className={styles.priceTag}>{t('priceTag', { type: showtime.type, price: showtime.ticketPrice.toFixed(2) })}</span>
                                     </div>
                                 </Link>
                             );
@@ -122,10 +122,10 @@ function CinemaProgram() {
     return (
         <div className={styles.cinemaProgram}>
             <BackButton />
-            <h2 className={styles.programLabel}>{cinema.name} Program</h2>
+            <h2 className={styles.programLabel}>{cinema.name} {t('programLabel')}</h2>
             <DateNavigation selectedDate={selectedDate} onSelectDate={setSelectedDate} />
             <div className={styles.movieShowtimes}>
-                {Object.keys(showtimesByMovie).length > 0 ? renderShowtimesByMovie() : <p>No showtimes available.</p>}
+                {Object.keys(showtimesByMovie).length > 0 ? renderShowtimesByMovie() : <p>{t('noShowtimesAvailable')}</p>}
             </div>
         </div>
     );

@@ -6,15 +6,16 @@ import * as ticketService from "../../../services/ticketService";
 import * as bookingService from "../../../services/bookingService";
 import Spinner from '../../Spinner/Spinner';
 import { generateTicketsPDF } from '../../../utils/pdfGenerator';
+import { useTranslation } from 'react-i18next';
 
-// Style the modal
-Modal.setAppElement('#root'); // This is important for accessibility
+Modal.setAppElement('#root');
 
 const PhysicalPaymentModal = ({ isOpen, onClose, orderInfo }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [paymentCompleted, setPaymentCompleted] = useState(false);
     const [ticketIds, setTicketIds] = useState([]);
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const handleFinishPayment = async () => {
         let result;
@@ -43,22 +44,21 @@ const PhysicalPaymentModal = ({ isOpen, onClose, orderInfo }) => {
         <Modal
             isOpen={isOpen}
             onRequestClose={onClose}
-            contentLabel="Physical Payment Modal"
+            contentLabel={t('physicalPaymentModal')}
             className={styles.Modal}
             overlayClassName={styles.Overlay}
         >
-            <h2>Complete Your Payment</h2>
+            <h2>{t('completePayment')}</h2>
             <div className={styles.form}>
                 {isLoading && <Spinner />}
                 {!paymentCompleted ? (
                     <>
-                        <p>Please complete the payment process.
-                            <br />Total Price: <strong>{orderInfo?.totalPrice.toFixed(2) || 0} BGN</strong></p>
-                        <button onClick={handleFinishPayment} className={styles.payButton}>Finish Payment</button>
+                        <p>{t('completePaymentMessage')}<br />{t('totalPrice')}: <strong>{orderInfo?.totalPrice.toFixed(2) || 0} {t("BGN")}</strong></p>
+                        <button onClick={handleFinishPayment} className={styles.payButton}>{t('finishPayment')}</button>
                     </>
                 ) : (
                     <button onClick={handleGetTickets} className={styles.getTicketsButton}>
-                        Get Tickets
+                        {t('getTickets')}
                     </button>
                 )}
             </div>

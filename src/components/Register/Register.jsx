@@ -21,23 +21,23 @@ export default function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (username.length < 3) {
-            setError("Username must be at least 3 characters long.")
+            setError(t("errors.usernameLength"));
             return;
         }
 
         if (password.length < 3) {
-            setError("Password must be at least 3 characters long.")
+            setError(t("errors.passwordLength"));
             return;
         }
 
         if (confirmPassword !== password) {
-            setError('Passwords do not match!');
-            return
+            setError(t("errors.passwordsMismatch"));
+            return;
         }
 
         setError('');
         setIsLoading(true);
-        await registerSubmitHandler({ username, email, password })
+        await registerSubmitHandler({ username, email, password });
         toast.warning(t('messages.verifyMail'));
         setIsLoading(false);
     };
@@ -49,11 +49,11 @@ export default function Register() {
     return (
         <div className={styles.registerContainer}>
             <form onSubmit={handleSubmit} className={styles.registerForm}>
-                <h2>Register</h2>
+                <h2>{t('register')}</h2>
                 <div className={styles.inputGroup}>
                     <input
                         type="text"
-                        placeholder="Username"
+                        placeholder={t('username')}
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required
@@ -62,7 +62,7 @@ export default function Register() {
                 <div className={styles.inputGroup}>
                     <input
                         type="email"
-                        placeholder="Email"
+                        placeholder={t('email')}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
@@ -71,7 +71,7 @@ export default function Register() {
                 <div className={styles.inputGroup}>
                     <input
                         type="password"
-                        placeholder="Password"
+                        placeholder={t('password')}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
@@ -80,16 +80,16 @@ export default function Register() {
                 <div className={styles.inputGroup}>
                     <input
                         type="password"
-                        placeholder="Confirm Password"
+                        placeholder={t('confirmPassword')}
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         required
                     />
                 </div>
                 {error && <div className={styles.errorMessage}>{error}</div>}
-                <button type="submit" className={styles.registerButton}>Register</button>
+                <button type="submit" className={styles.registerButton}>{t('register')}</button>
                 <div className={styles.loginPrompt}>
-                    Already have an account? <Link to={PATHS.LOGIN} className={styles.loginLink}>Login</Link>
+                    {t('alreadyHaveAccount')} <Link to={PATHS.LOGIN} className={styles.loginLink}>{t('login')}</Link>
                 </div>
             </form>
         </div>

@@ -6,8 +6,10 @@ import * as hallService from '../../../services/hallService';
 import BackButton from '../../BackButton/BackButton';
 import Spinner from '../../Spinner/Spinner';
 import HallEditor from './HallEditor';
+import { useTranslation } from 'react-i18next';
 
 export default function AddEditHallPage() {
+    const { t } = useTranslation();
     const [hallName, setHallName] = useState('');
     const [rows, setRows] = useState([]);
     const { hallId } = useParams();
@@ -54,10 +56,10 @@ export default function AddEditHallPage() {
         <>
             <BackButton />
             <div className={styles.addEditHallContainer}>
-                <h2>{hallId ? 'Edit Hall' : 'Add New Hall'}</h2>
+                <h2>{hallId ? t('editHall') : t('addNewHall')}</h2>
                 <form onSubmit={handleSubmit} className={styles.addEditHallForm}>
                     <div className={styles.formGroup}>
-                        <label htmlFor="name">Name:</label>
+                        <label htmlFor="name">{t('name')}:</label>
                         <input
                             id="name"
                             name="name"
@@ -72,7 +74,7 @@ export default function AddEditHallPage() {
                         onRowsChange={handleRowsChange}
                     />
                     <button type="submit" className="submit-button">
-                        {hallId ? 'Update Hall' : 'Add Hall'}
+                        {hallId ? t('updateHall') : t('addHall')}
                     </button>
                 </form>
             </div>
