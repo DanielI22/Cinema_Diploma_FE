@@ -5,7 +5,6 @@ import * as bookingService from '../../../services/bookingService';
 import * as ticketService from '../../../services/ticketService';
 import Spinner from '../../Spinner/Spinner';
 import { useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import BackButton from '../../BackButton/BackButton';
 import DeleteModal from '../../DeleteModal/DeleteModal';
 import useDeleteModal from '../../../hooks/useDeleteModal';

@@ -15,8 +15,7 @@ const ValidatorLayout = () => (
         <Routes>
             <Route path={PATHS.HOME} element={<PersonnelRoute><ValidatorHome /></PersonnelRoute>} />
             <Route path={PATHS.SELECT_CINEMA} element={<SelectCinema />} />
-            <Route path={`${PATHS.PROGRAM}/:cinemaId`} element={<PersonnelRoute><CinemaProgram /></PersonnelRoute>} />
-            <Route path={`${PATHS.VALIDATE_TICKET}/:showtimeId`} element={<PersonnelRoute><TicketValidation /></PersonnelRoute>} />
+            <Route path={PATHS.VALIDATE_TICKET} element={<PersonnelRoute><TicketValidation /></PersonnelRoute>} />
             <Route path={PATHS.MY_PROFILE} element={<PersonnelRoute><ProfilePage /></PersonnelRoute>} />
             <Route path={PATHS.LOGOUT} element={<Logout />} />
             <Route path="*" element={<NotFound />} />

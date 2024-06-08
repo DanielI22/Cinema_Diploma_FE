@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './AddEditShowtimePage.module.css';
 import Select from 'react-select';
-import axios from 'axios';
 import { PATHS } from '../../../utils/constants';
 import Spinner from '../../Spinner/Spinner';
 import BackButton from '../../BackButton/BackButton';

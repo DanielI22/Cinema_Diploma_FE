@@ -4,7 +4,6 @@ import styles from './HallManagementPage.module.css';
 import * as hallService from '../../../services/hallService';
 import { PATHS } from '../../../utils/constants';
 import Spinner from '../../Spinner/Spinner';
-import { toast } from 'react-toastify';
 import DeleteModal from '../../DeleteModal/DeleteModal';
 import useDeleteModal from '../../../hooks/useDeleteModal';
 import BackButton from '../../BackButton/BackButton';

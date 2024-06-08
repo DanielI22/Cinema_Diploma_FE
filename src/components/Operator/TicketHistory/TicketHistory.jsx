@@ -4,7 +4,7 @@ import Spinner from '../../Spinner/Spinner';
 import styles from './TicketHistory.module.css';
 import OperatorSidebar from '../OperatorSidebar/OperatorSidebar';
 import { useCinema } from '../../../contexts/cinemaContext';
-import { formatLocalDate } from '../../../utils/functions';
+import { formatLocalDate, mapTicketType } from '../../../utils/functions';
 import { useTranslation } from 'react-i18next';
 
 const TicketHistory = () => {
@@ -63,7 +63,7 @@ const TicketHistory = () => {
                             <tr key={ticket.id}>
                                 <td>{ticket.movieTitle}</td>
                                 <td>{formatLocalDate(ticket.showtimeStartTime)}</td>
-                                <td>{ticket.type}</td>
+                                <td>{mapTicketType(ticket.type)}</td>
                                 <td>{ticket.price.toFixed(2)} BGN</td>
                                 <td>{ticket.shortcode}</td>
                                 <td>{formatLocalDate(ticket.soldTime)}</td>

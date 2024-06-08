@@ -54,7 +54,7 @@ export const getShotimePurchasedTickets = async (showtimeId) => {
     }
 };
 
-export const validateTicket = async (ticketCode, selectedCinemaId, showtimeId) => {
-    const response = await axiosInstance.get(`/tickets/validate/${ticketCode}?cinema=${selectedCinemaId}&showtime=${showtimeId}`);
+export const validateTicket = async (ticketCode, selectedCinemaId) => {
+    const response = await axiosInstance.get(`/tickets/validate/${ticketCode}?cinema=${selectedCinemaId}`);
     return response;
 }

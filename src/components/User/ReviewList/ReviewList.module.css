@@ -26,3 +26,7 @@
     border: none;
     cursor: pointer;
 }
+
+.sentimentEmoji {
+    font-size: 1em;
+}

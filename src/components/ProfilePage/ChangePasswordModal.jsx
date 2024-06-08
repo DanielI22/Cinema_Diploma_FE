@@ -12,12 +12,38 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
+    const [showCriteria, setShowCriteria] = useState(false);
+    const [criteria, setCriteria] = useState({
+        length: false,
+        uppercase: false,
+        lowercase: false,
+        digit: false,
+        specialChar: false,
+    });
     const { t } = useTranslation();
+
+    const handlePasswordChange = (e) => {
+        const { value } = e.target;
+        setPassword(value);
+        setCriteria({
+            length: value.length >= 8,
+            uppercase: /[A-Z]/.test(value),
+            lowercase: /[a-z]/.test(value),
+            digit: /\d/.test(value),
+            specialChar: /[@$!%*?&]/.test(value),
+        });
+    };
+
+    const validatePassword = (password) => {
+        const { length, uppercase, lowercase, digit, specialChar } = criteria;
+        return length && uppercase && lowercase && digit && specialChar;
+    };
+
 
     const handleChangePassword = async (e) => {
         e.preventDefault();
-        if (password.length < 3) {
-            setErrorMessage(t('passwordTooShort'));
+        if (!validatePassword(password)) {
+            setError(t("errors.passwordCriteria"));
             return;
         }
 
@@ -46,9 +72,28 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
                     <input
                         type="password"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={handlePasswordChange}
+                        onFocus={() => setShowCriteria(true)}
+                        onBlur={() => setShowCriteria(false)}
                         required
                     />
+                </div>
+                <div className={`${styles.criteriaBox} ${showCriteria ? styles.show : ''}`}>
+                    <p className={criteria.length ? styles.valid : styles.invalid}>
+                        {criteria.length ? '✔' : '✘'} {t('passwordCriteria.length')}
+                    </p>
+                    <p className={criteria.uppercase ? styles.valid : styles.invalid}>
+                        {criteria.uppercase ? '✔' : '✘'} {t('passwordCriteria.uppercase')}
+                    </p>
+                    <p className={criteria.lowercase ? styles.valid : styles.invalid}>
+                        {criteria.lowercase ? '✔' : '✘'} {t('passwordCriteria.lowercase')}
+                    </p>
+                    <p className={criteria.digit ? styles.valid : styles.invalid}>
+                        {criteria.digit ? '✔' : '✘'} {t('passwordCriteria.digit')}
+                    </p>
+                    <p className={criteria.specialChar ? styles.valid : styles.invalid}>
+                        {criteria.specialChar ? '✔' : '✘'} {t('passwordCriteria.specialChar')}
+                    </p>
                 </div>
                 <div className={styles.formGroup}>
                     <label>{t('confirmPassword')}</label>

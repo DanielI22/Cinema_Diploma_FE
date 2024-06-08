@@ -34,7 +34,7 @@ export const login = async ({ email, password }) => {
         if (error.response?.status === 404 || error.response?.status === 400) {
             showToast(TOAST_ERROR, 'errors.badCredentials');
         } else if (error.response?.status === 401) {
-            showToast('warning', 'messages.verifyMail');
+            showToast('warning', 'errors.verifyMail');
         }
     }
 };

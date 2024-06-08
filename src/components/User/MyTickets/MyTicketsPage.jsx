@@ -75,7 +75,7 @@ const MyTicketsPage = () => {
             <div className={styles.content}>
                 <h1 className={styles.header}>{t('myTickets')}</h1>
                 <div className={styles.section}>
-                    <h2>{t('upcoming')}</h2>
+                    <h2>{t('upcomingTickets')}</h2>
                     {upcomingTickets.length > 0 ? (
                         upcomingTickets.map(renderTicket)
                     ) : (

@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useCallback, useContext } from "react";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import usePersistedState from "../hooks/usePersistedState";
 import * as authService from '../services/authService';

@@ -7,7 +7,7 @@ import { generateBookingPDF } from '../../../utils/pdfGenerator';
 import useDeleteModal from '../../../hooks/useDeleteModal';
 import DeleteModal from '../../DeleteModal/DeleteModal';
 import UserSidebar from '../UserSidebar/UserSidebar';
-import { formatLocalDate, mapBookingStatus } from '../../../utils/functions';
+import { formatLocalDate, mapBookingStatus, mapTicketType } from '../../../utils/functions';
 import { useTranslation } from 'react-i18next';
 
 const ITEMS_PER_PAGE = 2;
@@ -37,7 +37,7 @@ const MyBookingsPage = () => {
     }, []);
 
     const handleCancelBooking = async (bookingId) => {
-        await bookingService.cancelBooking(bookingId);
+        await bookingService.cancelMyBooking(bookingId);
         fetchBookings();
     };
 
@@ -65,7 +65,7 @@ const MyBookingsPage = () => {
                     </p>
                     <p><strong>{t('seats')}:</strong> {tickets.map(ticket => (
                         <div key={ticket.id} className={styles.ticketDetails}>
-                            {t('row')} {ticket.seat.rowNumber} {t('seat')} {ticket.seat.seatNumber} ({ticket.type} - {ticket.price.toFixed(2)} {t('BGN')})
+                            {t('row')} {ticket.seat.rowNumber} {t('seat')} {ticket.seat.seatNumber} ({mapTicketType(ticket.type)} - {ticket.price.toFixed(2)} {t('BGN')})
                         </div>
                     ))}</p>
                     <p><strong>{t('status')}:</strong> {mapBookingStatus(status)}</p>
@@ -92,7 +92,7 @@ const MyBookingsPage = () => {
             <div className={styles.content}>
                 <h1 className={styles.header}>{t('myBookings')}</h1>
                 <div className={styles.section}>
-                    <h2>{t('upcoming')}</h2>
+                    <h2>{t('upcomingBookings')}</h2>
                     {upcomingBookings.length > 0 ? (
                         upcomingBookings.map(renderBooking)
                     ) : (

@@ -1,6 +1,6 @@
 import { showToast } from "../utils/toast";
 import axiosInstance from "../config/axiosInstance";
-import { GENERAL_ADD, GENERAL_DELETE, GENERAL_ERROR, TOAST_ERROR, TOAST_SUCCESS } from "../utils/constants";
+import { GENERAL_ERROR, TOAST_ERROR } from "../utils/constants";
 
 export const getFavourites = async () => {
     try {

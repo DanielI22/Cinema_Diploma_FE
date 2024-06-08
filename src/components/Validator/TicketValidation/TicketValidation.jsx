@@ -3,7 +3,6 @@ import styles from './TicketValidation.module.css';
 import * as ticketService from '../../../services/ticketService';
 import Spinner from '../../Spinner/Spinner';
 import { useCinema } from '../../../contexts/cinemaContext';
-import { useParams } from 'react-router-dom';
 import { formatLocalDate } from '../../../utils/functions';
 import { useTranslation } from 'react-i18next';
 
@@ -14,7 +13,6 @@ const TicketValidation = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [ticket, setTicket] = useState(null);
-    const { showtimeId } = useParams();
     const inputRef = useRef(null);
     const { t } = useTranslation();
 
@@ -39,7 +37,7 @@ const TicketValidation = () => {
 
         setIsLoading(true);
         try {
-            const response = await ticketService.validateTicket(ticketCode, selectedCinema.id, showtimeId);
+            const response = await ticketService.validateTicket(ticketCode, selectedCinema.id);
             if (response.status === 200) {
                 setIsValid(true);
                 setError(null);

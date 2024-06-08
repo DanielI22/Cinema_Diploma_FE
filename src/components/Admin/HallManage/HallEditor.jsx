@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import styles from './HallEditor.module.css';
 import { INITIAL_SEATS, MAX_ROWS, MAX_SEATS } from '../../../utils/constants';
 import { useTranslation } from 'react-i18next';

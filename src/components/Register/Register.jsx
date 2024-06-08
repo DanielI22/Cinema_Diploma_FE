@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './Register.module.css';
 import { GENERAL_ERROR, PATHS } from '../../utils/constants';
-import { useAuth } from "../../contexts/authContext"
+import { useAuth } from "../../contexts/authContext";
 import Spinner from '../Spinner/Spinner';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
@@ -15,8 +15,32 @@ export default function Register() {
     const [error, setError] = useState('');
     const { registerSubmitHandler } = useAuth();
     const [isLoading, setIsLoading] = useState(false);
-    const navigate = useNavigate();
+    const [showCriteria, setShowCriteria] = useState(false);
+    const [criteria, setCriteria] = useState({
+        length: false,
+        uppercase: false,
+        lowercase: false,
+        digit: false,
+        specialChar: false,
+    });
     const { t } = useTranslation();
+
+    const handlePasswordChange = (e) => {
+        const { value } = e.target;
+        setPassword(value);
+        setCriteria({
+            length: value.length >= 8,
+            uppercase: /[A-Z]/.test(value),
+            lowercase: /[a-z]/.test(value),
+            digit: /\d/.test(value),
+            specialChar: /[@$!%*?&]/.test(value),
+        });
+    };
+
+    const validatePassword = (password) => {
+        const { length, uppercase, lowercase, digit, specialChar } = criteria;
+        return length && uppercase && lowercase && digit && specialChar;
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,8 +49,8 @@ export default function Register() {
             return;
         }
 
-        if (password.length < 3) {
-            setError(t("errors.passwordLength"));
+        if (!validatePassword(password)) {
+            setError(t("errors.passwordCriteria"));
             return;
         }
 
@@ -37,9 +61,14 @@ export default function Register() {
 
         setError('');
         setIsLoading(true);
-        await registerSubmitHandler({ username, email, password });
-        toast.warning(t('messages.verifyMail'));
-        setIsLoading(false);
+        try {
+            await registerSubmitHandler({ username, email, password });
+            toast.warning(t('errors.verifyMail'));
+            setIsLoading(false);
+        } catch (error) {
+            setError(GENERAL_ERROR);
+            setIsLoading(false);
+        }
     };
 
     if (isLoading) {
@@ -73,9 +102,28 @@ export default function Register() {
                         type="password"
                         placeholder={t('password')}
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={handlePasswordChange}
+                        onFocus={() => setShowCriteria(true)}
+                        onBlur={() => setShowCriteria(false)}
                         required
                     />
+                </div>
+                <div className={`${styles.criteriaBox} ${showCriteria ? styles.show : ''}`}>
+                    <p className={criteria.length ? styles.valid : styles.invalid}>
+                        {criteria.length ? '✔' : '✘'} {t('passwordCriteria.length')}
+                    </p>
+                    <p className={criteria.uppercase ? styles.valid : styles.invalid}>
+                        {criteria.uppercase ? '✔' : '✘'} {t('passwordCriteria.uppercase')}
+                    </p>
+                    <p className={criteria.lowercase ? styles.valid : styles.invalid}>
+                        {criteria.lowercase ? '✔' : '✘'} {t('passwordCriteria.lowercase')}
+                    </p>
+                    <p className={criteria.digit ? styles.valid : styles.invalid}>
+                        {criteria.digit ? '✔' : '✘'} {t('passwordCriteria.digit')}
+                    </p>
+                    <p className={criteria.specialChar ? styles.valid : styles.invalid}>
+                        {criteria.specialChar ? '✔' : '✘'} {t('passwordCriteria.specialChar')}
+                    </p>
                 </div>
                 <div className={styles.inputGroup}>
                     <input
