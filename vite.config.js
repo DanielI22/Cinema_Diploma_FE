@@ -17,5 +17,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     https: httpsOptions
-  }
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/setupTests.js',
+  },
 });

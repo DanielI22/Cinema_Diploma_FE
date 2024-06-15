@@ -4,21 +4,21 @@
     padding: 0 20px;
     background-color: var(--secondary-color);
     color: white;
-    flex-wrap: wrap; /* Allow items to wrap on small screens */
+    flex-wrap: wrap;
 }
 
 .logo {
     max-width: 80px;
     height: auto;
     border-radius: 10px;
-    margin: 10px 0; /* Adjust margin for better spacing */
+    margin: 10px 0;
 }
 
 .navRight {
     display: flex;
     margin-left: auto;
     align-items: center;
-    flex-wrap: wrap; /* Allow items to wrap on small screens */
+    flex-wrap: wrap;
 }
 
 .header a {

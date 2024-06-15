@@ -14,8 +14,12 @@ export default function DeleteModal({ showModal, onConfirm, onCancel }) {
     };
 
     return (
-        <div className={styles.modalBackground} onClick={handleBackgroundClick}>
-            <div className={styles.modalContent}>
+        <div
+            className={styles.modalBackground}
+            data-testid="modal-background"
+            onClick={handleBackgroundClick}
+        >
+            <div className={styles.modalContent} data-testid="modal-content">
                 <h2>{t('deleteConfirmation')}</h2>
                 <p>{t('deleteConfirmationMessage')}</p>
                 <button className={styles.deleteButton} onClick={onConfirm}>{t('confirm')}</button>
