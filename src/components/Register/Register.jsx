@@ -61,14 +61,11 @@ export default function Register() {
 
         setError('');
         setIsLoading(true);
-        try {
-            await registerSubmitHandler({ username, email, password });
+        const result = await registerSubmitHandler({ username, email, password });
+        if (result) {
             toast.warning(t('errors.verifyMail'));
-            setIsLoading(false);
-        } catch (error) {
-            setError(GENERAL_ERROR);
-            setIsLoading(false);
         }
+        setIsLoading(false);
     };
 
     if (isLoading) {
