@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 
 export default function Register() {
+    const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -63,6 +64,7 @@ export default function Register() {
         setIsLoading(true);
         const result = await registerSubmitHandler({ username, email, password });
         if (result) {
+            navigate(PATHS.HOME);
             toast.warning(t('errors.verifyMail'));
         }
         setIsLoading(false);
