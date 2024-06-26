@@ -35,7 +35,6 @@ describe('GenreSelect Component', () => {
       handleCreateGenre: mockHandleCreateGenre,
     });
 
-    // Check if the select input is rendered
     expect(screen.getByRole('combobox')).toBeInTheDocument();
   });
 
@@ -47,11 +46,9 @@ describe('GenreSelect Component', () => {
       handleCreateGenre: mockHandleCreateGenre,
     });
 
-    // Open the select menu
     const selectInput = screen.getByRole('combobox');
     fireEvent.mouseDown(selectInput);
 
-    // Check if options are rendered
     mockAllGenres.forEach((genre) => {
       expect(screen.getByText(genre.name)).toBeInTheDocument();
     });
@@ -65,15 +62,12 @@ describe('GenreSelect Component', () => {
       handleCreateGenre: mockHandleCreateGenre,
     });
 
-    // Open the select menu
     const selectInput = screen.getByRole('combobox');
     fireEvent.mouseDown(selectInput);
 
-    // Select a new option
     const newOption = screen.getByText('Action');
     fireEvent.click(newOption);
 
-    // Check if handleGenreChange was called with the correct value
     expect(mockHandleGenreChange).toHaveBeenCalledWith(expect.arrayContaining([
       expect.objectContaining({ value: '1', label: 'Action' }),
       expect.objectContaining({ value: '2', label: 'Comedy' })
