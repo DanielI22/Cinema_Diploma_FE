@@ -132,7 +132,8 @@ const Booking = () => {
             seats: selectedSeats.map(seat => ({
                 seatId: seat.id,
                 ticketType: seat.ticketType
-            }))
+            })),
+            language: i18n.language
         };
         setOrderInfo(order);
         openCashModal();
